@@ -5,9 +5,9 @@ import LootiesLogo from "../../assets/Looties_wordmark 1.svg";
 
 const HeaderLogo: React.FC = () => {
   return (
-    <div className="logo-box h-[120px] left-0 top-0 ">
+    <div className="logo-box h-[120px] flex items-center">
       <img
-        className="logo-img absolute w-[232px] h-[52px] left-[73px] top-[34px]"
+        className="w-[232px] h-[52px] mx-auto"
         src={LootiesLogo}
         alt="image description"
       />
