@@ -1,0 +1,13 @@
+// HeaderInfoBar.scss
+$bgColor: #151719;
+.info-container {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 40px;
+  left: 378px;
+  background-color: $bgColor;
+  /* Add any additional styles for the container */
+}
