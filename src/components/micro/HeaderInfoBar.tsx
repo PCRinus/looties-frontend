@@ -7,7 +7,7 @@ import MailIcon from "../../assets/MailIcon.svg";
 
 const HeaderInfoBar: React.FC = () => {
   return (
-    <div className="info-container absolute flex justify-between items-center w-[1542px]">
+    <div className="flex justify-between items-center h-[40px]">
       <div className="left-section ml-8 font-sans font-medium text-grey_font_color">
         <a href="#" className="">
           Affiliates

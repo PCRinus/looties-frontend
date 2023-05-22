@@ -22,12 +22,12 @@ const App: React.FC = () => {
   return (
     <div className="flex justify-normal items-start">
       <Header></Header>
-
+      {/*
       <div className="test mt-52">
         <UserBoxRed />
         <UserBoxBlue />
         <UserBoxPurple />
-      </div>
+      </div> */}
     </div>
   );
 };
