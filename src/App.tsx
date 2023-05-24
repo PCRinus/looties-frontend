@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
 import Header from "./components/macro/Header";
 import WebFont from "webfontloader";
-import GradientBorderBoxBlue from "./components/micro/GradientBorderBoxBlue";
-import GradientBorderBoxRed from "./components/micro/GradientBorderBoxRed";
-import GradientBorderBoxPurple from "./components/micro/GradientBorderBoxPurple";
-import {
-  UserBoxBlue,
-  UserBoxPurple,
-  UserBoxRed,
-} from "./components/micro/UserBox";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Homepage } from "./components/pages/Homepage";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -20,15 +14,14 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex justify-normal items-start">
+    <>
       <Header></Header>
-      {/*
-      <div className="test mt-52">
-        <UserBoxRed />
-        <UserBoxBlue />
-        <UserBoxPurple />
-      </div> */}
-    </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Homepage />}></Route>
+        </Routes>
+      </Router>
+    </>
   );
 };
 

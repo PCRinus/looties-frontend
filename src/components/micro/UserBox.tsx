@@ -9,9 +9,9 @@ import GradientBorderBoxPurple from "./GradientBorderBoxPurple";
 export const UserBoxBlue: React.FC = () => {
   return (
     <div>
-      <GradientBorderBoxBlue className="flex relative">
+      <GradientBorderBoxBlue className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
-        <div className="ml-2 flex-col justify-normal items-center">
+        <div className="ml-2 flex-col items-center justify-normal">
           <label className=" block font-sans font-semibold text-custom_white_1">
             {/* {name} */}
             Looties #122
@@ -24,11 +24,7 @@ export const UserBoxBlue: React.FC = () => {
             </label>
           </div>
         </div>
-        <img
-          className="absolute top-[10px] right-[13px]"
-          src={RefreshIcon}
-          alt="refresh-icon-svg"
-        ></img>
+        <img className="absolute right-[13px] top-[10px]" src={RefreshIcon} alt="refresh-icon-svg"></img>
       </GradientBorderBoxBlue>
     </div>
   );
@@ -37,9 +33,9 @@ export const UserBoxBlue: React.FC = () => {
 export const UserBoxRed: React.FC = () => {
   return (
     <div>
-      <GradientBorderBoxRed className="flex relative">
+      <GradientBorderBoxRed className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
-        <div className="ml-2 flex-col justify-normal items-center">
+        <div className="ml-2 flex-col items-center justify-normal">
           <label className=" block font-sans font-semibold text-custom_white_1">
             {/* {name} */}
             Looties #122
@@ -52,11 +48,7 @@ export const UserBoxRed: React.FC = () => {
             </label>
           </div>
         </div>
-        <img
-          className="absolute top-[10px] right-[13px]"
-          src={RefreshIcon}
-          alt="refresh-icon-svg"
-        ></img>
+        <img className="absolute right-[13px] top-[10px]" src={RefreshIcon} alt="refresh-icon-svg"></img>
       </GradientBorderBoxRed>
     </div>
   );
@@ -65,9 +57,9 @@ export const UserBoxRed: React.FC = () => {
 export const UserBoxPurple: React.FC = () => {
   return (
     <div>
-      <GradientBorderBoxPurple className="flex relative">
+      <GradientBorderBoxPurple className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
-        <div className="ml-2 flex-col justify-normal items-center">
+        <div className="ml-2 flex-col items-center justify-normal">
           <label className=" block font-sans font-semibold text-custom_white_1">
             {/* {name} */}
             Looties #122
@@ -80,11 +72,7 @@ export const UserBoxPurple: React.FC = () => {
             </label>
           </div>
         </div>
-        <img
-          className="absolute top-[10px] right-[13px]"
-          src={RefreshIcon}
-          alt="refresh-icon-svg"
-        ></img>
+        <img className="absolute right-[13px] top-[10px]" src={RefreshIcon} alt="refresh-icon-svg"></img>
       </GradientBorderBoxPurple>
     </div>
   );

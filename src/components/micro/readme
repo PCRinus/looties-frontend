@@ -1,6 +1,0 @@
-Micro Components:
-Micro components are smaller, reusable building blocks that make up the UI of your application. They are often used within macro components or other micro components. Examples of micro components could include:
-
-Button: A reusable button component with different variations and styles.
-Input: A text input field component.
-Card: A small, self-contained component used to display information.

@@ -7,14 +7,11 @@ interface GradientBorderBoxProps {
   className?: string;
 }
 
-const GradientBorderBoxRed: React.FC<GradientBorderBoxProps> = ({
-  children,
-  className,
-}) => {
+const GradientBorderBoxRed: React.FC<GradientBorderBoxProps> = ({ children, className }) => {
   return (
-    <div className="w-[251px] h-[76px] custom-style-red rounded-lg flex justify-center items-center">
+    <div className="custom-style-red flex h-[76px] w-[251px] items-center justify-center rounded-lg">
       <div
-        className={`w-[245px] h-[72px] bg-custom_black_1 custom-gradient-bg-color rounded-lg flex justify-normal items-center ${className}`}
+        className={`custom-gradient-bg-color flex h-[72px] w-[245px] items-center justify-normal rounded-lg bg-custom_black_1 ${className}`}
       >
         <img src={UserBoxDetailRed} alt="detail.svg" />
         {children}

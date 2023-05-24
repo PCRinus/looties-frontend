@@ -1,6 +1,0 @@
-Macro Components:
-Macro components typically represent higher-level structures or sections of your application. They are composed of multiple micro or smaller components and might contain complex logic or state management. Examples of macro components could include:
-
-Header: The top navigation bar or header section of your application.
-Footer: The bottom section that appears on every page.
-Sidebar: A side panel containing navigation or additional information.

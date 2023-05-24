@@ -7,7 +7,7 @@ import MailIcon from "../../assets/MailIcon.svg";
 
 const HeaderInfoBar: React.FC = () => {
   return (
-    <div className="flex justify-between items-center h-[40px]">
+    <div className="flex h-[40px] items-center justify-between">
       <div className="left-section ml-8 font-sans font-medium text-grey_font_color">
         <a href="#" className="">
           Affiliates
@@ -23,7 +23,7 @@ const HeaderInfoBar: React.FC = () => {
         </a>
       </div>
       <div className="right-section mr-[33.25px]">
-        <div className="social-icons flex justify-center items-center">
+        <div className="social-icons flex items-center justify-center">
           <a href="#" className="social-icon]">
             <img src={FaceBookIcon} alt="facebook-icon" />
           </a>
