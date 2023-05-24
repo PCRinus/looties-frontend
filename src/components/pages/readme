@@ -1,5 +1,0 @@
-Page components represent the individual pages or routes within your application. They act as the main entry points and are responsible for rendering the appropriate macro and micro components for that specific page. Examples of page components could include:
-
-HomePage: The main landing page of your application.
-AboutPage: A page providing information about your application or company.
-ContactPage: A page with a contact form or contact information.

@@ -9,8 +9,8 @@ import BalanceView from "./BalanceView";
 
 const HeaderUserBar: React.FC = () => {
   return (
-    <div className="user-box h-[80px] top-[40px] flex justify-between items-center">
-      <div className="flex justify-start items-center">
+    <div className="user-box top-[40px] flex h-[80px] items-center justify-between">
+      <div className="flex items-center justify-start">
         <div className="ml-8">
           <HomeButton />
         </div>
@@ -24,7 +24,7 @@ const HeaderUserBar: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex justify-start items-center">
+      <div className="flex items-center justify-start">
         <div>
           <BalanceView />
         </div>
