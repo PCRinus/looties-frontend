@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import Header from "./components/macro/Header";
 import WebFont from "webfontloader";
+import GradientBorderBoxBlue from "./components/micro/GradientBorderBoxBlue";
+import GradientBorderBoxRed from "./components/micro/GradientBorderBoxRed";
+import GradientBorderBoxPurple from "./components/micro/GradientBorderBoxPurple";
+import { UserBoxBlue, UserBoxPurple, UserBoxRed } from "./components/micro/UserBox";
+import UserList from "./components/micro/UserList";
+import LiveDropSidebar from "./components/micro/LiveDropSidebar";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Homepage } from "./components/pages/Homepage";
 
