@@ -9,6 +9,7 @@ import UserList from "./components/micro/UserList";
 import LiveDropSidebar from "./components/micro/LiveDropSidebar";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Homepage } from "./components/pages/Homepage";
+import OpenBox from "./components/pages/OpenBox";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -24,9 +25,10 @@ const App: React.FC = () => {
       <Header></Header>
       <Router>
         <Routes>
-          <Route path="/" element={<Homepage />}></Route>
+          <Route path="/" element={<OpenBox />}></Route>
         </Routes>
       </Router>
+      <div className="h-full  bg-custom_gray_1"></div>
     </>
   );
 };

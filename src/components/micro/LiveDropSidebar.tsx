@@ -5,7 +5,7 @@ import Scrollbars from "react-custom-scrollbars-2";
 
 const LiveDropSidebar: React.FC = () => {
   return (
-    <div className="w-[315px] h-[calc(100vh-120px)] bg-custom_black_2 overflow-hidden">
+    <div className="h-[calc(100vh-120px)] w-[315px] overflow-hidden bg-custom_black_2">
       <LiveDropHeader />
       <Scrollbars
         // This will activate auto hide
