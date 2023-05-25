@@ -5,7 +5,10 @@ import Scrollbars from "react-custom-scrollbars-2";
 
 const LiveDropSidebar: React.FC = () => {
   return (
-    <div className="w-[315px] h-[calc(100vh-120px)] bg-custom_black_2 overflow-hidden">
+    <div
+      id="live-drop-sidebar"
+      className="h-full w-80 flex-shrink-0 overflow-y-hidden bg-custom_black_2 xs:hidden 2xl:block"
+    >
       <LiveDropHeader />
       <Scrollbars
         // This will activate auto hide
@@ -15,10 +18,8 @@ const LiveDropSidebar: React.FC = () => {
         // Duration for hide animation in ms.
         autoHideDuration={200}
       >
-        <div className=" flex justify-center">
-          <div className="">
-            <UserList />
-          </div>
+        <div className=" flex flex-col items-center justify-center">
+          <UserList />
         </div>
       </Scrollbars>
     </div>

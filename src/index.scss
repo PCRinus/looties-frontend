@@ -9,8 +9,14 @@ $bgColorTest: #323940;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: none;
 }
 
 body {
   background-color: $bgColor;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
 }

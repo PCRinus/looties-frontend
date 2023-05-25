@@ -7,11 +7,11 @@ interface Props {
 
 export const Filter: React.FC<Props> = ({ filterName, options, handleFilterChange, value }) => {
   return (
-    <div className="flex h-[48px] w-[200px] flex-row items-center justify-center gap-1 rounded-xl bg-[#2C3034] px-[24px] py-[14px]">
+    <div className="flex h-[48px] flex-row items-center justify-center gap-1 whitespace-nowrap rounded-xl bg-[#2C3034] px-5 py-[14px] xs:my-2 xs:w-full 2xl:my-0 2xl:w-auto">
       <span className="text-[#848B8D]">{filterName}</span>
       <select className="bg-[#2C3034] text-[#F03033]" onChange={handleFilterChange}>
         {options.map((option, index) => (
-          <option key={index} value={option} selected={option === value ? true : false}>
+          <option key={index} className={`${value === option ? "text-[#F03033]" : "text-[#848B8D]"}`} value={option}>
             {option}
           </option>
         ))}
