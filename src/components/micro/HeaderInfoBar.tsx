@@ -1,5 +1,4 @@
 import React from "react";
-import "../../styles/micro/HeaderInfoBar.scss";
 import FaceBookIcon from "../../assets/FacebookIcon.svg";
 import TwiterIcon from "../../assets/TwiterIcon.svg";
 import InstagramIcon from "../../assets/InstagramIcon.svg";
