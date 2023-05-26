@@ -1,11 +1,14 @@
 import React from "react";
-import "../../styles/micro/HeaderLogo.scss";
 import LootiesLogo from "../../assets/Looties_wordmark 1.svg";
 
 const HeaderLogo: React.FC = () => {
   return (
-    <div className="logo-box flex h-[120px] items-center">
-      <img className="mx-auto h-[52px] w-[232px]" src={LootiesLogo} alt="Looties logo" />
+    <div className="flex h-full items-center">
+      <img
+        className="mx-auto xs:h-[26px] xs:w-[120px] 2xl:h-[52px] 2xl:w-[232px]"
+        src={LootiesLogo}
+        alt="Looties logo"
+      />
     </div>
   );
 };
