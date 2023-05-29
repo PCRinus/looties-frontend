@@ -10,6 +10,7 @@ $bgColorTest: #323940;
   padding: 0;
   box-sizing: border-box;
   scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -20,3 +21,4 @@ body {
   width: 0;
   background-color: transparent;
 }
+
