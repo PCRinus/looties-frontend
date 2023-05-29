@@ -11,7 +11,7 @@ export const UserBoxBlue: React.FC = () => {
     <div className="mt-4">
       <GradientBorderBoxBlue className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
-        <div className="ml-2flex-col items-center justify-normal">
+        <div className="ml-2 flex-col items-center justify-normal">
           <label className=" block font-sans font-semibold text-custom_white_1">
             {/* {name} */}
             Looties #122

@@ -10,6 +10,7 @@ import LiveDropSidebar from "./components/micro/LiveDropSidebar";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Homepage } from "./components/pages/Homepage";
 import OpenBox from "./components/pages/OpenBox";
+import { Chat } from "./components/macro/Chat";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -21,15 +22,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <Header></Header>
-      <Router>
-        <Routes>
-          <Route path="/" element={<OpenBox />}></Route>
-        </Routes>
-      </Router>
-      <div className="h-full  bg-custom_gray_1"></div>
-    </>
+      <div className="flex">
+        <LiveDropSidebar />
+        <Router>
+          <Routes>
+            <Route path="/" element={<OpenBox />}></Route>
+          </Routes>
+        </Router>
+        <Chat />
+      </div>
+    </div>
   );
 };
 

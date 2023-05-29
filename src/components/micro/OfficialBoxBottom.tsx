@@ -5,7 +5,7 @@ import FastOpeningButton from "./FastOpeningButton";
 
 const OfficialBoxBottom = () => {
   return (
-    <div className="box-gradient flex h-[80px] items-center justify-center">
+    <div className="box-gradient flex h-[80px] w-full items-center justify-center">
       <OpenButton />
       <TryItButton />
       <FastOpeningButton />

@@ -1,3 +1,16 @@
+$start-color: rgba(31, 34, 37, 0);
+$middle-color: rgba(31, 34, 37, 1);
+$end-color: rgba(31, 34, 37, 0);
+
+$start-percent: 10.94%;
+$middle-percent: 51.46%;
+$end-percent: 93.23%;
+
 .box-gradient {
-  background: linear-gradient(90deg, rgba(31, 34, 37, 0) 10.94%, #1f2225 51.46%, rgba(31, 34, 37, 0) 93.23%);
+  background: linear-gradient(
+    90deg,
+    $start-color $start-percent,
+    $middle-color $middle-percent,
+    $end-color $end-percent
+  );
 }
