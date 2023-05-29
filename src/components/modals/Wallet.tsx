@@ -19,7 +19,7 @@ const Wallet = () => {
   const { select, connect } = useWallet();
 
   const connectWallet = async (walletName: WalletName) => {
-    select(walletName);
+    await select(walletName);
     try {
       await connect();
     } catch (error) {

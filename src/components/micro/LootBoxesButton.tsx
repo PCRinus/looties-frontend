@@ -1,5 +1,5 @@
 import React from "react";
-import DropBoxIcon from "../../assets/DropboxIcon.svg";
+import DropBoxIcon from "../../assets/DropBoxIcon.svg";
 const LootBoxesButton: React.FC = () => {
   return (
     <>
