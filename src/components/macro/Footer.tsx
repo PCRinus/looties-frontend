@@ -9,7 +9,12 @@ import MobileMenuIcon from "../../assets/MobileMenuIcon.svg";
 import MobileMenuIconRed from "../../assets/MobileMenuIconRed.svg";
 import { useLocation } from "react-router-dom";
 
-export const Footer: React.FC = () => {
+interface Props {
+  openSidebar: boolean;
+  toggleOpenSidebar: () => void;
+}
+
+export const Footer: React.FC<Props> = ({ openSidebar, toggleOpenSidebar }) => {
   // TODO: use location to display normal/red icons inside footer
   const location = useLocation();
 
@@ -33,8 +38,8 @@ export const Footer: React.FC = () => {
           </button>
         </div>
         <div className="flex w-20 shrink-0 grow flex-row items-center justify-center">
-          <button>
-            <img src={MobileMenuIcon} alt="Mobile menu icon"></img>
+          <button onClick={toggleOpenSidebar}>
+            <img src={openSidebar ? MobileMenuIconRed : MobileMenuIcon} alt="Mobile menu icon"></img>
           </button>
         </div>
       </div>
