@@ -7,7 +7,7 @@ interface Props {
 export const MobileFiltersButton: React.FC<Props> = ({ appliedFiltersCount, openFilters = false, toggleFilters }) => {
   return (
     <button
-      className={`flex h-10 w-[42vw] flex-row items-center justify-center gap-1 justify-self-end rounded-xl 2xl:hidden ${
+      className={`h-10 w-[42vw] flex-row items-center justify-center gap-1 justify-self-end rounded-xl xs:flex 2xl:hidden ${
         openFilters ? "bg-[#F03033] bg-opacity-20" : "bg-[#2C3034]"
       }`}
       onClick={toggleFilters}

@@ -14,6 +14,7 @@ export const LootboxCardsDisplay: React.FC = () => {
   const [sortBy, setSortBy] = useState<string>(SORT_BY_OPTIONS[0]);
   const [appliedFiltersCount, setAppliedFiltersCount] = useState<number>(0);
   const [openFilters, setOpenFilters] = useState<boolean>(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -46,7 +47,17 @@ export const LootboxCardsDisplay: React.FC = () => {
 
       setAppliedFiltersCount(counter);
     };
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setScreenWidth(width);
+    };
+
+    window.addEventListener("resize", handleResize);
     setFiltersCount();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [category, collection, price, sortBy]);
 
   return (
@@ -63,7 +74,7 @@ export const LootboxCardsDisplay: React.FC = () => {
             toggleFilters={handleToggleFilters}
           />
           {/* desktop lootbox filters */}
-          {window.innerWidth > 1536 && (
+          {screenWidth > 1536 && (
             <>
               <Filter
                 filterName="Category"
