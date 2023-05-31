@@ -1,8 +1,15 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const OpenButton = () => {
+interface IProps {
+  className?: string;
+  children?: ReactNode;
+}
+
+const OpenButton: React.FC<IProps> = ({ className, children }) => {
   return (
-    <button className="mr-4 flex h-[44.57px] w-[188px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white">
+    <button
+      className={` rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white ${className}`}
+    >
       Open
     </button>
   );

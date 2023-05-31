@@ -5,7 +5,7 @@ interface INftCanvaProps {
   children?: ReactNode;
   className?: string;
   cardTitle?: string;
-  cardInfo?: string;
+  cardInfo?: string | number;
 }
 
 const NftGradientCanva: React.FC<INftCanvaProps> = ({ children, className, cardTitle, cardInfo }) => {

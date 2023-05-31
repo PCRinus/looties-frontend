@@ -11,6 +11,7 @@ import OfficialBoxBottom from "../micro/OfficialBoxBottom";
 import OfficialBoxSpinner from "../micro/OfficialBoxSpinner";
 import TrophyIcon from "../../assets/Trophy.svg";
 import PrizeCard from "../micro/PrizeCard";
+import NftCardOpen from "../micro/NftCardOpen";
 
 const OpenBox: React.FC = () => {
   return (
@@ -56,17 +57,8 @@ const OpenBox: React.FC = () => {
             <span className="ml-5 font-sans text-[24px] font-bold text-custom_white_1">Recomended Boxes</span>
           </GradientTitleBox>
 
-          <div className="mt-9 flex flex-row flex-wrap items-start justify-center gap-4">
-            {NFC_CARDS_DATA.slice(0, 4).map((nft, index) => (
-              <NftCard
-                key={index}
-                cardTitle={nft.cardTitle}
-                cost={nft.cost}
-                label={nft.label}
-                itemsCount={nft.itemsCount}
-                icon={nft.icon}
-              />
-            ))}
+          <div className="flex flex-row flex-wrap items-start justify-center gap-4">
+            <NftCardOpen />
           </div>
         </Scrollbars>
       </div>
