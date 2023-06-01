@@ -14,7 +14,7 @@ const PrizeCard: React.FC = () => {
             cardInfo={data.cardPercentage}
             className=" flex-col items-center justify-center"
           >
-            {data.cardInfo === "Coins" && (
+            {/* {data.cardInfo === "Coins" && (
               <>
                 <PrizeCardContent value={16.444} />
               </>
@@ -23,7 +23,7 @@ const PrizeCard: React.FC = () => {
               <>
                 <FreeOpenCard />
               </>
-            )}
+            )} */}
           </PrizeCardCanva>
         </div>
       ))}
