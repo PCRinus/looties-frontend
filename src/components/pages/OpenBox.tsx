@@ -15,8 +15,8 @@ import NftCardOpen from "../micro/NftCardOpen";
 
 const OpenBox: React.FC = () => {
   return (
-    <div className="xs:w-screen 2xl:w-[calc(100vw-744px)]">
-      <div className="w-full flex-col justify-center overflow-hidden xs:h-[calc(100vh-80px-64px)] 2xl:h-[calc(100vh-120px)]">
+    <div className="xs:w-screen md:max-2xl:w-[calc(100vw)] 2xl:w-[calc(100vw)]">
+      <div className=" w-full flex-col justify-center overflow-hidden xs:h-[calc(100vh-80px-64px)] md:max-2xl:h-[calc(100vh-120px)] 2xl:h-[calc(100vh-120px)]">
         <Scrollbars
           // This will activate auto hide
           autoHide
@@ -25,11 +25,11 @@ const OpenBox: React.FC = () => {
           // Duration for hide animation in ms.
           autoHideDuration={200}
         >
-          <GradientTitleBox className="flex xs:mt-[32px] xs:!h-[40px] 2xl:mt-[52px] 2xl:!h-12">
+          <GradientTitleBox className="flex xs:mt-[32px] xs:!h-[40px] md:max-2xl:mt-[52px] md:max-2xl:!h-12 2xl:mt-[52px] 2xl:!h-12">
             <OfficialBoxHeader />
           </GradientTitleBox>
 
-          <div className="flex items-center justify-center xs:my-[32px] 2xl:my-9">
+          <div className="flex items-center justify-center xs:my-[32px] md:max-2xl:my-9 2xl:my-9">
             <OfficialBoxSpinner />
           </div>
 
@@ -37,27 +37,39 @@ const OpenBox: React.FC = () => {
             <OfficialBoxBottom />
           </GradientTitleBox>
 
-          <h1 className=" font-sans font-bold text-custom_white_1 xs:mb-[26px] xs:ml-6 xs:mt-12 xs:text-[20px] 2xl:mb-[36px] 2xl:ml-[52px] 2xl:mt-[52px] 2xl:text-[24px]">
+          <h1 className=" font-sans font-bold text-custom_white_1 xs:mb-[26px] xs:ml-6 xs:mt-12 xs:text-[20px] md:max-2xl:mb-[36px] md:max-2xl:ml-[52px] md:max-2xl:mt-[52px] md:max-2xl:text-2xl 2xl:mb-[36px] 2xl:ml-[52px] 2xl:mt-[52px] 2xl:text-2xl">
             NFT’S lootbox contents
           </h1>
-          {/*  mobile done |*/}
-          <div className="flex flex-row flex-wrap items-start justify-start xs:ml-5 xs:gap-4 2xl:ml-[54px] 2xl:gap-4">
+
+          <div className=" justify- flex flex-row flex-wrap items-start gap-4 xs:ml-5 xs:gap-4 md:max-2xl:ml-[36px] md:max-2xl:gap-4 2xl:ml-[36px] 2xl:gap-4">
             <NFTPriceCard />
-            {/* <PrizeCard /> */}
+            <PrizeCard />
           </div>
 
-          <GradientTitleBox className="my-9 flex items-center justify-center">
-            <img src={FireIcon} alt="Img-svg"></img>
-            <span className="ml-5 font-sans text-[24px] font-bold text-custom_white_1">Last 24 hours top NFT's</span>
+          <GradientTitleBox className="my-9 flex items-center justify-center xs:h-[68px] md:max-2xl:h-[80px]  2xl:h-[80px]">
+            <img
+              src={FireIcon}
+              alt="Img-svg"
+              className="xs:h-[22px] xs:w-[20px] md:max-2xl:h-[26.35px] md:max-2xl:w-6 2xl:h-[26.35px] 2xl:w-6"
+            ></img>
+            <span className="font-sans font-bold text-custom_white_1 xs:ml-3 xs:text-xl md:max-2xl:ml-5 md:max-2xl:text-2xl 2xl:ml-5 2xl:text-2xl">
+              Last 24 hours top NFT's
+            </span>
           </GradientTitleBox>
 
           <div className="flex flex-row flex-wrap items-start justify-center gap-4">
             <NFTPriceCard />
           </div>
 
-          <GradientTitleBox className="my-9 flex items-center justify-center">
-            <img src={TrophyIcon} alt="Img-svg"></img>
-            <span className="ml-5 font-sans text-[24px] font-bold text-custom_white_1">Recomended Boxes</span>
+          <GradientTitleBox className="my-9 flex items-center justify-center xs:h-[68px] md:max-2xl:h-[80px] 2xl:h-[80px]">
+            <img
+              src={TrophyIcon}
+              alt="Img-svg"
+              className="xs:h-[22px] xs:w-[20px] md:max-2xl:h-[26.35px] md:max-2xl:w-6 2xl:h-[26.35px] 2xl:w-6"
+            ></img>
+            <span className="font-sans font-bold text-custom_white_1 xs:ml-3 xs:text-xl md:max-2xl:ml-5 md:max-2xl:text-2xl 2xl:ml-5 2xl:text-2xl">
+              Recomended Boxes
+            </span>
           </GradientTitleBox>
 
           <div className="flex flex-row flex-wrap items-start justify-center gap-4">

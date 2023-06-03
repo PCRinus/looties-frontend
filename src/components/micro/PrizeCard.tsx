@@ -8,13 +8,13 @@ const PrizeCard: React.FC = () => {
   return (
     <>
       {cardData.slice(0, 3).map((data: ICardData, index: number) => (
-        <div className="mb-3" key={index}>
+        <div className="" key={index}>
           <PrizeCardCanva
             cardTitle={data.cardInfo}
             cardInfo={data.cardPercentage}
             className=" flex-col items-center justify-center"
           >
-            {/* {data.cardInfo === "Coins" && (
+            {data.cardInfo === "Coins" && (
               <>
                 <PrizeCardContent value={16.444} />
               </>
@@ -23,7 +23,7 @@ const PrizeCard: React.FC = () => {
               <>
                 <FreeOpenCard />
               </>
-            )} */}
+            )}
           </PrizeCardCanva>
         </div>
       ))}

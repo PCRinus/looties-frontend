@@ -9,7 +9,7 @@ const NFTPriceCard = () => {
     <>
       {cardData.slice(0, 4).map((data: ICardData, index: number) => (
         <NftGradientCanva key={index} cardTitle={data.cardTitle} cardInfo={data.cardInfo}>
-          <div className="mx-2 mt-2 2xl:mx-3 2xl:mt-3">
+          <div className="mx-2 mt-2 md:max-2xl:mx-3 md:max-2xl:mt-3 2xl:mx-3 2xl:mt-3">
             <NftCardContent
               priceLeft={data.priceLeft}
               price={data.price}

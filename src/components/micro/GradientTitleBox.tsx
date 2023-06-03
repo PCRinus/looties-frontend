@@ -6,7 +6,7 @@ interface IBoxProps {
 }
 
 const GradientTitleBox: React.FC<IBoxProps> = ({ children, className }) => {
-  return <div className={`box-gradient flex h-[80px] items-center justify-center ${className}`}>{children}</div>;
+  return <div className={`box-gradient flex items-center justify-center ${className}`}>{children}</div>;
 };
 
 export default GradientTitleBox;
