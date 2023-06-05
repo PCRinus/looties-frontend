@@ -1,47 +1,25 @@
 import React, { useState } from "react";
 import GradientTitleBox from "../micro/GradientTitleBox";
-import { NftCard } from "../micro/NftCard";
-import { NFC_CARDS_DATA } from "../../mocks/nftsMocks";
-import NFTPriceCard from "../micro/NFTPriceCard";
-import Scrollbars from "react-custom-scrollbars-2";
-import FireIcon from "../../assets/FireIcon.svg";
+import NftCardOpen from "../micro/NftCardOpen";
+import TrophyIcon from "../../assets/Trophy.svg";
 
 const RecommendedBoxes = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
   return (
-    <div className="h-[calc(100vh-120px)] w-full flex-col justify-center overflow-hidden ">
-      <Scrollbars
-        // This will activate auto hide
-        autoHide
-        // Hide delay in ms
-        autoHideTimeout={1000}
-        // Duration for hide animation in ms.
-        autoHideDuration={200}
-      >
-        <GradientTitleBox className="my-9 flex items-center justify-center">
-          <img src={FireIcon} alt="Img-svg"></img>
-          <span className="ml-5 font-sans text-[24px] font-bold text-custom_white_1">Last 24 hours top NFT's</span>
-        </GradientTitleBox>
-        <div className=" flex items-start justify-center">
-          <NFTPriceCard />
-        </div>
-
-        {/* <div className="mt-9 flex flex-row flex-wrap items-start justify-center gap-4">
-          {NFC_CARDS_DATA.filter((nft) => nft.cardTitle.toLowerCase().includes(searchValue.toLowerCase()))
-            .slice(0, 4)
-            .map((nft, index) => (
-              <NftCard
-                key={index}
-                cardTitle={nft.cardTitle}
-                cost={nft.cost}
-                label={nft.label}
-                itemsCount={nft.itemsCount}
-                icon={nft.icon}
-              />
-            ))}
-        </div> */}
-      </Scrollbars>
-    </div>
+    <>
+      <GradientTitleBox className="my-9 flex justify-center xs:h-[68px] md:max-2xl:h-[80px] 2xl:h-[80px]">
+        <img
+          src={TrophyIcon}
+          alt="Img-svg"
+          className="xs:h-[22px] xs:w-[20px] md:max-2xl:h-[26.35px] md:max-2xl:w-6 2xl:h-[26.35px] 2xl:w-6"
+        ></img>
+        <span className="font-sans font-bold text-custom_white_1 xs:ml-3 xs:text-xl md:max-2xl:ml-5 md:max-2xl:text-2xl 2xl:ml-5 2xl:text-2xl">
+          Recomended Boxes
+        </span>
+      </GradientTitleBox>
+      <div className="flex flex-row flex-wrap justify-normal gap-4 ">
+        <NftCardOpen />
+      </div>
+    </>
   );
 };
 

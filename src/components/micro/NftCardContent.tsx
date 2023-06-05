@@ -11,7 +11,7 @@ interface INftCardContentProps {
 
 const NftCardContent: React.FC<INftCardContentProps> = ({ priceLeft, price, priceRight, cardName, icon }) => {
   return (
-    <div className="flex-column items-center justify-center">
+    <div className="card_inner flex-column items-center justify-center">
       <img
         src={icon}
         alt="nft-icon-svg"

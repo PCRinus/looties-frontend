@@ -11,6 +11,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Homepage } from "./components/pages/Homepage";
 import OpenBox from "./components/pages/OpenBox";
 import { Chat } from "./components/macro/Chat";
+import OfficialBox from "./components/macro/OfficialBox";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -23,9 +24,9 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {/* <Header></Header> */}
+      <Header></Header>
       <div className="flex">
-        {/* <LiveDropSidebar /> */}
+        <LiveDropSidebar />
         <Router>
           <Routes>
             <Route path="/" element={<OpenBox />}></Route>

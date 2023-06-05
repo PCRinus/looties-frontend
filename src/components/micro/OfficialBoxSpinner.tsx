@@ -7,9 +7,9 @@ import "../../styles/micro/SpinnerNft.scss";
 
 const OfficialBoxSpinner = () => {
   return (
-    <div className="relative w-11/12 rounded-xl border-solid border-[#2C3034] xs:h-[180px] xs:border-2 md:max-2xl:h-[268px] md:max-2xl:border-4 2xl:h-[268px] 2xl:border-4 3xl:w-[calc(96%)]">
+    <div className="relative w-full rounded-xl border-solid border-[#2C3034] xs:h-[180px] xs:border-2 md:max-2xl:h-[268px] md:max-2xl:border-4 2xl:h-[268px] 2xl:border-4">
       <div className="horizontal-fade flex h-full md:max-2xl:px-10 2xl:px-10">
-        {nftData.slice(0, 3).map((data: INftProps, index: number) => (
+        {nftData.slice(0, 5).map((data: INftProps, index: number) => (
           <SpinnerNft key={index} cardTitle={data.cardTitle} icon={data.icon} coins={data.coins} rarity={data.rarity} />
         ))}
       </div>
