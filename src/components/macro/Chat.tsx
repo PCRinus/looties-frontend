@@ -1,3 +1,3 @@
 export const Chat: React.FC = () => {
-  return <div className="h-[calc(100vh-120px)] w-[429px] bg-[#1C1E22]"></div>;
+  return <div className="h-full w-[429px] flex-shrink-0 bg-[#1C1E22] xs:hidden 2xl:block"></div>;
 };

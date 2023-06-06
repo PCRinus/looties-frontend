@@ -9,8 +9,23 @@ $bgColorTest: #414a54;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background-color: $bgColor;
 }
+
+#root{
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
+}
+

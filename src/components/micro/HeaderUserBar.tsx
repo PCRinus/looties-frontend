@@ -6,8 +6,13 @@ import HomeButton from "./HomeButton";
 import LootBoxesButton from "./LootBoxesButton";
 import ClassicButton from "./ClassicButton";
 import BalanceView from "./BalanceView";
+import { ConnectWalletButton } from "./ConnectWalletButton";
 
-const HeaderUserBar: React.FC = () => {
+interface Props {
+  isUserLoggedIn: boolean;
+}
+
+const HeaderUserBar: React.FC<Props> = ({ isUserLoggedIn = false }) => {
   return (
     <div className="user-box top-[40px] flex h-[80px] items-center justify-between">
       <div className="flex items-center justify-start">
@@ -24,19 +29,24 @@ const HeaderUserBar: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-start">
-        <div>
-          <BalanceView />
-        </div>
+      {isUserLoggedIn ? (
+        <div className="flex items-center justify-start">
+          <div>
+            <BalanceView />
+          </div>
 
-        <div className="ml-4">
-          <UserInfo name={"Solanagamer11"} level={10} />
+          <div className="ml-4">
+            <UserInfo name={"Solanagamer11"} level={10} />
+          </div>
+          <div className="ml-4 mr-8">
+            <LogoutButton />
+          </div>
         </div>
-
-        <div className="ml-4 mr-8">
-          <LogoutButton />
+      ) : (
+        <div className="mr-8">
+          <ConnectWalletButton />
         </div>
-      </div>
+      )}
     </div>
   );
 };
