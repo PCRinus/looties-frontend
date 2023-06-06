@@ -23,10 +23,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <Header></Header>
+    <>
+      {/* <Header></Header> */}
       <div className="flex">
-        <LiveDropSidebar />
+        {/* <LiveDropSidebar /> */}
         <Router>
           <Routes>
             <Route path="/" element={<OpenBox />}></Route>
@@ -34,7 +34,7 @@ const App: React.FC = () => {
         </Router>
         {/* <Chat /> */}
       </div>
-    </div>
+    </>
   );
 };
 

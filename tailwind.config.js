@@ -20,6 +20,8 @@ module.exports = {
     },
     screens: {
       xs: "0px",
+      mobileL: "400px",
+
       ...defaultTheme.screens,
       "3xl": "2560px",
     },

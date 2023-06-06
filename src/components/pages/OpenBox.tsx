@@ -7,8 +7,8 @@ import LastTopNFTs from "../macro/LastTopNFTs";
 
 const OpenBox: React.FC = () => {
   return (
-    <div className="xs:w-screen md:max-2xl:w-[calc(100vw-744px)] 2xl:w-[calc(100vw-744px)]">
-      <div className=" w-full flex-col justify-center overflow-hidden xs:h-[calc(100vh-80px-64px)] md:max-2xl:h-[calc(100vh-120px)] 2xl:h-[calc(100vh-120px)]">
+    <div className="xs:w-screen md:max-2xl:w-[calc(100vw-744px)] 2xl:w-[calc(100vw-744px)] 3xl:w-[calc(100vw-744px)]">
+      <div className=" flex w-full flex-col justify-center overflow-hidden xs:h-[calc(100vh-80px-64px)] md:max-2xl:h-[calc(100vh-120px)] 2xl:h-[calc(100vh-120px)]">
         <Scrollbars
           // This will activate auto hide
           autoHide
@@ -17,7 +17,7 @@ const OpenBox: React.FC = () => {
           // Duration for hide animation in ms.
           autoHideDuration={200}
         >
-          <div className="xs:p-4 xs:pt-8 md:max-2xl:p-14 2xl:p-14 ">
+          <div className="xs:p-4 xs:pt-8 md:max-2xl:p-14 2xl:p-14">
             <OfficialBox />
           </div>
           <div className="xs:p-4 md:max-2xl:mx-9 2xl:mx-9 ">

@@ -16,7 +16,7 @@ const RecommendedBoxes = () => {
           Recomended Boxes
         </span>
       </GradientTitleBox>
-      <div className="flex flex-row flex-wrap justify-normal gap-4 ">
+      <div className="flex flex-row flex-wrap justify-normal xs:gap-[1.3rem] 2xl:gap-4 3xl:gap-[2.2rem]">
         <NftCardOpen />
       </div>
     </>
