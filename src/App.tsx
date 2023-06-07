@@ -8,6 +8,7 @@ import { Modal } from "./components/modals/Modal";
 import { useSelector } from "react-redux";
 import { Footer } from "./components/macro/Footer";
 import { MobileSidebar } from "./components/macro/MobileSideBar";
+import OpenBox from "./pages/OpenBox";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -31,7 +32,7 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<OpenBox />} />
         </Routes>
         <MobileSidebar isOpen={openSidebar} />
         <Footer openSidebar={openSidebar} toggleOpenSidebar={toggleOpenSidebar} />
