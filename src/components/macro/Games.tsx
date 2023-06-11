@@ -4,13 +4,14 @@ import LootboxesImg from "../../assets/LootboxexImg.svg";
 import ClassicImg from "../../assets/ClassicImg.svg";
 import WalletIcon from "../../assets/Wallet.svg";
 import dropbox from "../../assets/DropBoxIcon.svg";
-
+import redStar from "../../assets/StarRed.svg";
+import DropBoxRed from "../../assets/DropboxIconRed.svg";
 const Games: React.FC = () => {
   return (
     <div className="flex xs:flex-col xs:justify-center 2xl:flex-row 2xl:gap-[52px]">
       <div className="">
         <div className="flex gap-4">
-          <img src={dropbox} alt="img-svg"></img>
+          <img src={DropBoxRed} alt="img-svg"></img>
           <span className="font-sans text-2xl font-bold text-custom_white_1">Lootboxes</span>
         </div>
         <div className="flex flex-col">
@@ -27,8 +28,8 @@ const Games: React.FC = () => {
       </div>
       <div className="xs:mt-14 2xl:mt-0">
         <div className="flex gap-4">
-          <img src={dropbox} alt="img-svg"></img>
-          <span className="font-sans text-2xl font-bold text-custom_white_1">Lootboxes</span>
+          <img src={redStar} alt="img-svg"></img>
+          <span className="font-sans text-2xl font-bold text-custom_white_1">Classic</span>
         </div>
         <div className="flex flex-col">
           <img src={ClassicImg} alt="img-svg" className="xs:mt-[24px] 2xl:mt-[33px]" />
