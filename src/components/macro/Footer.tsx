@@ -8,15 +8,15 @@ import StarRed from "../../assets/StarRed.svg";
 import MobileMenuIcon from "../../assets/MobileMenuIcon.svg";
 import MobileMenuIconRed from "../../assets/MobileMenuIconRed.svg";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxEvents } from "../../reducers/events";
 
-interface Props {
-  openSidebar: boolean;
-  toggleOpenSidebar: () => void;
-}
-
-export const Footer: React.FC<Props> = ({ openSidebar, toggleOpenSidebar }) => {
+export const Footer: React.FC = () => {
   // TODO: use location to display normal/red icons inside footer
   const location = useLocation();
+  const dispatch = useDispatch();
+  const openChat = useSelector((state: any) => state.ui.openChat);
+  const openSidebar = useSelector((state: any) => state.ui.openSidebar);
 
   return (
     <div
@@ -25,8 +25,8 @@ export const Footer: React.FC<Props> = ({ openSidebar, toggleOpenSidebar }) => {
     >
       <div className="flex h-full flex-row items-center justify-center ">
         <div className="flex w-20 shrink-0 grow  flex-row items-center justify-center">
-          <button>
-            <img src={ChatIcon} alt="Union icon"></img>
+          <button onClick={() => dispatch({ type: ReduxEvents.ToggleChat })}>
+            <img src={openChat ? ChatIconRed : ChatIcon} alt="Union icon"></img>
           </button>
         </div>
         <div className="flex w-[266px]  flex-row items-center justify-center gap-12">
@@ -38,7 +38,7 @@ export const Footer: React.FC<Props> = ({ openSidebar, toggleOpenSidebar }) => {
           </button>
         </div>
         <div className="flex w-20 shrink-0 grow flex-row items-center justify-center">
-          <button onClick={toggleOpenSidebar}>
+          <button onClick={() => dispatch({ type: ReduxEvents.ToggleSidebar })}>
             <img src={openSidebar ? MobileMenuIconRed : MobileMenuIcon} alt="Mobile menu icon"></img>
           </button>
         </div>

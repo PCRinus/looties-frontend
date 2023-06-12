@@ -1,14 +1,7 @@
 import WelcomeBox from "../components/macro/WelcomeBox";
 import { Chat } from "../components/macro/Chat";
 import LiveDropSidebar from "../components/micro/LiveDropSidebar";
-
-import React from "react";
 import Scrollbars from "react-custom-scrollbars-2";
-import OfficialBox from "../components/macro/OfficialBox";
-import NFTLootBoxContent from "../components/macro/NFTLootBoxContent";
-import LastTopNFTs from "../components/macro/LastTopNFTs";
-import RecommendedBoxes from "../components/macro/RecommendedBoxes";
-import OfficialBoxSpinner from "../components/micro/OfficialBoxSpinner";
 import Games from "../components/macro/Games";
 import PaymentMethod from "../components/micro/PaymentMethod";
 import HomepageFooter from "../components/macro/HomepageFooter";

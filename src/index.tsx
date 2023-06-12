@@ -12,9 +12,7 @@ const store = ReduxStore.getInstance().currentStore;
 root.render(
   <Provider store={store}>
     <WalletsProvider>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </WalletsProvider>
   </Provider>
 );
