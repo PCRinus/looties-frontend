@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { Footer } from "./components/macro/Footer";
 import { MobileSidebar } from "./components/macro/MobileSideBar";
 import OpenBox from "./pages/OpenBox";
-import Homepage from "./pages/HomePage";
+import Homepage from "./pages/Homepage";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
