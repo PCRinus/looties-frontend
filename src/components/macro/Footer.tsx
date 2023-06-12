@@ -20,7 +20,7 @@ export const Footer: React.FC<Props> = ({ openSidebar, toggleOpenSidebar }) => {
 
   return (
     <div
-      className="bottom-0 h-16 w-screen xs:absolute 2xl:hidden"
+      className="bottom-0 h-16 w-screen border-t border-custom_gray_1 xs:absolute 2xl:hidden"
       style={{ background: "linear-gradient(0deg, #1f2225 0%, rgba(31, 34, 37, 0) 100%)" }}
     >
       <div className="flex h-full flex-row items-center justify-center ">

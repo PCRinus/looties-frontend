@@ -9,7 +9,7 @@ const NFTLootBoxContent = () => {
         NFT’S lootbox contents
       </span>
       <div
-        className="flex flex-row flex-wrap justify-normal xs:mt-[26px] xs:gap-[1.3rem] md:max-2xl:mb-[36px] 2xl:mt-[36px] 2xl:gap-4 3xl:gap-[2.2rem]
+        className="3xl:gap-[2.2rem] flex flex-row flex-wrap justify-normal xs:mt-[26px] xs:gap-[1.3rem] md:max-2xl:mb-[36px] 2xl:mt-[36px] 2xl:gap-4
       "
       >
         <NFTPriceCard />
