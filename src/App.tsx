@@ -33,7 +33,7 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<OpenBox />} />
         </Routes>
         <MobileSidebar isOpen={openSidebar} />
         <Footer openSidebar={openSidebar} toggleOpenSidebar={toggleOpenSidebar} />
