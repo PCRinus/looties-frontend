@@ -8,7 +8,7 @@ import GradientBorderBoxPurple from "./GradientBorderBoxPurple";
 
 export const UserBoxBlue: React.FC = () => {
   return (
-    <div>
+    <div className="mt-4">
       <GradientBorderBoxBlue className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
         <div className="ml-2 flex-col items-center justify-normal">
@@ -32,7 +32,7 @@ export const UserBoxBlue: React.FC = () => {
 
 export const UserBoxRed: React.FC = () => {
   return (
-    <div>
+    <div className="mt-4">
       <GradientBorderBoxRed className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
         <div className="ml-2 flex-col items-center justify-normal">
@@ -56,7 +56,7 @@ export const UserBoxRed: React.FC = () => {
 
 export const UserBoxPurple: React.FC = () => {
   return (
-    <div>
+    <div className="mt-4">
       <GradientBorderBoxPurple className="relative flex">
         <img src={UserIcon} alt="user-icon-svg" className="ml-2"></img>
         <div className="ml-2 flex-col items-center justify-normal">
