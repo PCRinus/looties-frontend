@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import OfficialBox from "../components/macro/OfficialBox";
 import NFTLootBoxContent from "../components/macro/NFTLootBoxContent";

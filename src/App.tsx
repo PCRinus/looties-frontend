@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./components/macro/Header";
 import WebFont from "webfontloader";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { LootBox } from "./pages/LootBox";
+import { LootboxesPage } from "./pages/LootboxesPage";
 import { AnimatePresence } from "framer-motion";
 import { Modal } from "./components/modals/Modal";
 import { useSelector } from "react-redux";
@@ -13,11 +13,6 @@ import Homepage from "./pages/Homepage";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
-  const [openSidebar, setOpenSidebar] = useState<boolean>(false);
-
-  const toggleOpenSidebar = () => {
-    setOpenSidebar(!openSidebar);
-  };
 
   useEffect(() => {
     WebFont.load({
@@ -33,10 +28,16 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<OpenBox />} />
+          <Route path="/lootboxes" element={<LootboxesPage />} />
         </Routes>
-        <MobileSidebar isOpen={openSidebar} />
-        <Footer openSidebar={openSidebar} toggleOpenSidebar={toggleOpenSidebar} />
+        <Routes>
+          <Route path="/openbox" element={<OpenBox />} />
+        </Routes>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+        </Routes>
+        <MobileSidebar />
+        <Footer />
       </Router>
     </>
   );
