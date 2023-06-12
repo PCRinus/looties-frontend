@@ -1,6 +1,6 @@
 import userIcon from "../assets/UserIcon.svg";
 
-interface NFTCard {
+export interface INFTCard {
   cardTitle: string;
   itemsCount: string | number;
   label: string;
@@ -8,7 +8,7 @@ interface NFTCard {
   icon: string;
 }
 
-export const NFC_CARDS_DATA: NFTCard[] = [
+export const NFC_CARDS_DATA: INFTCard[] = [
   {
     cardTitle: "Title 1",
     itemsCount: "1",
