@@ -3,6 +3,7 @@ import { Wallet } from "./Wallet";
 import { WithdrawNft } from "./WithdrawNft";
 import { LogOut } from "./LogOut";
 import { AddCoins } from "./AddCoins";
+import { ProvablyFair } from "./ProvablyFair";
 import { WithdrawCoins } from "./WithdrawCoins";
 import "../../styles/macro/Modal.scss";
 import { ReduxEvents } from "../../reducers/events";
@@ -17,6 +18,7 @@ const Modals: {
   AddCoins,
   WithdrawCoins,
   LogOut,
+  ProvablyFair,
 };
 
 interface ModalProps {
