@@ -5,8 +5,10 @@ import UserInfo from "./UserInfo";
 import HomeButton from "./HomeButton";
 import LootBoxesButton from "./LootBoxesButton";
 import ClassicButton from "./ClassicButton";
+import ProvablyFairButton from "./ProvablyFairButton";
 import BalanceView from "./BalanceView";
 import { ConnectWalletButton } from "./ConnectWalletButton";
+
 
 interface Props {
   isUserLoggedIn: boolean;
@@ -26,6 +28,10 @@ const HeaderUserBar: React.FC<Props> = ({ isUserLoggedIn = false }) => {
 
         <div className="ml-4">
           <ClassicButton />
+        </div>
+
+        <div className="ml-4">
+          <ProvablyFairButton/>
         </div>
       </div>
 
