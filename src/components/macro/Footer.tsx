@@ -2,21 +2,24 @@ import React from "react";
 import ChatIcon from "../../assets/ChatIcon.svg";
 import ChatIconRed from "../../assets/ChatIconRed.svg";
 import DropBoxIcon from "../../assets/DropBoxIcon.svg";
-import DropBoxIconRed from "../../assets/DropBoxIcon.svg";
+import DropBoxIconRed from "../../assets/DropboxIconRed.svg";
 import Star from "../../assets/Star.svg";
 import StarRed from "../../assets/StarRed.svg";
 import MobileMenuIcon from "../../assets/MobileMenuIcon.svg";
 import MobileMenuIconRed from "../../assets/MobileMenuIconRed.svg";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxEvents } from "../../reducers/events";
+import HomeIcon from "../../assets/HomeIcon.svg";
+import HomeIconRed from "../../assets/HomeIconRed.svg";
 
 export const Footer: React.FC = () => {
-  // TODO: use location to display normal/red icons inside footer
   const location = useLocation();
   const dispatch = useDispatch();
   const openChat = useSelector((state: any) => state.ui.openChat);
   const openSidebar = useSelector((state: any) => state.ui.openSidebar);
+
+  console.log(location.pathname);
 
   return (
     <div
@@ -26,20 +29,41 @@ export const Footer: React.FC = () => {
       <div className="flex h-full flex-row items-center justify-center ">
         <div className="flex w-20 shrink-0 grow  flex-row items-center justify-center">
           <button onClick={() => dispatch({ type: ReduxEvents.ToggleChat })}>
-            <img src={openChat ? ChatIconRed : ChatIcon} alt="Union icon"></img>
+            <img className="h-7 w-7" src={openChat ? ChatIconRed : ChatIcon} alt="Chat"></img>
           </button>
         </div>
-        <div className="flex w-[266px]  flex-row items-center justify-center gap-12">
-          <button>
-            <img src={DropBoxIcon} alt="DropBox icon"></img>
-          </button>
-          <button>
-            <img src={Star} alt="Star icon"></img>
-          </button>
+        <div className="flex w-[266px]   flex-row items-center justify-center gap-9">
+          <Link to="/lootboxes">
+            <button>
+              <img
+                className="h-7 w-7"
+                src={location.pathname === "/lootboxes" && !openChat ? DropBoxIconRed : DropBoxIcon}
+                alt="DropBox "
+              ></img>
+            </button>
+          </Link>
+          <Link to="/">
+            <button>
+              <img
+                className="h-7 w-7"
+                src={location.pathname === "/" && !openChat ? HomeIconRed : HomeIcon}
+                alt="Home"
+              ></img>
+            </button>
+          </Link>
+          <Link to="/classic">
+            <button>
+              <img
+                className="h-7 w-7"
+                src={location.pathname === "/classic" && !openChat ? StarRed : Star}
+                alt="Classic"
+              ></img>
+            </button>
+          </Link>
         </div>
         <div className="flex w-20 shrink-0 grow flex-row items-center justify-center">
           <button onClick={() => dispatch({ type: ReduxEvents.ToggleSidebar })}>
-            <img src={openSidebar ? MobileMenuIconRed : MobileMenuIcon} alt="Mobile menu icon"></img>
+            <img className="h-7 w-7" src={openSidebar ? MobileMenuIconRed : MobileMenuIcon} alt="Open sidebar"></img>
           </button>
         </div>
       </div>

@@ -1,5 +1,0 @@
-Modals are components that appear on top of the main content to provide focused user interactions or display additional information. They are often used for tasks like user authentication, form submissions, or displaying detailed views. Examples of modals could include:
-
-LoginModal: A modal component for user authentication or login.
-ConfirmationModal: A modal component for confirming an action.
-ImageModal: A modal component for displaying a larger version of an image.

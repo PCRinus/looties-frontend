@@ -5,6 +5,7 @@ import HomeButton from "../micro/HomeButton";
 import { SidebarInfobar } from "../micro/SidebarInfobar";
 import { MobileSocialButtons } from "../micro/MobileSocialButtons";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const MobileSidebar: FC = () => {
   const openSidebar = useSelector((state: any) => state.ui.openSidebar);
@@ -17,9 +18,15 @@ export const MobileSidebar: FC = () => {
     >
       <div className={`${openSidebar ? "flex" : "hidden"} mt-8 h-full flex-col items-center justify-start`}>
         <div className="flex w-3/4 flex-col items-end justify-start gap-3">
-          <HomeButton />
-          <LootBoxesButton />
-          <ClassicButton />
+          <Link to="/">
+            <HomeButton />
+          </Link>
+          <Link to="/lootboxes">
+            <LootBoxesButton />
+          </Link>
+          <Link to="/classic">
+            <ClassicButton />
+          </Link>
         </div>
         <hr className="my-8 block h-px w-3/4 border-0 bg-[#34373A]" />
         <SidebarInfobar />

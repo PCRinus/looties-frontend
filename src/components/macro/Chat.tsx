@@ -133,6 +133,10 @@ export const Chat: React.FC = () => {
       setScrollApplied(false);
     });
     setChatSocket(socket);
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   //only run once to scroll chat-body to bottom

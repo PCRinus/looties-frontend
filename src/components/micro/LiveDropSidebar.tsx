@@ -10,7 +10,6 @@ const LiveDropSidebar: React.FC = () => {
   const [itemsOrder, setItemsOrder] = useState<string>("top");
 
   const handleItemsOrder = (orderBy: string) => {
-    console.log(orderBy);
     setItemsOrder(orderBy);
   };
   const sortByPriceFn = (a: any, b: any) => {
@@ -42,6 +41,10 @@ const LiveDropSidebar: React.FC = () => {
     socket.on("itemDropped", (item) => {
       setItemsDropped((prevItemsDropped: any) => [...prevItemsDropped, item]);
     });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (
