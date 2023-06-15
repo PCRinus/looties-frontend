@@ -30,14 +30,8 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
-        </Routes>
-        <Routes>
           <Route path="/lootboxes" element={<LootboxesPage />} />
-        </Routes>
-        <Routes>
           <Route path="/openbox" element={<OpenBox />} />
-        </Routes>
-        <Routes>
           <Route path="/" element={<Homepage />} />
         </Routes>
         <MobileSidebar />
