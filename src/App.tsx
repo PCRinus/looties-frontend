@@ -10,6 +10,7 @@ import { Footer } from "./components/macro/Footer";
 import { MobileSidebar } from "./components/macro/MobileSideBar";
 import OpenBox from "./pages/OpenBox";
 import Homepage from "./pages/Homepage";
+import Profile from "./pages/Profile";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -33,7 +34,7 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<OpenBox />} />
+          <Route path="/" element={<Profile />} />
         </Routes>
         <MobileSidebar isOpen={openSidebar} />
         <Footer openSidebar={openSidebar} toggleOpenSidebar={toggleOpenSidebar} />
