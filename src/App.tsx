@@ -10,6 +10,7 @@ import { Footer } from "./components/macro/Footer";
 import { MobileSidebar } from "./components/macro/MobileSideBar";
 import OpenBox from "./pages/OpenBox";
 import Homepage from "./pages/Homepage";
+import { GameResponsiblyPage } from "./pages/GameResponsiblyPage";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -28,12 +29,9 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
+          <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
           <Route path="/lootboxes" element={<LootboxesPage />} />
-        </Routes>
-        <Routes>
           <Route path="/openbox" element={<OpenBox />} />
-        </Routes>
-        <Routes>
           <Route path="/" element={<Homepage />} />
         </Routes>
         <MobileSidebar />

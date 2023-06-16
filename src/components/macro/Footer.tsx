@@ -19,8 +19,6 @@ export const Footer: React.FC = () => {
   const openChat = useSelector((state: any) => state.ui.openChat);
   const openSidebar = useSelector((state: any) => state.ui.openSidebar);
 
-  console.log(location.pathname);
-
   return (
     <div
       className="bottom-0 h-16 w-screen border-t border-custom_gray_1 xs:absolute 2xl:hidden"
