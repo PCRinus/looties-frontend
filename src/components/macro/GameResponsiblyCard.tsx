@@ -27,26 +27,37 @@ export const GameResponsiblyCard: FC = () => {
 
   const handleSelfExclude = () => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/game-responsibly`, {
-        userId: userIdMock,
-        timePeriodDays: selectedDaysOption,
+      .post(
+        `${process.env.REACT_APP_API_URL}/game-responsibly`,
+        JSON.stringify({
+          userId: userIdMock,
+          timePeriodDays: selectedDaysOption,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        checkExcludedUser();
       })
-      .then((res) => console.log(res))
       .catch((err) => console.log("Self exclude error: ", err));
   };
 
-  useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}/game-responsibly?userId=${userIdMock}`;
-    console.log(url);
+  const checkExcludedUser = () => {
     axios
-      .get(url)
+      .get(`${process.env.REACT_APP_API_URL}/game-responsibly/${userIdMock}`)
       .then((res) => {
-        console.log(res);
-        // setUserSelfExcluded(res);
+        setUserSelfExcluded(res.data);
       })
       .catch((err) => {
         console.log("Error while checking user exclusion: ", err);
       });
+  };
+
+  useEffect(() => {
+    checkExcludedUser();
   }, []);
 
   return (
