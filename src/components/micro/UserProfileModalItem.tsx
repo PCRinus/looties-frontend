@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { ModalItemType } from "../modals/UserProfile";
 import TOTAL_GAME from "../../assets/UserProfileModal/TOTAL_GAME.svg";
 import GAMES_WON from "../../assets/UserProfileModal/GAMES_WON.svg";
