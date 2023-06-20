@@ -54,7 +54,7 @@ const UserProfile: React.FC = () => {
         </div>
       </div>
       {/* content div */}
-      <div className={`flex flex-col px-[32px] text-[14px] text-[#848B8D] `}>
+      <div className={`flex max-h-full flex-col gap-4 overflow-y-scroll px-[32px] text-[14px] text-[#848B8D] `}>
         <div className="flex flex-col gap-6 rounded-xl border border-solid border-[#2C3034] xs:p-6 2xl:p-8">
           <div className="flex flex-row items-stretch justify-start gap-6">
             <div className="shrink-0 xs:h-20 xs:w-20 2xl:h-32 2xl:w-32">
@@ -65,14 +65,14 @@ const UserProfile: React.FC = () => {
               <h2 className="font-semibold text-[#848B8D] xs:text-xs 2xl:text-base">Member Since 15 Nov 22</h2>
               {/* desktop XP */}
               <div className="flex w-full flex-row items-center justify-between xs:hidden 2xl:flex">
-                <div className="flex flex-row items-center justify-center gap-2">
+                <div className="flex flex-row items-center justify-center gap-2 font-semibold">
                   <span>Level: 99</span>
-                  <img src={ChatPoint} alt="dot"></img>
+                  <img className="h-1 w-1" src={ChatPoint} alt="dot"></img>
                   <span>378,295 XP</span>
                 </div>
-                <div className="flex flex-row items-center justify-center gap-2">
+                <div className="flex flex-row items-center justify-center gap-2 font-semibold">
                   <span>Level: 100</span>
-                  <img src={ChatPoint} alt="dot"></img>
+                  <img className="h-1 w-1" src={ChatPoint} alt="dot"></img>
                   <span>400,000 XP</span>
                 </div>
               </div>
@@ -83,14 +83,14 @@ const UserProfile: React.FC = () => {
           </div>
           {/* mobile progress bar */}
           <div className="flex-col gap-2 xs:flex 2xl:hidden">
-            <div className="flex w-full flex-row items-center justify-between xs:flex 2xl:hidden">
+            <div className="flex w-full flex-row items-center justify-between font-semibold xs:flex 2xl:hidden">
               <span>Level: 99</span>
               <span>Level: 100</span>
             </div>
             <div className="w-full">
               <ProgressBar completed={60} isLabelVisible={false} animateOnRender bgColor="#F03033" />
             </div>
-            <div className="flex w-full flex-row items-center justify-between xs:flex 2xl:hidden">
+            <div className="flex w-full flex-row items-center justify-between font-semibold xs:flex 2xl:hidden">
               <span>378,295 XP</span>
               <span>400,000 XP</span>
             </div>
