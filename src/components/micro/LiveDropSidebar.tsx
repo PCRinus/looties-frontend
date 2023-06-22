@@ -32,7 +32,7 @@ const LiveDropSidebar: React.FC = () => {
   };
 
   useEffect(() => {
-    const socket = io(process.env.REACT_APP_LIVE_DROPS_WEBSOCKET_URL as string);
+    const socket = io(`${process.env.REACT_APP_API_URL}/live-drops`);
     socket.on("connected", (itemsDropped) => {
       if (itemsDropped && itemsDropped.length > 0) {
         setItemsDropped(itemsDropped);

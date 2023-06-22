@@ -35,14 +35,19 @@ enum ReduxEvents {
   clearBets = "CLEAR_BETS",
   UpdateBets = "UPDATE_BETS",
 
-  // User Logout
-  UserLogout = "USER_LOGOUT",
-  CloseBottomBar = "CLOSE_BOTTOM_BAR",
-  OpenBottomBar = "OPEN_BOTTOM_BAR",
-
   // UI actions
   ToggleChat = "TOGGLE_CHAT",
   ToggleSidebar = "TOGGLE_SIDEBAR",
+  CloseBottomBar = "CLOSE_BOTTOM_BAR",
+  OpenBottomBar = "OPEN_BOTTOM_BAR",
+
+  //Auth actions
+  SetNeedsAuth = "SET_AUTH",
+  SetJwt = "SET_JWT",
+
+  //User actions
+  SetUserData = "SET_USER_DATA",
+  UserLogout = "USER_LOGOUT",
 }
 
 export { ReduxEvents };

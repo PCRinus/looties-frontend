@@ -8,26 +8,14 @@ import RedArrowDown from "../../assets/RedArrowDown.svg";
 import Phantom from "../../assets/Phantom.svg";
 import Ledger from "../../assets/Ledger.svg";
 import { useDispatch } from "react-redux";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { PhantomWalletName, SolflareWalletName } from "@solana/wallet-adapter-wallets";
-import { WalletName } from "@solana/wallet-adapter-base";
+import { useAuth } from "../../hooks/useAuth";
 
 const Wallet = () => {
   const dispatch = useDispatch();
 
   const [seeMore, setSeeMore] = useState<boolean>(false);
-  const { select, connect } = useWallet();
-
-  const connectWallet = async (walletName: WalletName) => {
-    await select(walletName);
-    try {
-      await connect();
-    } catch (error) {
-      console.log(`Unable to connect ${walletName} wallet: ${error} `);
-    } finally {
-      dispatch({ type: ReduxEvents.CloseModal });
-    }
-  };
+  const { connectWallet } = useAuth();
 
   return (
     <div className="flex--column modal--content wallet" onClick={(e) => e.stopPropagation()}>
