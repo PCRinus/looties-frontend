@@ -97,7 +97,7 @@ export const Chat: React.FC = () => {
 
   // needs to run only once, so that it doesn't mess the user count by trying to connect multiple times
   useEffect(() => {
-    const socket = io(process.env.REACT_APP_CHAT_WEBSOCKET_URL as string);
+    const socket = io(`${process.env.REACT_APP_API_URL}/chat`);
     socket.on("connected", (data) => {
       setMessages(data.messages);
     });
