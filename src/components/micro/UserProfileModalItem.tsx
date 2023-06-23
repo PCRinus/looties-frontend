@@ -11,12 +11,14 @@ import NET_PROFIT from "../../assets/UserProfileModal/NET_PROFIT.svg";
 import SOCIAL_LINKS from "../../assets/UserProfileModal/SOCIAL_LINKS.svg";
 import TwitterIcon from "../../assets/TwiterIcon.svg";
 import DiscordIcon from "../../assets/DiscordIcon.svg";
+import { useSelector } from "react-redux";
 
 interface Props {
   itemType: ModalItemType;
+  profile: any;
 }
 
-export const UserProfileModalItem: FC<Props> = ({ itemType }) => {
+export const UserProfileModalItem: FC<Props> = ({ itemType, profile }) => {
   const getImageSrc = (): string => {
     switch (itemType) {
       case ModalItemType.TOTAL_GAME:
@@ -45,7 +47,7 @@ export const UserProfileModalItem: FC<Props> = ({ itemType }) => {
   const getItemTitle = () => {
     switch (itemType) {
       case ModalItemType.TOTAL_GAME:
-        return "Total game";
+        return "Total games";
       case ModalItemType.GAMES_WON:
         return "Games won";
       case ModalItemType.GAMES_LOST:
@@ -71,26 +73,30 @@ export const UserProfileModalItem: FC<Props> = ({ itemType }) => {
     // TODO: show real data after auth implementation
     switch (itemType) {
       case ModalItemType.TOTAL_GAME:
-        return "4881";
+        return profile.gamesPlayed;
       case ModalItemType.GAMES_WON:
-        return "2831";
+        return profile.gamesWon;
       case ModalItemType.GAMES_LOST:
-        return "2050";
+        return profile.gamesLost;
       case ModalItemType.WIN_RATIO:
-        return "72.01%";
+        return profile.winRatio;
       case ModalItemType.LOOTBOXES_OPEN:
-        return "2831";
+        return profile.lootboxesOpened;
       case ModalItemType.REFERRALS:
-        return "12";
+        return "0";
       case ModalItemType.TOTAL_WAGERED:
-        return "283,113.30";
+        return profile.totalWagered;
       case ModalItemType.NET_PROFIT:
-        return "+ 28,113.30";
+        return `+ ${profile.netProfit}`;
       case ModalItemType.SOCIAL_LINKS:
         return (
           <>
-            <img src={TwitterIcon} alt="Twitter"></img>
-            <img src={DiscordIcon} alt="Discord"></img>
+            <a href={profile.twitterLink ?? "#"} target="_blank" rel="noreferrer">
+              <img src={TwitterIcon} alt="Twitter"></img>
+            </a>
+            <a href={profile.discordLink ?? "#"} target="_blank" rel="noreferrer">
+              <img src={DiscordIcon} alt="Discord"></img>
+            </a>
           </>
         );
       default:
