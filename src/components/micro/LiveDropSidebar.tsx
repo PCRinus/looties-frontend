@@ -4,8 +4,10 @@ import Scrollbars from "react-custom-scrollbars-2";
 import { io } from "socket.io-client";
 import "../../styles/micro/LiveDropSidebar.scss";
 import { LiveDrop } from "./LiveDrop";
+import { useSelector } from "react-redux";
 
 const LiveDropSidebar: React.FC = () => {
+  const auth = useSelector((state: any) => state.auth);
   const [itemsDropped, setItemsDropped] = useState<any>([]);
   const [itemsOrder, setItemsOrder] = useState<string>("top");
 
@@ -32,7 +34,11 @@ const LiveDropSidebar: React.FC = () => {
   };
 
   useEffect(() => {
-    const socket = io(`${process.env.REACT_APP_API_URL}/live-drops`);
+    const socket = io(`${process.env.REACT_APP_API_URL}/live-drops`, {
+      extraHeaders: {
+        Authorization: `Bearer ${auth.jwt}`,
+      },
+    });
     socket.on("connected", (itemsDropped) => {
       if (itemsDropped && itemsDropped.length > 0) {
         setItemsDropped(itemsDropped);
