@@ -4,6 +4,7 @@ import { ChatMessage } from "../micro/ChatMessage";
 import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { ChatInput } from "../micro/ChatInput";
+import { ChatMessageUserNotAuthenticated } from "../micro/ChatMessageUserNotAuthenticated";
 
 export interface Message {
   id: string;
@@ -22,17 +23,22 @@ export interface RepliedMessage {
 
 export const Chat: React.FC = () => {
   const openChat = useSelector((state: any) => state.ui.openChat);
+  const user = useSelector((state: any) => state.user);
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatUsersCount, setChatUsersCount] = useState<number>(0);
   const [chatSocket, setChatSocket] = useState<Socket>();
   const [isReply, setIsReply] = useState<boolean>(false);
+  const [showUnauthenticatedUserMessage, setShowUnauthenticatedUserMessage] = useState<boolean>(false);
   const [repliedMessageData, setRepliedMessageData] = useState<RepliedMessage>();
   const [scrollApplied, setScrollApplied] = useState(false);
   const chatBodyDiv = useRef<HTMLDivElement>(null);
 
+  console.log(messages);
+  console.log(user.id);
+
   const handleMessage = (message: string) => {
     try {
-      chatSocket?.emit("message", { userId: "eb96fd6e-9d0e-467d-a7a3-2772376328f3", message });
+      chatSocket?.emit("message", { userId: user.id, message });
     } catch (error) {
       console.log("Could not emit message " + error);
     }
@@ -43,7 +49,7 @@ export const Chat: React.FC = () => {
     const reply = {
       originalMessageId: repliedMessageData?.messageId,
       reply: message,
-      userId: "eb96fd6e-9d0e-467d-a7a3-2772376328f3",
+      userId: user.id,
     };
     try {
       chatSocket?.emit("reply", reply);
@@ -53,6 +59,7 @@ export const Chat: React.FC = () => {
   };
 
   const handleLike = (userId: string, messageId: string) => {
+    console.log("like", userId, messageId);
     try {
       chatSocket?.emit("like", { userId, messageId });
     } catch (error) {
@@ -61,6 +68,7 @@ export const Chat: React.FC = () => {
   };
 
   const handleUnlike = (userId: string, messageId: string) => {
+    console.log("unlike", userId, messageId);
     try {
       chatSocket?.emit("unlike", { userId, messageId });
     } catch (error) {
@@ -95,6 +103,14 @@ export const Chat: React.FC = () => {
     return messages.find((message) => message.id === messageId);
   };
 
+  const handleUnauthenticatedUserAction = () => {
+    setShowUnauthenticatedUserMessage(true);
+  };
+
+  const handleCloseUnauthenticatedMessage = () => {
+    setShowUnauthenticatedUserMessage(false);
+  };
+
   // needs to run only once, so that it doesn't mess the user count by trying to connect multiple times
   useEffect(() => {
     const socket = io(`${process.env.REACT_APP_API_URL}/chat`);
@@ -105,24 +121,23 @@ export const Chat: React.FC = () => {
       setChatUsersCount(data.connectedUsersCount);
     });
     socket.on("message", (newMessage) => {
-      console.log(newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage as Message]);
       setScrollApplied(false);
     });
-    socket.on("like", (likedMessageId) => {
-      console.log(likedMessageId);
+    socket.on("like", (data) => {
       setMessages((prevMessages) =>
         prevMessages.map((message) =>
-          message.id === likedMessageId ? { ...message, likedBy: [...message.likedBy, message.userId] } : message
+          message.id === data.likedMessageId
+            ? { ...message, likedBy: [...message.likedBy, data.likedByUserId] }
+            : message
         )
       );
     });
-    socket.on("unlike", (unlikedMessageId) => {
-      console.log(unlikedMessageId);
+    socket.on("unlike", (data) => {
       setMessages((prevMessages) =>
         prevMessages.map((message) =>
-          message.id === unlikedMessageId
-            ? { ...message, likedBy: message.likedBy.filter((userId) => userId !== message.userId) }
+          message.id === data.unlikedMessageId
+            ? { ...message, likedBy: message.likedBy.filter((userId) => userId !== data.unlikedByUserId) }
             : message
         )
       );
@@ -137,7 +152,7 @@ export const Chat: React.FC = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [user.id]);
 
   //only run once to scroll chat-body to bottom
   useEffect(() => {
@@ -155,8 +170,12 @@ export const Chat: React.FC = () => {
     >
       <ChatHeader chatUsersCount={chatUsersCount} />
       <div ref={chatBodyDiv} className="flex w-full grow flex-col items-center gap-6 overflow-auto py-8 ">
+        {showUnauthenticatedUserMessage && !user.id && (
+          <ChatMessageUserNotAuthenticated closeAction={handleCloseUnauthenticatedMessage} />
+        )}
         {messages.sort(sortFn).map((message, index) => (
           <ChatMessage
+            currentUser={user}
             key={index}
             messageId={message.id}
             message={message.message}
@@ -164,20 +183,20 @@ export const Chat: React.FC = () => {
             userId={message.userId}
             createdAt={message.createdAt}
             updatedAt={message.updatedAt}
-            handleSetIsReply={handleSetIsReply}
-            handleRepliedMessageData={handleRepliedMessageData}
-            handleLike={handleLike}
-            handleUnlike={handleUnlike}
+            handleSetIsReply={user.id ? handleSetIsReply : handleUnauthenticatedUserAction}
+            handleRepliedMessageData={user.id ? handleRepliedMessageData : handleUnauthenticatedUserAction}
+            handleLike={user.id ? handleLike : handleUnauthenticatedUserAction}
+            handleUnlike={user.id ? handleUnlike : handleUnauthenticatedUserAction}
             repliedMessage={message.repliedTo ? getMessageById(message.repliedTo) : undefined}
           />
         ))}
       </div>
 
       <ChatInput
-        handleMessage={handleMessage}
-        handleReply={handleReply}
+        handleMessage={user.id ? handleMessage : handleUnauthenticatedUserAction}
+        handleReply={user.id ? handleReply : handleUnauthenticatedUserAction}
         isReply={isReply}
-        handleCancelReply={handleCancelReply}
+        handleCancelReply={user.id ? handleCancelReply : handleUnauthenticatedUserAction}
         repliedMessageData={repliedMessageData}
       />
     </div>
