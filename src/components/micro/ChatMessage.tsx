@@ -10,6 +10,7 @@ import ChatVerticalBar from "../../assets/ChatVerticalBar.svg";
 import { Message } from "../macro/Chat";
 
 export interface Props {
+  currentUser: any;
   messageId: string;
   message: string;
   likedBy: string[];
@@ -24,6 +25,7 @@ export interface Props {
 }
 
 export const ChatMessage: React.FC<Props> = ({
+  currentUser,
   messageId,
   message,
   likedBy,
@@ -94,10 +96,15 @@ export const ChatMessage: React.FC<Props> = ({
               <button
                 className="h-4 w-4 shrink-0"
                 onClick={() => {
-                  likedBy.includes(userId) ? handleUnlike(userId, messageId) : handleLike(userId, messageId);
+                  likedBy.includes(currentUser.id)
+                    ? handleUnlike(currentUser.id, messageId)
+                    : handleLike(currentUser.id, messageId);
                 }}
               >
-                <img src={likedBy.includes(userId) ? ChatLikeIconRed : ChatLikeIcon} alt="Message like icon"></img>
+                <img
+                  src={likedBy.includes(currentUser.id) ? ChatLikeIconRed : ChatLikeIcon}
+                  alt="Message like icon"
+                ></img>
               </button>
               <button
                 className="h-4 w-4 shrink-0"

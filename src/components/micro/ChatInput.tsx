@@ -6,7 +6,6 @@ import { RepliedMessage } from "../macro/Chat";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import { useScreenResolution } from "../../hooks/useScreenResolution";
 import { Theme } from "emoji-picker-react";
-import CloseEmojiPicker from "../../assets/CloseEmojiPicker.svg";
 
 interface Props {
   handleMessage: (message: string) => void;
