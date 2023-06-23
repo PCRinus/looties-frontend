@@ -47,6 +47,7 @@ enum ReduxEvents {
 
   //User actions
   SetUserData = "SET_USER_DATA",
+  SetProfileData = "SET_PROFILE_DATA",
   UserLogout = "USER_LOGOUT",
 }
 

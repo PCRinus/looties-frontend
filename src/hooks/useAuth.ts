@@ -86,5 +86,25 @@ export const useAuth = () => {
       .catch((err) => console.log(err));
   };
 
-  return { connectWallet, authorizeWallet, loadUserData, disconnectWallet };
+  const loadProfileData = async (jwt: string, userId: string) => {
+    try {
+      const profileRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      const profileCardRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userId}/card`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      const profileData = { ...profileRes.data, ...profileCardRes.data };
+      dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
+    } catch (err) {
+      console.log("Error getting user profile ", err);
+      disconnect();
+    }
+  };
+
+  return { connectWallet, authorizeWallet, loadUserData, loadProfileData, disconnectWallet };
 };
