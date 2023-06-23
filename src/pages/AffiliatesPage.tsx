@@ -1,6 +1,6 @@
 import {Chat} from "../components/macro/Chat";
 import LiveDropSidebar from "../components/micro/LiveDropSidebar";
-import React, {FC} from "react";
+import React from "react";
 import Users from "../assets/Users.svg";
 import RedCoins from "../assets/RedCoins.svg";
 import RedDollar from "../assets/RedDollar.svg";
@@ -10,21 +10,10 @@ import RedTwitter from "../assets/RedTwitter.svg";
 import Copy from "../assets/Copy.svg";
 import toast from 'react-hot-toast';
 import axios from "axios";
-import { API_URL } from "../config";
-import {userIdMock} from "../mocks/userIdMock";
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { ReduxEvents } from '../reducers/events';
-//  TotalReferrals: 0 ///// redeemedCount
-//  TotalWagered: 0 /////////////////////// totalWagered
-//  AffiliateClaimableBalance: 0   /////// availableCommission
-//  TotalEarned: 0 ///// referralEarnings
-
-
-///////////////////////////////
+import { useSelector } from 'react-redux';
+import { useEffect, useState, useCallback } from 'react';
 
 export const AffiliatesPage = () => {
-    const dispatch = useDispatch();
     const [referralInput, setReferralInput] = useState<string>('');
     const [yourReferralInput, setYourReferralInput] = useState<string>('');
     const [referralCode, setReferralCode] = useState<string>('LOOTIES');
@@ -32,25 +21,32 @@ export const AffiliatesPage = () => {
     const [availableCommission, setavailableCommission] = useState(0);
     const [referralEarnings, setreferralEarnings] = useState(0);
     const [redeemedCount, setredeemedCount] = useState(0);
+    const user = useSelector((state: any) => state.user);
+    const auth = useSelector((state: any) => state.auth);
 
     useEffect(() => {
         const fetchAffiliateStats = async () => {
-            try {
-                const response = await axios.get(
-                    `${process.env.REACT_APP_API_URL}/affiliates/{?}/stats`
-                );
-                const { totalWagered, availableCommission, referralEarnings, redeemedCount } = response?.data;
-                setTotalWagered(totalWagered);
-                setavailableCommission(availableCommission);
-                setreferralEarnings(referralEarnings);
-                setredeemedCount(redeemedCount);
-            } catch (error) {
-                console.log("Error while fetching affiliate stats:", error);
-                toast.error("Failed to fetch affiliate stats");
+            if(user.id) {
+                try {
+                    const response = await axios.get(
+                        `${process.env.REACT_APP_API_URL}/affiliates/${user.id}/stats`
+                    );
+                    const {totalWagered, availableCommission, referralEarnings, redeemedCount} = response?.data;
+                    console.log(totalWagered, 'this is daniel');
+                    setTotalWagered(parseFloat(totalWagered));
+                    setavailableCommission(parseFloat(availableCommission));
+                    setreferralEarnings(parseFloat(referralEarnings));
+                    setredeemedCount(parseFloat(redeemedCount));
+
+                } catch (error) {
+                    console.log("Error while fetching affiliate stats:", error);
+                    toast.error("Failed to fetch affiliate stats");
+                }
             }
+
         };
         fetchAffiliateStats();
-    }, []);
+    }, [user.id]);
 
     const handleReferralChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -62,54 +58,58 @@ export const AffiliatesPage = () => {
     };
 
     const getReferralCode = useCallback(() => {
-        axios
-            .get(`${API_URL}/affiliates/`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer ",
-                },
-            })
-            .then(
-                (response) => {
-                    setReferralCode(response?.data.affiliate);
-                },
-                (error) => {
-                    if (error.response?.data.message) {
-                        toast(error.response?.data.message);
+        if(user.id) {
+            axios
+                .get(`${process.env.REACT_APP_API_URL}/affiliates/${user.id}/stats`, {
+                    headers: {
+                        Authorization: `Bearer ${auth.jwt}`,
+                    },
+                })
+                .then(
+                    (response) => {
+                        const {referralCode} = response?.data;
+                        setReferralCode(referralCode);
+                        console.log('dupa toate astea this represents the referral code', referralCode);
+                    },
+                    (error) => {
+                        if (error.response?.data.message) {
+                            toast(error.response?.data.message);
+                        }
                     }
-                }
-            );
-    }, [setReferralCode]);
+                );
+        }
+    }, [setReferralCode, user.id, auth.jwt]);
 
     const getStats = useCallback(() => {
-        axios
-            .get(`${API_URL}/affiliate/stats`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer ",
-                },
-            })
-            .then(
-                (response) => {
-                    setredeemedCount(parseFloat(response?.data.totalReferrals));
-                    setTotalWagered(parseFloat(response?.data.totalWagered));
-                    setavailableCommission(parseFloat(response?.data.claimable));
-                    setreferralEarnings(
-                        parseFloat(response?.data.withdrawn) +
-                        parseFloat(response?.data.claimable)
-                    );
-                },
-                (error) => {
-                    if (error.response?.data.message) {
-                        toast(error.response?.data.message);
+        if(user.id) {
+            axios
+                .get(`${process.env.REACT_APP_API_URL}/affiliates/${user.id}/stats`, {
+                    headers: {
+                        Authorization: `Bearer ${auth.jwt}`,
+                    },
+                })
+                .then(
+                    (response) => {
+
+
+                        const {totalWagered, availableCommission, referralEarnings, redeemedCount} = response?.data;
+                        console.log(totalWagered, 'this is daniel');
+                        setTotalWagered(parseFloat(totalWagered));
+                        setavailableCommission(parseFloat(availableCommission));
+                        setreferralEarnings(parseFloat(referralEarnings));
+                        setredeemedCount(parseFloat(redeemedCount));
+
+                    },
+                    (error) => {
+                        if (error.response?.data.message) {
+                            toast(error.response?.data.message);
+                        }
                     }
-                }
-            );
-    }, [setredeemedCount, setTotalWagered, setavailableCommission, setavailableCommission]);
-
-
+                );
+        }
+    }, [setredeemedCount, setTotalWagered, setavailableCommission, user.id, auth.jwt]);
     const copyToClipboard = () => {
-        const affiliateCode = `https://moonie.land/affiliates/${referralCode}...`; // Replace with actual affiliate code of client
+        const affiliateCode = `https://looties.app.land/${referralCode || 'LOOTIES'}`;
         navigator.clipboard.writeText(affiliateCode)
             .then(() => {
                 return toast.success('Code copied to clipboard!');
@@ -125,26 +125,28 @@ export const AffiliatesPage = () => {
     }, [getStats, getReferralCode]);
 
     const setCode = () => {
-        if (referralInput.length > 255) {
-            toast.error('Referral code is too long');
+        if (referralInput.length > 255 || referralInput.includes(' ')) {
+            toast.error('Referral code is invalid');
             return;
         }
+        if(user.id) {
+
         axios
             .post(
-                `${API_URL}/affiliate/save-code`,
+                `${process.env.REACT_APP_API_URL}/affiliates/${user.id}/update-referral-code`,
                 {
-                    code: referralInput,
+                    "updatedReferralCode": referralInput
                 },
                 {
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer ",
+                        Authorization: `Bearer ${auth.jwt}`,
                     },
-                }
+                },
             )
             .then(
                 (response) => {
-                    toast.success(response?.data.message);
+                    toast.success(response.data + ' is your new referral code');
+                    // console.log(response.data, 'this is response data');
                     getReferralCode();
                 },
                 (error) => {
@@ -153,25 +155,27 @@ export const AffiliatesPage = () => {
                     }
                 }
             );
-    };
+        }
 
+    };
     const redeemCode = () => {
         if (yourReferralInput.length > 255) {
             toast.error('Referral code is too long');
             return;
         }
+        if(user.id) {
+
         axios
             .post(
-                `${API_URL}/affiliate/redeem`,
+                `${process.env.REACT_APP_API_URL}/affiliates/${user.id}/redeem-referral-code`,
                 {
-                    code: yourReferralInput,
+                    "referralCode": yourReferralInput
                 },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer ",
-                    },
-                }
+                     {
+                         headers: {
+                             Authorization: `Bearer ${auth.jwt}`,
+                         },
+        },
             )
             .then(
                 (response) => {
@@ -184,52 +188,33 @@ export const AffiliatesPage = () => {
                     }
                 }
             );
-    };
-
-    const refreshBalance = async () => {
-        const response = await axios.get(`${API_URL}/users/balance`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ',
-            },
-        });
-
-        if (response?.data) {
-
-            dispatch({
-                type: ReduxEvents.SetBalance, payload: {
-                    balance: response?.data.balance
-                }
-            })
         }
-    }
 
+    };
     const claimAll = () => {
-        axios
-            .post(
-                `${API_URL}/affiliate/claim`,
-                {
-
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer ",
-                    },
-                }
-            )
-            .then(
-                (response) => {
-                    toast.success(response?.data.message);
-                    refreshBalance();
-                    getStats();
-                },
-                (error) => {
-                    if (error.response?.data.message) {
-                        toast.error(error.response?.data.message);
+        if(user.id) {
+            axios
+                .post(
+                    `${process.env.REACT_APP_API_URL}/affiliates/${user.id}/claim-available-commission`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth.jwt}`,
+                        },
                     }
-                }
-            );
+                )
+                .then(
+                    (response) => {
+                        toast.success('Claimed successfully!');
+                        getStats();
+                    },
+                    (error) => {
+                        if (error.response?.data.message) {
+                            toast.error('No available commission to claim!');
+                        }
+                    }
+                );
+        }
     };
 
     const handleTwitterShare = () => {
@@ -309,10 +294,9 @@ export const AffiliatesPage = () => {
                                 <div className="md:w-auto w-full p-[7px] gap-2 h-[48px] bg-[#1E2023] border border-[#2C3034] rounded-lg font-semibold text-custom_gray_2 flex justify-start md:justify-center items-center font-sans" >
                                     <input
                                         type="text"
-                                        placeholder="example code"
                                         className="p-[3px] outline-0 h-full w-full md:w-[142px] bg-[#1E2023] border border-[#1E2023] rounded font-semibold text-base text-custom_gray_2 flex-1 justify-center items-center font-sans"
+                                        placeholder={referralCode} value={referralInput} onChange={handleReferralChange}
                                     />
-                                    <input className={`input type='text`} placeholder={referralCode} value={referralInput} onChange={handleReferralChange}/>
                                     <button className="w-[77px] ml-auto h-full px-[8px] top-[56-px] bg-gradient-to-t from-red-700 to-red-500 border border-[#2C3034] rounded-xl flex justify-center items-center" onClick={setCode}>
                                         <span className="text-white font-semibold text-xs font-sans">
                                          Set code
@@ -324,7 +308,7 @@ export const AffiliatesPage = () => {
                                 <h1 className="text-[#848B8D] font-semibold text-xs">Copy and share your referral code</h1>
                                 <div className="p-[7px] gap-2 w-full h-[48px] bg-[#1E2023] border border-[#2C3034] rounded-lg font-semibold text-custom_gray_2 flex justify-start md:justify-center items-center font-sans" >
                                   <h1 className="p-[3px] outline-0 h-full w-full md:w-[142px] bg-[#1E2023] border border-[#1E2023] rounded font-semibold text-base text-custom_gray_2 flex-1 justify-center items-center font-sans">
-                                      https://looties.app/
+                                      https://looties.app/{referralCode}
                                   </h1>
                                     <button className="flex justify-center items-center" onClick={copyToClipboard}>
                                         <img src={Copy} alt="copy-icon-svg" className="w-4 h-4"/>
@@ -395,14 +379,14 @@ export const AffiliatesPage = () => {
                                     <h1 className="text-[#848B8D] text-sm md:text-base font-semibold"> Available commission </h1>
                                     <h1 className="text-white text-sm md:text-base font-semibold"> { availableCommission } </h1>
                                 </div>
-                                <button className="w-[57px] hidden md:flex h-[30px] justify-center items-center ml-auto p-[3px] bg-gradient-to-t from-red-700 to-red-500  border border-[#2C3034] rounded-md">
+                                <button className="w-[57px] hidden md:flex h-[30px] justify-center items-center ml-auto p-[3px] bg-gradient-to-t from-red-700 to-red-500  border border-[#2C3034] rounded-md" onClick={claimAll}>
                             <span className="text-white justify-center items-center font-semibold text-xs font-sans">
                             Claim
                             </span>
                                 </button>
                             </div>
                         </div>
-                            <button className="w-full h-[44.5px] flex md:hidden  mb-10 justify-center items-center ml-auto p-[3px] bg-gradient-to-t from-red-700 to-red-500  border border-[#2C3034] rounded-md">
+                            <button className="w-full h-[44.5px] flex md:hidden  mb-10 justify-center items-center ml-auto p-[3px] bg-gradient-to-t from-red-700 to-red-500  border border-[#2C3034] rounded-md" onClick={claimAll}>
                             <span className="text-white justify-center items-center font-semibold text-xs font-sans">
                             Claim
                             </span>
