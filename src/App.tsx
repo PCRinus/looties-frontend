@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const { publicKey, connected, disconnecting } = useWallet();
-  const { authorizeWallet, loadUserData } = useAuth();
+  const { authorizeWallet, loadUserData, loadProfileData } = useAuth();
 
   useEffect(() => {
     WebFont.load({
@@ -48,7 +48,10 @@ const App: React.FC = () => {
     if (auth.jwt && !user.id) {
       loadUserData(auth.jwt);
     }
-  }, [auth.jwt, user, loadUserData]);
+    if (auth.jwt && user.id && !user.profile) {
+      loadProfileData(auth.jwt, user.id);
+    }
+  }, [auth.jwt, user.id, user.profile, loadUserData, loadProfileData]);
 
   return (
     <>
