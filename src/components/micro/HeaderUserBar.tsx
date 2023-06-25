@@ -5,8 +5,10 @@ import UserInfo from "./UserInfo";
 import HomeButton from "./HomeButton";
 import LootBoxesButton from "./LootBoxesButton";
 import ClassicButton from "./ClassicButton";
+import ProvablyFairButton from "./ProvablyFairButton";
 import BalanceView from "./BalanceView";
 import { ConnectWalletButton } from "./ConnectWalletButton";
+import { Link } from "react-router-dom";
 
 interface Props {
   isUserLoggedIn: boolean;
@@ -17,15 +19,25 @@ const HeaderUserBar: React.FC<Props> = ({ isUserLoggedIn = false }) => {
     <div className="user-box top-[40px] flex h-[80px] items-center justify-between">
       <div className="flex items-center justify-start">
         <div className="ml-8">
-          <HomeButton />
+          <Link to="/">
+            <HomeButton />
+          </Link>
         </div>
 
         <div className="ml-4">
-          <LootBoxesButton />
+          <Link to="/lootboxes">
+            <LootBoxesButton />
+          </Link>
         </div>
 
         <div className="ml-4">
-          <ClassicButton />
+          <Link to="/classic">
+            <ClassicButton />
+          </Link>
+        </div>
+
+        <div className="ml-4">
+          <ProvablyFairButton />
         </div>
       </div>
 

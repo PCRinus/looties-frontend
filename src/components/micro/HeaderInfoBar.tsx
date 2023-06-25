@@ -3,23 +3,24 @@ import FaceBookIcon from "../../assets/FacebookIcon.svg";
 import TwiterIcon from "../../assets/TwiterIcon.svg";
 import InstagramIcon from "../../assets/InstagramIcon.svg";
 import MailIcon from "../../assets/MailIcon.svg";
+import { Link } from "react-router-dom";
 
 const HeaderInfoBar: React.FC = () => {
   return (
     <div className="flex h-[40px] items-center justify-between">
       <div className="left-section ml-8 font-sans font-medium text-grey_font_color">
-        <a href="#" className="">
+        <Link to="/" className="">
           Affiliates
-        </a>
-        <a href="#" className="ml-4">
+        </Link>
+        <Link to="/" className="ml-4">
           Fairness
-        </a>
-        <a href="#" className="ml-4">
+        </Link>
+        <Link to="/" className="ml-4">
           FAQ
-        </a>
-        <a href="#" className="ml-4">
+        </Link>
+        <Link to="/game-responsibly" className="ml-4">
           Game responsibly
-        </a>
+        </Link>
       </div>
       <div className="right-section mr-[33.25px]">
         <div className="social-icons flex items-center justify-center">

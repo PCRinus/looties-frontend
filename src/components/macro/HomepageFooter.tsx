@@ -5,6 +5,7 @@ import TwiterIcon from "../../assets/TwiterIcon.svg";
 import InstagramIcon from "../../assets/InstagramIcon.svg";
 import MailIcon from "../../assets/MailIcon.svg";
 import AdultImg from "../../assets/18+.svg";
+import { Link } from "react-router-dom";
 
 const HomepageFooter = () => {
   return (
@@ -53,9 +54,9 @@ const HomepageFooter = () => {
             <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
               Affiliates
             </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
+            <Link to="/game-responsibly" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
               Game responsibly
-            </a>
+            </Link>
             <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
               Fairness
             </a>
