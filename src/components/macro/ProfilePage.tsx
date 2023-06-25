@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Twiter from "../../assets/Twiter.svg";
 import DiscordIcon from "../../assets/DiscordIcon.svg";
 import TotalGameIcon from "../../assets/TotalGameIcon.svg";
@@ -9,26 +9,32 @@ import DolarFrame from "../../assets/DolarFrame.svg";
 import ReferralsIcon from "../../assets/ReferralsIcon.svg";
 import RedDropBoxIcon from "../../assets/DropboxIconRed.svg";
 
-interface IProps {
-  totalGameData: number;
-  gamesWonData: number;
-  gamesLostData: number;
-  winRatioData: number;
-  lootboxesOpenData: number;
-  referralsData: number;
-  totalWageredData: number;
-  netProfitData: number;
-}
-const ProfilePage: React.FC<IProps> = ({
-  totalGameData,
-  gamesWonData,
-  gamesLostData,
-  winRatioData,
-  lootboxesOpenData,
-  referralsData,
-  totalWageredData,
-  netProfitData,
-}) => {
+const ProfilePage: React.FC = ({}) => {
+  // Initiate your state variables
+  const [totalGameData, setTotalGameData] = useState<number>(0);
+  const [gamesWonData, setGamesWonData] = useState<number>(0);
+  const [gamesLostData, setGamesLostData] = useState<number>(0);
+  const [winRatioData, setWinRatioData] = useState<number>(0);
+  const [lootboxesOpenData, setLootboxesOpenData] = useState<number>(0);
+  const [referralsData, setReferralsData] = useState<number>(0);
+  const [totalWageredData, setTotalWageredData] = useState<number>(0);
+  const [netProfitData, setNetProfitData] = useState<number>(0);
+
+  // Simulate fetching data
+  useEffect(() => {
+    // You will replace this with your actual fetch call
+    // For the purpose of example, I'm just going to use setTimeout to simulate latency
+    setTimeout(() => {
+      setTotalGameData(4843.3);
+      setGamesWonData(1000000);
+      setGamesLostData(100000);
+      setWinRatioData(100000);
+      setLootboxesOpenData(100000);
+      setReferralsData(100000);
+      setTotalWageredData(100000);
+      setNetProfitData(4843.3);
+    }, 1000);
+  }, []); // This empty dependency array means this effect will only run once, similar to componentDidMount()
   return (
     <div id="content" className=" h-full w-full xs:p-6 2xl:p-8">
       <div className="h-full w-full">

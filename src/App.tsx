@@ -15,6 +15,7 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
+import SettingsPage from "./components/macro/SettingsPage";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -64,7 +65,7 @@ const App: React.FC = () => {
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/*" element={<Profile />} />
         </Routes>
         <MobileSidebar />
         <Footer />
