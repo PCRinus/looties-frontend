@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
         <>
           <div className="flex h-screen  w-full flex-col">
             <div className=" grid  grid-cols-[450px_1fr] grid-rows-1 ">
-              <div className="ml-[10%] mt-[10%] flex h-[742px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
+              <div className="ml-[10%] mt-[10%] flex h-[806px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
                 <UserProfileCard
                   currentLevel={99}
                   currentXP={278295}

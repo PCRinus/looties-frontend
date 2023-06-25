@@ -16,7 +16,7 @@ interface IProps {
 const UserProfileCard: React.FC<IProps> = ({ currentLevel, currentXP, nextLevel, xpNeeded, username, data, level }) => {
   const progressPercentage = (currentXP / xpNeeded) * 100;
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-xl border-[1px] border-solid border-[#2C3034] 2xl:h-[214px] 2xl:w-full ">
+    <div className="flex h-full min-h-[205px] w-full flex-col items-center justify-center gap-4 rounded-xl border-[1px] border-solid border-[#2C3034] 2xl:h-[214px] 2xl:w-full ">
       <div className="relative flex gap-4 xs:w-full xs:px-6 2xl:mx-8 2xl:mt-8 2xl:h-1/2 2xl:w-[-webkit-fill-available] 2xl:justify-normal 2xl:p-0">
         <img src={Icon} alt="transparent-icon-svg" />
         <img src={PhotoButton} alt="photo-icon-svg" className="absolute xs:left-14 xs:top-8 2xl:left-8 2xl:top-9" />
