@@ -32,7 +32,6 @@ export const AffiliatesPage = () => {
                         `${process.env.REACT_APP_API_URL}/affiliates/${user.id}/stats`
                     );
                     const {totalWagered, availableCommission, referralEarnings, redeemedCount} = response?.data;
-                    console.log(totalWagered, 'this is daniel');
                     setTotalWagered(parseFloat(totalWagered));
                     setavailableCommission(parseFloat(availableCommission));
                     setreferralEarnings(parseFloat(referralEarnings));
@@ -69,7 +68,6 @@ export const AffiliatesPage = () => {
                     (response) => {
                         const {referralCode} = response?.data;
                         setReferralCode(referralCode);
-                        console.log('dupa toate astea this represents the referral code', referralCode);
                     },
                     (error) => {
                         if (error.response?.data.message) {
@@ -93,7 +91,6 @@ export const AffiliatesPage = () => {
 
 
                         const {totalWagered, availableCommission, referralEarnings, redeemedCount} = response?.data;
-                        console.log(totalWagered, 'this is daniel');
                         setTotalWagered(parseFloat(totalWagered));
                         setavailableCommission(parseFloat(availableCommission));
                         setreferralEarnings(parseFloat(referralEarnings));
@@ -146,7 +143,6 @@ export const AffiliatesPage = () => {
             .then(
                 (response) => {
                     toast.success(response.data + ' is your new referral code');
-                    // console.log(response.data, 'this is response data');
                     getReferralCode();
                 },
                 (error) => {
@@ -179,7 +175,7 @@ export const AffiliatesPage = () => {
             )
             .then(
                 (response) => {
-                    toast.success(response?.data.message);
+                    toast.success('Referral code redeemed successfully!');
                     getStats();
                 },
                 (error) => {
@@ -289,12 +285,12 @@ export const AffiliatesPage = () => {
                         </div>
                         <h1 className="py-5 text-[#DFDFDF] font-bold text-xl"> Set up your referral code </h1>
                         <div className="flex md:flex-row flex-col md:items-center items-start gap-3 justify-start mt-2">
-                            <div className="flex flex-col items-start justify-center gap-2 md:w-auto w-full">
+                            <div className="flex flex-col items-start justify-center gap-2 md:w-[275px] w-full">
                                 <h1 className="text-[#848B8D] font-semibold text-xs">Set your referral code</h1>
-                                <div className="md:w-auto w-full p-[7px] gap-2 h-[48px] bg-[#1E2023] border border-[#2C3034] rounded-lg font-semibold text-custom_gray_2 flex justify-start md:justify-center items-center font-sans" >
+                                <div className="w-full p-[7px] gap-2 h-[48px] bg-[#1E2023] border border-[#2C3034] rounded-lg font-semibold text-custom_gray_2 flex justify-start md:justify-center items-center font-sans" >
                                     <input
                                         type="text"
-                                        className="p-[3px] outline-0 h-full w-full md:w-[142px] bg-[#1E2023] border border-[#1E2023] rounded font-semibold text-base text-custom_gray_2 flex-1 justify-center items-center font-sans"
+                                        className="p-[3px] outline-0 h-full w-full md:w-[142px] bg-[#1E2023] border border-[#1E2023] rounded font-semibold md:text-base text-sm text-custom_gray_2 flex-1 justify-center items-center font-sans"
                                         placeholder={referralCode} value={referralInput} onChange={handleReferralChange}
                                     />
                                     <button className="w-[77px] ml-auto h-full px-[8px] top-[56-px] bg-gradient-to-t from-red-700 to-red-500 border border-[#2C3034] rounded-xl flex justify-center items-center" onClick={setCode}>
@@ -307,9 +303,10 @@ export const AffiliatesPage = () => {
                             <div className="flex flex-col items-start justify-center gap-2 md:w-[404px] w-full">
                                 <h1 className="text-[#848B8D] font-semibold text-xs">Copy and share your referral code</h1>
                                 <div className="p-[7px] gap-2 w-full h-[48px] bg-[#1E2023] border border-[#2C3034] rounded-lg font-semibold text-custom_gray_2 flex justify-start md:justify-center items-center font-sans" >
-                                  <h1 className="p-[3px] outline-0 h-full w-full md:w-[142px] bg-[#1E2023] border border-[#1E2023] rounded font-semibold text-base text-custom_gray_2 flex-1 justify-center items-center font-sans">
-                                      https://looties.app/{referralCode}
-                                  </h1>
+                                    <h1 className="p-[3px] outline-0 h-full w-full md:w-[142px] bg-[#1E2023] border border-[#1E2023] rounded font-semibold md:text-base text-sm text-custom_gray_2 flex-1 justify-center items-center font-sans">
+                                        https://looties.app/{referralCode.length > 7 ? `${referralCode.substring(0, 7)}...` : referralCode}
+                                    </h1>
+
                                     <button className="flex justify-center items-center" onClick={copyToClipboard}>
                                         <img src={Copy} alt="copy-icon-svg" className="w-4 h-4"/>
                                     </button>
@@ -332,52 +329,52 @@ export const AffiliatesPage = () => {
                             </div>
                         </div>
                         <h1 className="py-5 text-[#DFDFDF] font-bold text-xl"> Statistics </h1>
-                        <div className="flex flex-col gap-4">
-                        <div className="flex flex-row gap-4">
-                            <div className="flex gap-4 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-6 rounded-xl">
+                        <div className="grid grid-cols-2 gap-4 md:mb-10 mb-5">
+                            <div className="flex md:gap-4 gap-2 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-4 rounded-xl">
                                 <div className="flex flex-row">
                                     <div className="flex flex-row items-center justify-center">
-                                        <img src={Users} alt="users-svg-icon" className="md:w-[48px] w-[24px] h-auto" />
+                                        <img src={Users} alt="users-svg-icon" className="md:w-[48px] w-[24px] min-w-[24px] h-auto" />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <h1 className="text-[#848B8D] text-sm md:text-base font-semibold"> Total referrals </h1>
-                                    <h1 className="text-white text-sm md:text-base font-semibold">{redeemedCount}</h1>
+                                    <h1 className="text-[#848B8D] text-xs sm:text-sm md:text-base font-semibold"> Total referrals </h1>
+                                    <h1 className="text-white text-xs sm:text-sm md:text-base font-semibold">{redeemedCount}</h1>
                                 </div>
                             </div>
-                            <div className="flex gap-4 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-6 rounded-xl">
+                            <div className="flex md:gap-4 gap-2 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-4 rounded-xl">
                                 <div className="flex flex-row">
                                     <div className="flex flex-row items-center justify-center">
-                                        <img src={RedDollar} alt="red-dollar-svg-icon" className="md:w-[48px] w-[24px] h-auto" />
+                                        <img src={RedDollar} alt="red-dollar-svg-icon" className="md:w-[48px] w-[24px] min-w-[24px] h-auto" />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <h1 className="text-[#848B8D] text-sm md:text-base font-semibold"> Total wagered </h1>
-                                    <h1 className="text-white text-sm md:text-base font-semibold">{totalWagered}</h1>
+                                    <h1 className="text-[#848B8D] text-xs sm:text-sm md:text-base font-semibold"> Total wagered </h1>
+                                    <h1 className="text-white text-xs sm:text-sm md:text-base font-semibold">{totalWagered}</h1>
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex flex-row gap-4 md:mb-10">
-                            <div className="flex gap-4 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-6 rounded-xl">
+                            <div className="flex md:gap-4 gap-2 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-4 rounded-xl">
                                 <div className="flex flex-row">
                                     <div className="flex flex-row items-center justify-center">
-                                        <img src={RedDollar} alt="red-dollar-svg-icon" className="md:w-[48px] w-[24px] h-auto" />
+                                        <img src={RedDollar} alt="red-dollar-svg-icon" className="md:w-[48px] w-[24px] min-w-[24px] h-auto" />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <h1 className="text-[#848B8D] text-sm md:text-base font-semibold"> Referral earnings </h1>
-                                    <h1 className="text-white text-sm md:text-base font-semibold"> {referralEarnings} </h1>
+                                    <h1 className="text-[#848B8D] text-xs sm:text-sm md:text-base font-semibold">Referral earnings</h1>
+                                    <h1 className="text-white text-xs sm:text-sm md:text-base font-semibold break-all overflow-hidden">
+                                        {referralEarnings}
+                                    </h1>
                                 </div>
+
                             </div>
-                            <div className="flex gap-4 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-6 rounded-xl items-center">
+                            <div className="flex md:gap-4 gap-2 basis-[50%] border border-[#2C3034] md:py-8 md:px-9 py-6 px-4 rounded-xl items-center">
                                 <div className="flex flex-row">
                                     <div className="flex flex-row items-center justify-center">
-                                        <img src={RedDollar} alt="red-dollar-svg-icon" className="md:w-[48px] w-[24px] h-auto" />
+                                        <img src={RedDollar} alt="red-dollar-svg-icon" className="md:w-[48px] w-[24px] min-w-[24px] h-auto" />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <h1 className="text-[#848B8D] text-sm md:text-base font-semibold"> Available commission </h1>
-                                    <h1 className="text-white text-sm md:text-base font-semibold"> { availableCommission } </h1>
+                                    <h1 className="text-[#848B8D] text-xs sm:text-sm md:text-base font-semibold"> Available commission </h1>
+                                    <h1 className="text-white text-xs sm:text-sm md:text-base font-semibold"> { availableCommission } </h1>
                                 </div>
                                 <button className="w-[57px] hidden md:flex h-[30px] justify-center items-center ml-auto p-[3px] bg-gradient-to-t from-red-700 to-red-500  border border-[#2C3034] rounded-md" onClick={claimAll}>
                             <span className="text-white justify-center items-center font-semibold text-xs font-sans">
@@ -385,14 +382,15 @@ export const AffiliatesPage = () => {
                             </span>
                                 </button>
                             </div>
+
                         </div>
                             <button className="w-full h-[44.5px] flex md:hidden  mb-10 justify-center items-center ml-auto p-[3px] bg-gradient-to-t from-red-700 to-red-500  border border-[#2C3034] rounded-md" onClick={claimAll}>
                             <span className="text-white justify-center items-center font-semibold text-xs font-sans">
                             Claim
                             </span>
                             </button>
-                        </div>
-                        <div className="pointer-events-none absolute left-[-32px] pr-[32px] bottom-[0px] h-[66px] w-full bg-gradient-to-b from-transparent to-[#151719]"></div>
+
+                        <div className="pointer-events-none absolute left-0 bottom-0 h-[66px] w-full bg-gradient-to-b from-transparent to-[#151719]"></div>
                     </div>
                 </div>
             </div>
