@@ -7,7 +7,7 @@ import GradientTitleBox from "../micro/GradientTitleBox";
 const OfficialBox = () => {
   return (
     <div className="flex-col items-center justify-center">
-      <GradientTitleBox className="flex xs:!h-[40px] md:max-2xl:!h-12 2xl:!h-12">
+      <GradientTitleBox className="flex xs:!h-[40px] 2xl:!h-12">
         <OfficialBoxHeader />
       </GradientTitleBox>
       <div className="flex justify-center py-8">

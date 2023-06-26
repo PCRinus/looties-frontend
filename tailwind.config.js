@@ -16,6 +16,7 @@ module.exports = {
         custom_white_1: "rgba(223, 223, 223, 1)",
         custom_red_1: "rgba(240, 48, 51, 1)",
         grey_font_color: "rgb(118, 118, 118, 1)",
+        bottom_fade: "linear-gradient( to top, transparent, #000 5%, #000 95%, transparent )",
       },
     },
     screens: {
