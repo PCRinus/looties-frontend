@@ -5,6 +5,7 @@ import OfficialBoxSpinner from "../micro/OfficialBoxSpinner";
 import WelcomeBoxContent from "../micro/WelcomeBoxContent";
 import Avatar1 from "../../assets/HomePageAvatar1.svg";
 import Avatar2 from "../../assets/HomePageAvatar2.svg";
+import { useSelector } from "react-redux";
 
 const WelcomeBox: React.FC = () => {
   return (
@@ -14,11 +15,7 @@ const WelcomeBox: React.FC = () => {
         alt="avatar-icon.svg"
         className="mt-[-109px] xs:hidden 2xl:mb-0 2xl:inline 2xl:h-[369px] 2xl:w-[369px]"
       />
-      <WelcomeBoxContent
-        isLoggedIn={true}
-        username="Solanagamer11"
-        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard."
-      />
+      <WelcomeBoxContent />
       <img
         src={Avatar1}
         alt="avatar-icon-svg"

@@ -62,12 +62,12 @@ export const useAuth = () => {
             })
             .catch((err) => {
               console.log(err);
-              disconnect();
+              disconnectWallet();
             });
         }
       } catch (err) {
         console.log("Signing error: ", err);
-        disconnect();
+        disconnectWallet();
       }
     }
   };
@@ -83,7 +83,10 @@ export const useAuth = () => {
         const userData = res.data;
         dispatch({ type: ReduxEvents.SetUserData, payload: userData });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        disconnectWallet();
+      });
   };
 
   const loadProfileData = async (jwt: string, userId: string) => {
@@ -102,7 +105,7 @@ export const useAuth = () => {
       dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
     } catch (err) {
       console.log("Error getting user profile ", err);
-      disconnect();
+      disconnectWallet();
     }
   };
 
