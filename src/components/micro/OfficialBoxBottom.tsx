@@ -6,7 +6,7 @@ import FastOpeningButton from "./FastOpeningButton";
 const OfficialBoxBottom = () => {
   return (
     <div className="flex h-[80px] w-full items-center justify-center ">
-      <OpenButton className="mr-4 font-sans font-bold xs:ml-6 xs:mr-3 xs:h-[29.71px] xs:w-[164px]  xs:text-[12px] md:max-2xl:h-[44.57px] md:max-2xl:w-[188px] md:max-2xl:text-[20px] 2xl:h-[44.57px]  2xl:w-[188px]" />
+      <OpenButton className="mr-4 font-sans font-bold xs:ml-6 xs:mr-3 xs:h-[29.71px] xs:w-[164px]  xs:text-[12px] 2xl:h-[44.57px] 2xl:w-[188px]" />
       <TryItButton />
       <FastOpeningButton />
     </div>

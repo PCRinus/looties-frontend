@@ -5,9 +5,9 @@ import ProvablyFairButton from "./ProvablyFairButton";
 import "../../styles/micro/OfficialBoxBar.scss";
 const OfficialBoxHeader = () => {
   return (
-    <div className=" flex items-center justify-between  xs:h-[40px] xs:w-screen  md:max-2xl:h-12 2xl:h-12">
+    <div className=" flex items-center justify-between  xs:h-[40px] xs:w-screen 2xl:h-12">
       <BackButton />
-      <span className="xs:text[16px] font-sans font-bold text-custom_white_1 xs:ml-[45px] md:max-2xl:text-[20px]  2xl:mr-[-55px] 2xl:text-[20px]">
+      <span className="xs:text[16px] font-sans font-bold text-custom_white_1 xs:ml-[45px] 2xl:mr-[-55px] 2xl:text-[20px]">
         Official Box
       </span>
       <div className="flex justify-center">
