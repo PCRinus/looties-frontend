@@ -15,6 +15,9 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
+import { AffiliatesPage } from "./pages/AffiliatesPage";
+import { Toaster } from "react-hot-toast";
+
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -64,6 +67,7 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
+          <Route path="/affiliates" element={<AffiliatesPage />} />
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
@@ -71,6 +75,7 @@ const App: React.FC = () => {
         </Routes>
         <MobileSidebar />
         <Footer />
+        <Toaster position="bottom-center" reverseOrder={false} />
       </Router>
     </>
   );
