@@ -1,29 +1,34 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type OptionType = {
   id: number;
   name: string;
 };
-
-const ProfileOptionsDropDown = () => {
-  const options: OptionType[] = [
-    { id: 1, name: "Profile" },
-    { id: 2, name: "Settings" },
-    { id: 3, name: "Games" },
-    { id: 4, name: "Inventory" },
-    { id: 5, name: "Dashboard" },
-    { id: 6, name: "My lootboxes" },
-    { id: 7, name: "Affiliates" },
-    { id: 8, name: "Transactions" },
-    { id: 9, name: "Log out" },
-  ];
-
+const options: OptionType[] = [
+  { id: 1, name: "Profile" },
+  { id: 2, name: "Settings" },
+  { id: 3, name: "Games" },
+  { id: 4, name: "Inventory" },
+  { id: 5, name: "Dashboard" },
+  { id: 6, name: "My lootboxes" },
+  { id: 7, name: "Affiliates" },
+  { id: 8, name: "Transactions" },
+  { id: 9, name: "Log out" },
+];
+const ProfileOptionsDropDown: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(options[0]);
   const [selectedColor, setSelectedColor] = useState<number | null>(options[0].id);
 
   const handleSelect = (option: OptionType) => {
     setSelectedOption(option);
     setSelectedColor(option.id);
+    if (option.name.toLowerCase() === "profile") {
+      navigate("/profile");
+    } else {
+      navigate(`${option.name.toLowerCase()}`);
+    }
   };
 
   return (
