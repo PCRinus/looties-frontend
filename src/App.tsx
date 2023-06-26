@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const { publicKey, connected, disconnecting } = useWallet();
-  const { authorizeWallet, loadUserData, loadProfileData } = useAuth();
+  const { authorizeWallet, loadUserData, loadProfileData, disconnectWallet } = useAuth();
 
   useEffect(() => {
     WebFont.load({
@@ -33,6 +33,9 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!connected) {
+      disconnectWallet();
+    }
     if (publicKey && connected && disconnecting === false) {
       dispatch({ type: ReduxEvents.SetNeedsAuth, payload: true });
     }
