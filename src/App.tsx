@@ -14,6 +14,7 @@ import { GameResponsiblyPage } from "./pages/GameResponsiblyPage";
 import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
+import Profile from "./pages/Profile";
 import { AffiliatesPage } from "./pages/AffiliatesPage";
 import { Toaster } from "react-hot-toast";
 
@@ -24,7 +25,7 @@ const App: React.FC = () => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const { publicKey, connected, disconnecting } = useWallet();
-  const { authorizeWallet, loadUserData, loadProfileData } = useAuth();
+  const { authorizeWallet, loadUserData, loadProfileData, disconnectWallet } = useAuth();
 
   useEffect(() => {
     WebFont.load({
@@ -35,6 +36,9 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!connected) {
+      disconnectWallet();
+    }
     if (publicKey && connected && disconnecting === false) {
       dispatch({ type: ReduxEvents.SetNeedsAuth, payload: true });
     }
@@ -67,6 +71,7 @@ const App: React.FC = () => {
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <MobileSidebar />
         <Footer />

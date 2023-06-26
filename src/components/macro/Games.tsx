@@ -3,9 +3,12 @@ import GameNav from "../micro/GameNav";
 import LootboxesImg from "../../assets/LootboxexImg.svg";
 import ClassicImg from "../../assets/ClassicImg.svg";
 import WalletIcon from "../../assets/Wallet.svg";
-import dropbox from "../../assets/DropBoxIcon.svg";
+import Dropbox from "../../assets/DropBoxIcon.svg";
 import redStar from "../../assets/StarRed.svg";
 import DropBoxRed from "../../assets/DropboxIconRed.svg";
+import LootboxesIconWhite from "../../assets/LootboxesIconWhite.svg";
+import ClassicIconWhite from "../../assets/ClassicIconWhite.svg";
+import { Link } from "react-router-dom";
 const Games: React.FC = () => {
   return (
     <div className="flex xs:flex-col xs:justify-center 2xl:flex-row 2xl:gap-[52px]">
@@ -21,10 +24,14 @@ const Games: React.FC = () => {
             industry's.
           </p>
         </div>
-        <button className="flex flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-[#F03033] to-[#E5383B] font-bold text-white xs:h-[45px] xs:w-[340px] 2xl:mt-[25px] 2xl:w-[509px] 2xl:px-4 2xl:py-2">
-          <img src={WalletIcon} alt="Wallet icon"></img>
-          <span className="whitespace-nowrap">Connect wallet</span>
-        </button>
+        <div className="flex flex-row items-center justify-center">
+          <Link to="lootboxes" className="w-full">
+            <button className="flex w-full flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-[#F03033] to-[#E5383B] font-bold text-white xs:h-[45px] 2xl:mt-[25px] 2xl:px-4 2xl:py-2">
+              <img src={LootboxesIconWhite} alt="Lootboxes icon"></img>
+              <span className="whitespace-nowrap">Go to Lootboxes</span>
+            </button>
+          </Link>
+        </div>
       </div>
       <div className="xs:mt-14 2xl:mt-0">
         <div className="flex gap-4">
@@ -41,10 +48,14 @@ const Games: React.FC = () => {
             industry's.
           </p>
         </div>
-        <button className="flex flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-[#F03033] to-[#E5383B] font-bold text-white xs:h-[45px] xs:w-[340px] 2xl:mt-[25px] 2xl:w-[509px] 2xl:px-4 2xl:py-2">
-          <img src={WalletIcon} alt="Wallet icon"></img>
-          <span className="whitespace-nowrap">Connect wallet</span>
-        </button>
+        <div className="flex flex-row items-center justify-center">
+          <Link to="classic" className="w-full">
+            <button className="flex w-full flex-row items-center justify-center gap-1 rounded-xl bg-gradient-to-t from-[#F03033] to-[#E5383B] font-bold text-white  xs:h-[45px] 2xl:mt-[25px] 2xl:px-4 2xl:py-2">
+              <img src={ClassicIconWhite} alt="Classic icon"></img>
+              <span className="whitespace-nowrap">Go to Classic</span>
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

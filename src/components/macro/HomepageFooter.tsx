@@ -21,75 +21,47 @@ const HomepageFooter = () => {
             Crypto trading is not gambling, and therefore not covered by our gaming license.
           </p>
         </div>
-        <div id="links" className="flex flex-row xs:mt-12 xs:justify-between 2xl:mt-0 2xl:justify-normal">
-          <div id="right-links-col" className="flex flex-col 2xl:pr-[10vw]">
-            <span className="pb-2 font-sans text-base font-semibold text-custom_white_1">Info</span>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              About us
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              FAQ
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Partnership
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Support
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Terms of Service
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Privacy Policy
-            </a>
-          </div>
-          <div id="left-links-col" className="flex flex-col">
-            <span className="pb-2 font-sans text-base font-semibold text-custom_white_1">Platform</span>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Lootboxes
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Classic
-            </a>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Affiliates
-            </a>
-            <Link to="/game-responsibly" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Game responsibly
-            </Link>
-            <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
-              Fairness
-            </a>
-          </div>
-        </div>
-        <div
-          id="social"
-          className="flex xs:relative xs:mt-12 xs:flex-row 2xl:mt-0 2xl:flex-col 2xl:justify-between 2xl:pl-[2vw] 2xl:pr-[52px]"
-        >
-          <div className="flex flex-col">
-            <span className="pb-2 font-sans text-base font-semibold text-custom_white_1">Social</span>
-            <div className="social-icons mt-4 flex items-center justify-center">
-              <a href="#" className="social-icon">
-                <img src={FaceBookIcon} alt="facebook-icon" />
+        <div className="flex flex-row items-start justify-start gap-16">
+          <div id="links" className="flex flex-row xs:mt-12 xs:justify-between 2xl:mt-0 2xl:justify-normal">
+            <div id="right-links-col" className="flex flex-col 2xl:pr-[10vw]">
+              <span className="pb-2 font-sans text-base font-semibold text-custom_white_1">Info</span>
+              <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
+                FAQ
               </a>
-              <a href="#" className="social-icon ml-[23.5px]">
-                <img src={TwiterIcon} alt="twiter-icon " />
+              <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
+                Support
               </a>
-              <a href="#" className="social-icon ml-[19.33px]">
-                <img src={InstagramIcon} alt="instagram-icon" />
+              <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
+                Terms of Service
               </a>
-              <a href="#" className="social-icon ml-[18.92px]">
-                <img src={MailIcon} alt="mail-icon" />
+              <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
+                Privacy Policy
               </a>
             </div>
           </div>
-          <img
-            src={AdultImg}
-            alt="img-svg"
-            className="xs:absolute xs:bottom-[-1.75rem] xs:right-5 xs:inline 2xl:hidden"
-          />
+          <div
+            id="social"
+            className="flex xs:relative xs:mt-12 xs:flex-row 2xl:mt-0 2xl:flex-col 2xl:justify-between 2xl:pl-[2vw] 2xl:pr-[52px]"
+          >
+            <div className="flex flex-col">
+              <span className="pb-2 font-sans text-base font-semibold text-custom_white_1">Social</span>
+              <div className="social-icons mt-4 flex items-center justify-start gap-5">
+                <a href="#" className="social-icon ">
+                  <img src={TwiterIcon} alt="twiter-icon " />
+                </a>
+                <a href="#" className="social-icon ">
+                  <img src={InstagramIcon} alt="instagram-icon" />
+                </a>
+                <a href="#" className="social-icon ">
+                  <img src={MailIcon} alt="mail-icon" />
+                </a>
+              </div>
+              <img src={AdultImg} alt="img-svg" className="relative right-12 xs:block 2xl:hidden" />
+            </div>
+          </div>
         </div>
-        <img src={AdultImg} alt="img-svg" className="xs:hidden 2xl:absolute 2xl:right-28 2xl:top-24 2xl:inline" />
+
+        <img src={AdultImg} alt="img-svg" className="relative bottom-16 xs:hidden 2xl:inline" />
       </div>
       <div className="flex flex-col xs:hidden 2xl:inline">
         <hr className=" border-1 rounded bg-custom_gray_1 2xl:mx-[52px]"></hr>

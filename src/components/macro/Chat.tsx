@@ -24,6 +24,7 @@ export interface RepliedMessage {
 export const Chat: React.FC = () => {
   const openChat = useSelector((state: any) => state.ui.openChat);
   const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatUsersCount, setChatUsersCount] = useState<number>(0);
   const [chatSocket, setChatSocket] = useState<Socket>();
@@ -32,9 +33,6 @@ export const Chat: React.FC = () => {
   const [repliedMessageData, setRepliedMessageData] = useState<RepliedMessage>();
   const [scrollApplied, setScrollApplied] = useState(false);
   const chatBodyDiv = useRef<HTMLDivElement>(null);
-
-  console.log(messages);
-  console.log(user.id);
 
   const handleMessage = (message: string) => {
     try {
@@ -113,7 +111,11 @@ export const Chat: React.FC = () => {
 
   // needs to run only once, so that it doesn't mess the user count by trying to connect multiple times
   useEffect(() => {
-    const socket = io(`${process.env.REACT_APP_API_URL}/chat`);
+    const socket = io(`${process.env.REACT_APP_API_URL}/chat`, {
+      extraHeaders: {
+        Authorization: `Bearer ${auth.jwt}`,
+      },
+    });
     socket.on("connected", (data) => {
       setMessages(data.messages);
     });
@@ -152,7 +154,7 @@ export const Chat: React.FC = () => {
     return () => {
       socket.disconnect();
     };
-  }, [user.id]);
+  }, [user.id, auth.jwt]);
 
   //only run once to scroll chat-body to bottom
   useEffect(() => {
