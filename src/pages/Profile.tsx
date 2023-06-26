@@ -26,26 +26,27 @@ const Profile: React.FC = () => {
   return (
     <div className="flex w-screen xs:h-[calc(100vh-80px-64px)] xs:flex-col 2xl:h-[calc(100vh-120px)] 2xl:flex-row ">
       {isXsScreen ? (
-        <Scrollbars autoHide universal>
-          <ProfileSideBar />
-          <div className="bottom-fade mx-6 h-auto min-h-full flex-auto rounded-xl bg-custom_black_2">
-            <ProfileOptionsHeader title="My Profile" />
-            {/*TO DO: Routes profile options pages mobile version */}
-            <ProfilePage
-              totalGameData={4843.3}
-              gamesWonData={1000000}
-              gamesLostData={100000}
-              winRatioData={100000}
-              lootboxesOpenData={100000}
-              referralsData={100000}
-              totalWageredData={100000}
-              netProfitData={4843.3}
-            />
-            <div className=" h-10 w-full bg-custom_black_2"></div>
-          </div>
-
+        <>
+          <Scrollbars autoHide universal>
+            <ProfileSideBar />
+            <div className="bottom-fade mx-6 h-auto min-h-full flex-auto rounded-xl bg-custom_black_2">
+              <ProfileOptionsHeader title="My Profile" />
+              {/*TO DO: Routes profile options pages mobile version */}
+              <ProfilePage
+                totalGameData={4843.3}
+                gamesWonData={1000000}
+                gamesLostData={100000}
+                winRatioData={100000}
+                lootboxesOpenData={100000}
+                referralsData={100000}
+                totalWageredData={100000}
+                netProfitData={4843.3}
+              />
+              <div className=" h-10 w-full bg-custom_black_2"></div>
+            </div>
+          </Scrollbars>
           <Chat />
-        </Scrollbars>
+        </>
       ) : (
         <>
           <div className="flex h-screen  w-full flex-col">
