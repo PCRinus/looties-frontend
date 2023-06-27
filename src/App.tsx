@@ -16,6 +16,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
 import { AffiliatesPage } from "./pages/AffiliatesPage";
+import { TermsPage } from "./pages/TermsPage";
 import { Toaster } from "react-hot-toast";
 
 
@@ -72,6 +73,7 @@ const App: React.FC = () => {
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/terms-of-service" element={<TermsPage />} />
         </Routes>
         <MobileSidebar />
         <Footer />

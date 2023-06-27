@@ -31,9 +31,9 @@ const HomepageFooter = () => {
               <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
                 Support
               </a>
-              <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
+              <Link to="/terms-of-service" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
                 Terms of Service
-              </a>
+              </Link>
               <a href="#" className="py-2 font-sans text-sm font-semibold text-custom_gray_2">
                 Privacy Policy
               </a>
