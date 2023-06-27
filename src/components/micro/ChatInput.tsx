@@ -75,7 +75,9 @@ export const ChatInput: FC<Props> = ({
           <div className="flex w-3/4 flex-row items-center justify-between bg-[#1E2124] ">
             <h1 className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold text-[#888888]">
               Replying to{" "}
-              <span className="text-xs font-semibold text-[#F03033] ">@{repliedMessageData!.repliedMessageUserId}</span>{" "}
+              <span className="text-xs font-semibold text-[#F03033] ">
+                @{repliedMessageData!.repliedMessageUserName}
+              </span>{" "}
             </h1>
             <button onClick={handleCancelReply}>
               <img src={CancelReplyIcon} alt="Cancel reply"></img>
