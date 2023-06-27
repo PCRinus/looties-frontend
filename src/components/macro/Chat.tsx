@@ -19,7 +19,7 @@ export interface Message {
 }
 
 export interface RepliedMessage {
-  repliedMessageUserId: string;
+  repliedMessageUserName: string;
   messageId: string;
 }
 
@@ -85,8 +85,8 @@ export const Chat: React.FC = () => {
     setIsReply(false);
   };
 
-  const handleRepliedMessageData = (userId: string, messageId: string) => {
-    setRepliedMessageData({ repliedMessageUserId: userId, messageId });
+  const handleRepliedMessageData = (userName: string, messageId: string) => {
+    setRepliedMessageData({ repliedMessageUserName: userName, messageId });
   };
 
   const sortFn = (a: Message, b: Message) => {
@@ -178,7 +178,7 @@ export const Chat: React.FC = () => {
         ref={chatBodyDiv}
         className="flex w-full grow flex-col items-center gap-6 overflow-auto py-8 xs:max-w-[429px]"
       >
-        <div className="absolute h-16 bg-gradient-to-b from-[#151719] to-transparent xs:top-[59px] xs:w-full 2xl:top-[180px] 2xl:w-[429px]"></div>
+        <div className="absolute h-8 bg-gradient-to-b from-[#151719] to-transparent xs:top-[59px] xs:w-full 2xl:top-[180px] 2xl:w-[429px]"></div>
         {showUnauthenticatedUserMessage && !user.id && (
           <ChatMessageUserNotAuthenticated closeAction={handleCloseUnauthenticatedMessage} />
         )}
@@ -202,7 +202,7 @@ export const Chat: React.FC = () => {
           />
         ))}
         <div
-          className={`absolute h-16 bg-gradient-to-t from-[#151719] to-transparent xs:w-full 2xl:w-[429px] ${
+          className={`absolute h-8 bg-gradient-to-t from-[#151719] to-transparent xs:w-full 2xl:w-[429px] ${
             isReply ? "bottom-[104px]" : "bottom-[79px]"
           }`}
         ></div>

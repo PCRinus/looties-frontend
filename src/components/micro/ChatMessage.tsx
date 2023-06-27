@@ -111,7 +111,7 @@ export const ChatMessage: React.FC<Props> = ({
               <button
                 className="h-4 w-4 shrink-0"
                 onClick={() => {
-                  handleRepliedMessageData(userId, messageId);
+                  handleRepliedMessageData(userName, messageId);
                   handleSetIsReply();
                 }}
               >
