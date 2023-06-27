@@ -320,11 +320,12 @@ export const AffiliatesPage = () => {
                                             <img src={RedTwitter} alt="twitter-icon-svg" className="w-5 h-5" />
                                         </button>
                                     </div>
-                                    <div>
-                                        <button className="w-[48px] h-[48px] bg-custom_gray_1 border border-custom_gray_1 rounded-xl flex justify-center items-center" onClick={handleDiscordShare}>
-                                            <img src={Discord} alt="discord-icon-svg" className="w-5 h-5" />
-                                        </button>
-                                    </div>
+                                    {/*<div>*/}
+                                    {/*    <button className="w-[48px] h-[48px] bg-custom_gray_1 border border-custom_gray_1 rounded-xl flex justify-center items-center" onClick={handleDiscordShare}>*/}
+                                    {/*        <img src={Discord} alt="discord-icon-svg" className="w-5 h-5" />*/}
+                                    {/*    </button>*/}
+                                    {/*</div>*/}
+                                    {/*TODO: Add discord share*/}
                                 </div>
                             </div>
                         </div>
