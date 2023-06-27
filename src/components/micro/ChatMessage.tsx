@@ -15,6 +15,8 @@ export interface Props {
   message: string;
   likedBy: string[];
   userId: string;
+  userName: string;
+  level: string;
   createdAt: Date;
   updatedAt: Date;
   repliedMessage: Message | undefined;
@@ -30,6 +32,8 @@ export const ChatMessage: React.FC<Props> = ({
   message,
   likedBy,
   userId,
+  userName,
+  level,
   createdAt,
   updatedAt,
   repliedMessage,
@@ -58,7 +62,7 @@ export const ChatMessage: React.FC<Props> = ({
               <img src={UserIcon} alt="User icon"></img>
             </div>
             <span className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium text-[#DFDFDF]">
-              @{repliedMessage.userId}
+              @{repliedMessage.name}
             </span>
             <div className="h-4 w-1">
               <img src={ChatVerticalBar} alt="Replied message vertical bar"></img>
@@ -79,11 +83,9 @@ export const ChatMessage: React.FC<Props> = ({
           <div className=" flex w-full flex-row items-center justify-between gap-2">
             <div className="flex flex-row items-center justify-start gap-1 ">
               <h3 className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-[#DFDFDF]">
-                {userId}
+                {userName}
               </h3>
-              <div className={`rounded-md bg-red-500 px-2 py-1 text-[10px] font-medium text-[#1A1C20] `}>
-                {Math.floor(Math.random() * 100)}
-              </div>
+              <div className={`rounded-md bg-red-500 px-2 py-1 text-[10px] font-medium text-[#1A1C20] `}>{level}</div>
               <div className="h-1 w-1">
                 <img src={ChatPoint} alt="Chat message user details separator"></img>
               </div>
