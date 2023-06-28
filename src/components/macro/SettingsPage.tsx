@@ -4,6 +4,11 @@ import Twiter from "../../assets/Twiter.svg";
 import DiscordIcon from "../../assets/DiscordIcon.svg";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
 import SettingsSaveChanges from "../micro/SettingsSaveChanges";
+import SettingsWalletAddress from "../micro/SettingsWalletAddress";
+import SettingsSoundEffects from "../micro/SettingsSoundEffects";
+import SettingsNotifications from "../micro/SettingsNotifications";
+import SettingsHideStatistics from "../micro/SettingsHideStatistics";
+import SettingsAnonymousMode from "../micro/SettingsAnonymousMode";
 
 const SettingsPage: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
@@ -31,16 +36,16 @@ const SettingsPage: React.FC = () => {
             </span>
             <div className={isXsScreen ? "mt-4 grid grid-cols-1 gap-4" : "mt-6 grid grid-cols-2 grid-rows-1 gap-4"}>
               <SettingsNicknameChange />
-              <SettingsNicknameChange />
+              <SettingsWalletAddress />
             </div>
             <span className="font-sans font-bold text-custom_white_1 xs:mt-6 xs:text-base 2xl:mt-8 2xl:text-xl">
               Hidden options
             </span>
             <div className={isXsScreen ? "mt-4 grid grid-cols-1 gap-4" : "mt-6 grid grid-cols-2 grid-rows-2 gap-4"}>
-              <SettingsNicknameChange />
-              <SettingsNicknameChange />
-              <SettingsNicknameChange />
-              <SettingsNicknameChange />
+              <SettingsHideStatistics />
+              <SettingsAnonymousMode />
+              <SettingsNotifications />
+              <SettingsSoundEffects />
             </div>
             <span className="font-sans text-xl font-bold text-custom_white_1 xs:mt-6 2xl:mt-8">Links</span>
             <div className="flex xs:mt-4 xs:gap-4 2xl:mt-8 2xl:gap-6">
