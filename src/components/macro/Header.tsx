@@ -4,10 +4,10 @@ import HeaderUserBar from "../micro/HeaderUserBar";
 import HeaderInfoBar from "../micro/HeaderInfoBar";
 import { ConnectWalletButton } from "../micro/ConnectWalletButton";
 import UserInfo from "../micro/UserInfo";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Header: React.FC = () => {
-  const { connected } = useWallet();
+  const user = useSelector((state: any) => state.user);
 
   return (
     <div
@@ -21,11 +21,15 @@ const Header: React.FC = () => {
       </div>
 
       <div className="flex-shrink-1 h-full flex-grow flex-nowrap xs:hidden 2xl:block">
-        <HeaderInfoBar></HeaderInfoBar>
-        <HeaderUserBar isUserLoggedIn={connected}></HeaderUserBar>
+        <HeaderInfoBar />
+        <HeaderUserBar />
       </div>
       <div className="w-full flex-row items-center justify-center xs:flex 2xl:hidden">
-        {connected ? <UserInfo name={"Solanagamer11"} level={10} /> : <ConnectWalletButton />}
+        {user.id && user.profile ? (
+          <UserInfo name={user.profile.userName} level={user.profile.level} />
+        ) : (
+          <ConnectWalletButton />
+        )}
       </div>
     </div>
   );
