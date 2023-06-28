@@ -8,6 +8,8 @@ import { ChatMessageUserNotAuthenticated } from "../micro/ChatMessageUserNotAuth
 
 export interface Message {
   id: string;
+  name: string;
+  level: string;
   message: string;
   likedBy: string[];
   repliedTo: string;
@@ -17,7 +19,7 @@ export interface Message {
 }
 
 export interface RepliedMessage {
-  repliedMessageUserId: string;
+  repliedMessageUserName: string;
   messageId: string;
 }
 
@@ -83,8 +85,8 @@ export const Chat: React.FC = () => {
     setIsReply(false);
   };
 
-  const handleRepliedMessageData = (userId: string, messageId: string) => {
-    setRepliedMessageData({ repliedMessageUserId: userId, messageId });
+  const handleRepliedMessageData = (userName: string, messageId: string) => {
+    setRepliedMessageData({ repliedMessageUserName: userName, messageId });
   };
 
   const sortFn = (a: Message, b: Message) => {
@@ -122,8 +124,9 @@ export const Chat: React.FC = () => {
     socket.on("get-users-count", (data) => {
       setChatUsersCount(data.connectedUsersCount);
     });
-    socket.on("message", (newMessage) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage as Message]);
+    socket.on("message", (newMessageData) => {
+      const { name, level, newMessage } = newMessageData;
+      setMessages((prevMessages) => [...prevMessages, { name, level, ...newMessage } as Message]);
       setScrollApplied(false);
     });
     socket.on("like", (data) => {
@@ -145,8 +148,8 @@ export const Chat: React.FC = () => {
       );
     });
     socket.on("reply", (replyData) => {
-      const { newMessage } = replyData;
-      setMessages((prevMessages) => [...prevMessages, newMessage as Message]);
+      const { name, level, newMessage } = replyData;
+      setMessages((prevMessages) => [...prevMessages, { name, level, ...newMessage } as Message]);
       setScrollApplied(false);
     });
     setChatSocket(socket);
@@ -171,7 +174,11 @@ export const Chat: React.FC = () => {
       } flex flex-col  items-center  justify-start bg-[#1C1E22] transition-all duration-200 xs:absolute xs:top-20 xs:h-[calc(100%-64px-80px)] xs:w-screen 2xl:static 2xl:h-full 2xl:w-[429px] 2xl:flex-shrink-0`}
     >
       <ChatHeader chatUsersCount={chatUsersCount} />
-      <div ref={chatBodyDiv} className="flex w-full grow flex-col items-center gap-6 overflow-auto py-8 ">
+      <div
+        ref={chatBodyDiv}
+        className="flex w-full grow flex-col items-center gap-6 overflow-auto py-8 xs:max-w-[429px]"
+      >
+        <div className="absolute h-8 bg-gradient-to-b from-[#151719] to-transparent xs:top-[59px] xs:w-full 2xl:top-[180px] 2xl:w-[429px]"></div>
         {showUnauthenticatedUserMessage && !user.id && (
           <ChatMessageUserNotAuthenticated closeAction={handleCloseUnauthenticatedMessage} />
         )}
@@ -183,6 +190,8 @@ export const Chat: React.FC = () => {
             message={message.message}
             likedBy={message.likedBy}
             userId={message.userId}
+            userName={message.name}
+            level={message.level}
             createdAt={message.createdAt}
             updatedAt={message.updatedAt}
             handleSetIsReply={user.id ? handleSetIsReply : handleUnauthenticatedUserAction}
@@ -192,6 +201,11 @@ export const Chat: React.FC = () => {
             repliedMessage={message.repliedTo ? getMessageById(message.repliedTo) : undefined}
           />
         ))}
+        <div
+          className={`absolute h-8 bg-gradient-to-t from-[#151719] to-transparent xs:w-full 2xl:w-[429px] ${
+            isReply ? "bottom-[104px]" : "bottom-[79px]"
+          }`}
+        ></div>
       </div>
 
       <ChatInput

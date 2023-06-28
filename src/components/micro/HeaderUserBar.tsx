@@ -9,12 +9,11 @@ import ProvablyFairButton from "./ProvablyFairButton";
 import BalanceView from "./BalanceView";
 import { ConnectWalletButton } from "./ConnectWalletButton";
 import { Link } from "react-router-dom";
+import { CreateLootboxButton } from "./CreateLootboxButton";
+import { useSelector } from "react-redux";
 
-interface Props {
-  isUserLoggedIn: boolean;
-}
-
-const HeaderUserBar: React.FC<Props> = ({ isUserLoggedIn = false }) => {
+const HeaderUserBar: React.FC = () => {
+  const user = useSelector((state: any) => state.user);
   return (
     <div className="user-box top-[40px] flex h-[80px] items-center justify-between">
       <div className="flex items-center justify-start">
@@ -41,16 +40,17 @@ const HeaderUserBar: React.FC<Props> = ({ isUserLoggedIn = false }) => {
         </div>
       </div>
 
-      {isUserLoggedIn ? (
-        <div className="flex items-center justify-start">
+      {user.id && user.profile ? (
+        <div className="flex items-center justify-start gap-4 px-4">
+          <CreateLootboxButton />
           <div>
             <BalanceView />
           </div>
 
-          <div className="ml-4">
-            <UserInfo name={"Solanagamer11"} level={10} />
+          <div className="">
+            <UserInfo name={user.profile.userName} level={user.profile.level} />
           </div>
-          <div className="ml-4 mr-8">
+          <div className="">
             <LogoutButton />
           </div>
         </div>

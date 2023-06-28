@@ -15,7 +15,9 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
-import SettingsPage from "./components/macro/SettingsPage";
+import { AffiliatesPage } from "./pages/AffiliatesPage";
+import { TermsPage } from "./pages/TermsPage";
+import { Toaster } from "react-hot-toast";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -23,7 +25,7 @@ const App: React.FC = () => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const { publicKey, connected, disconnecting } = useWallet();
-  const { authorizeWallet, loadUserData, loadProfileData } = useAuth();
+  const { authorizeWallet, loadUserData, loadProfileData, disconnectWallet } = useAuth();
 
   useEffect(() => {
     WebFont.load({
@@ -34,6 +36,9 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!connected) {
+      disconnectWallet();
+    }
     if (publicKey && connected && disconnecting === false) {
       dispatch({ type: ReduxEvents.SetNeedsAuth, payload: true });
     }
@@ -62,13 +67,16 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
+          <Route path="/affiliates" element={<AffiliatesPage />} />
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
           <Route path="/profile/*" element={<Profile />} />
+          <Route path="/terms-of-service" element={<TermsPage />} />
         </Routes>
         <MobileSidebar />
         <Footer />
+        <Toaster position="bottom-center" reverseOrder={false} />
       </Router>
     </>
   );
