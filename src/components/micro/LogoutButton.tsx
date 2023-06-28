@@ -1,15 +1,23 @@
 import React from "react";
 import LogoutIcon from "../../assets/LogoutImg.svg";
-import { ReduxEvents } from '../../reducers/events';
-import {useDispatch} from "react-redux";
+import { ReduxEvents } from "../../reducers/events";
+import { useDispatch } from "react-redux";
 const LogoutButton: React.FC = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "LogOut" } });
+    dispatch({ type: ReduxEvents.ToggleSidebar });
+  };
 
-    return (
+  return (
     <div>
-      <button className="top-56 flex h-12 w-12 items-center justify-center rounded-xl bg-custom_gray_1" onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LogOut' } })}>
+      <button
+        className="top-56 flex items-center justify-center gap-2 rounded-xl bg-custom_gray_1 xs:h-10 xs:w-28 2xl:h-12 2xl:w-12"
+        onClick={handleLogout}
+      >
         <img src={LogoutIcon} alt="logout-svg-icon" />
+        <span className="text-base font-semibold text-[#848B8D] xs:block 2xl:hidden">Log out</span>
       </button>
     </div>
   );
