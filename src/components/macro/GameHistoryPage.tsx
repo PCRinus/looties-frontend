@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
 import SettingsSaveChanges from "../micro/SettingsSaveChanges";
 import ContactSupport from "../micro/ContactSupport";
+import GameHistoryMobileCard from "../micro/GameHistoryMobileCard";
+import TableGameHistory from "../micro/TableGameHistory";
 
 interface Game {
   id: number;
@@ -17,11 +19,25 @@ const GameHistoryPage = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [displayCount, setDisplayCount] = useState(10);
 
+  const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
+
+  useEffect(() => {
+    const screenSizeChange = () => {
+      setIsXsScreen(window.matchMedia("(max-width: 1535px)").matches);
+    };
+
+    window.addEventListener("resize", screenSizeChange);
+
+    return () => {
+      window.removeEventListener("resize", screenSizeChange);
+    };
+  }, []);
+
   // Fetch games when component mounts
   useEffect(() => {
     // In a real app, fetch games from API and set state
     // For this example, we'll create 50 dummy game entries
-    const dummyGames: Game[] = Array.from({ length: 50 }, (_, id) => ({
+    const dummyGames: Game[] = Array.from({ length: 20 }, (_, id) => ({
       id,
       game: `Game ${id + 1}`,
       betAmount: Math.floor(Math.random() * 100),
@@ -38,35 +54,20 @@ const GameHistoryPage = () => {
 
   return (
     <>
-      <div className="2xl:autoheight bottom-fade mb-[52px] flex-auto rounded-xl  bg-custom_black_2 xs:mx-6 xs:h-auto   2xl:w-full">
+      <div className=" bottom-fade mb-[52px] flex-auto rounded-xl  bg-custom_black_2 xs:mx-6 xs:h-auto   2xl:w-full">
         <ProfileOptionsHeader title={"Game history"} />
 
         {/* Game History */}
         {games.length > 0 ? (
-          <div className="2xl:p-8">
-            <table className="w-fit">
-              <thead className="h-12  bg-[#1E2124]">
-                <tr className="">
-                  <th className="font-sans text-base font-semibold text-custom_gray_2">ID</th>
-                  <th className="font-sans text-base font-semibold text-custom_gray_2">Game</th>
-                  <th className="font-sans text-base font-semibold text-custom_gray_2">Bet Amount</th>
-                  <th className="font-sans text-base font-semibold text-custom_gray_2">Winning</th>
-                  <th className="font-sans text-base font-semibold text-custom_gray_2">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {games.slice(0, displayCount).map((game) => (
-                  <tr key={game.id}>
-                    <td>{game.id}</td>
-                    <td>{game.game}</td>
-                    <td>{game.betAmount}</td>
-                    <td>{game.winning}</td>
-                    <td>{game.date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <>
+            {isXsScreen ? (
+              <>
+                <GameHistoryMobileCard games={games} />
+              </>
+            ) : (
+              <TableGameHistory games={games} />
+            )}
+          </>
         ) : (
           <div className="flex w-full items-center justify-center  xs:px-6 xs:py-[58px]  2xl:min-h-[664px] 2xl:p-0">
             <div className="flex flex-col items-center justify-center gap-4 font-sans ">
