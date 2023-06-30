@@ -53,7 +53,7 @@ export const ChatInput: FC<Props> = ({
     >
       {openEmojiPicker && (
         <div
-          className={`absolute z-30 flex flex-col items-end justify-center bg-[#222222] ${
+          className={`absolute flex flex-col items-end justify-center bg-[#222222] ${
             isReply ? "bottom-28" : "bottom-20"
           }`}
         >
