@@ -19,7 +19,6 @@ import { AffiliatesPage } from "./pages/AffiliatesPage";
 import { TermsPage } from "./pages/TermsPage";
 import { Toaster } from "react-hot-toast";
 
-
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
   const auth = useSelector((state: any) => state.auth);
@@ -72,7 +71,7 @@ const App: React.FC = () => {
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/*" element={<Profile />} />
           <Route path="/terms-of-service" element={<TermsPage />} />
         </Routes>
         <MobileSidebar />

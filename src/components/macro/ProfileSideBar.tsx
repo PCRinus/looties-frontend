@@ -26,15 +26,7 @@ const ProfileSideBar: React.FC = () => {
         className=" flex w-full flex-col
        justify-start xs:mt-[30px] xs:gap-6 xs:px-6 xs:pb-6 2xl:mt-[32px] 2xl:gap-8 2xl:px-8"
       >
-        <UserProfileCard
-          currentLevel={99}
-          currentXP={278295}
-          nextLevel={100}
-          xpNeeded={400000}
-          username="Solanagamer11"
-          data="19 May 23"
-          level={10}
-        />
+        <UserProfileCard />
         {windowWidth >= breakpoint2xl ? (
           <ProfileOptions />
         ) : (
