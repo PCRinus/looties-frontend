@@ -121,10 +121,10 @@ export const ChatMessage: React.FC<Props> = ({
           </div>
           {/* user message */}
           <div className="flex max-w-full flex-row items-start justify-start">
-            <div className="relative left-2 z-10">
+            <div className="relative left-2 ">
               <img className="grow-0" src={ChatMessageRectangle} alt="Message rectangle"></img>
             </div>
-            <div className="z-20 w-full bg-[#1E2124] px-4 py-2 text-xs font-medium text-[#DFDFDF]">{message}</div>
+            <div className=" w-full bg-[#1E2124] px-4 py-2 text-xs font-medium text-[#DFDFDF]">{message}</div>
           </div>
         </div>
       </div>

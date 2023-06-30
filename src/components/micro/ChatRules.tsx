@@ -8,7 +8,7 @@ interface Props {
 
 export const ChatRules: FC<Props> = ({ closeRules }) => {
   return (
-    <div className="absolute z-50 xs:top-8 2xl:top-[154px]">
+    <div className="absolute z-[1] xs:top-8 2xl:top-[154px]">
       <img className="relative top-[10px] xs:ml-[125px] 2xl:ml-16" src={ChatMessageRectangle} alt="Rectangle"></img>
 
       <div className=" flex flex-row items-start justify-center rounded-md border border-solid border-[#2C3034] bg-[#1E2023] p-2  xs:h-[243px] xs:w-[90vw]  2xl:h-[243px] 2xl:w-[251px]">
