@@ -4,7 +4,7 @@ export default function Toggle() {
   const [enabled, setEnabled] = useState(false);
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+    <div className="relative flex h-full flex-col items-center justify-center overflow-hidden">
       <div className="flex">
         <label className="relative mr-5 inline-flex cursor-pointer items-center">
           <input type="checkbox" className="peer sr-only" checked={enabled} readOnly />
