@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import SettingsPage from "../components/macro/SettingsPage";
 import { AffiliatesPage } from "../components/macro/AffiliatesPage";
 import GameHistoryPage from "../components/macro/GameHistoryPage";
+import TransactionsPage from "../components/macro/TransactionsPage";
 
 const Profile: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
@@ -37,6 +38,7 @@ const Profile: React.FC = () => {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/games" element={<GameHistoryPage />} />
             <Route path="/affiliates" element={<AffiliatesPage />} />
+            <Route path="/transactions" element={<TransactionsPage />} />
             {/* Add more Routes as needed */}
           </Routes>
 
@@ -59,6 +61,7 @@ const Profile: React.FC = () => {
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/games" element={<GameHistoryPage />} />
                   <Route path="/affiliates" element={<AffiliatesPage />} />
+                  <Route path="/transactions" element={<TransactionsPage />} />
                 </Routes>
               </div>
             </div>
