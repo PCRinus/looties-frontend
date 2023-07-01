@@ -17,6 +17,7 @@ import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
 import { TermsPage } from "./pages/TermsPage";
 import { Toaster } from "react-hot-toast";
+import { ProtectedRoute } from "./components/micro/ProtectedRoute";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
@@ -69,7 +70,14 @@ const App: React.FC = () => {
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
-          <Route path="/profile/*" element={<Profile />} />
+          <Route
+            path="/profile/*"
+            element={
+              <ProtectedRoute user={user} redirectPath="/">
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/terms-of-service" element={<TermsPage />} />
         </Routes>
         <MobileSidebar />
