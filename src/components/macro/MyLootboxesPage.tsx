@@ -7,7 +7,11 @@ const MyLootboxesPage: React.FC = () => {
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"My lootboxes"} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-8">
+<<<<<<< HEAD
         {cards.length === 0 ? (
+=======
+        {cards.length > 0 ? (
+>>>>>>> loo-61-profile-transactions-depositswithdraws-ui-implemenation
           <></>
         ) : (
           <div className="flex w-full items-center justify-center  xs:px-6 xs:py-[58px]  2xl:min-h-[664px] 2xl:p-0">
