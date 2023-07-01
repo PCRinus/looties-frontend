@@ -49,8 +49,8 @@ const SettingsPage: React.FC = () => {
             </div>
             <span className="font-sans text-xl font-bold text-custom_white_1 xs:mt-6 2xl:mt-8">Links</span>
             <div className="flex xs:mt-4 xs:gap-4 2xl:mt-8 2xl:gap-6">
-              <img src={Twiter} className="xs:h-[40px] xs:w-[40px] 2xl:h-[48px] 2xl:w-[48px]"></img>
-              <img src={DiscordIcon} className="xs:h-[40px] xs:w-[40px] 2xl:h-[48px] 2xl:w-[48px]"></img>
+              <img src={Twiter} className="xs:h-[40px] xs:w-[40px] 2xl:h-[48px] 2xl:w-[48px]" alt="svg"></img>
+              <img src={DiscordIcon} className="xs:h-[40px] xs:w-[40px] 2xl:h-[48px] 2xl:w-[48px]" alt="svg"></img>
             </div>
             <div className=" h-10 w-full bg-custom_black_2 2xl:h-0"></div>
           </div>

@@ -15,7 +15,6 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
-import { AffiliatesPage } from "./pages/AffiliatesPage";
 import { TermsPage } from "./pages/TermsPage";
 import { Toaster } from "react-hot-toast";
 
@@ -67,7 +66,6 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
-          <Route path="/affiliates" element={<AffiliatesPage />} />
           <Route path="/lootboxes" element={<LootboxesPage />} />
           <Route path="/openbox" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
