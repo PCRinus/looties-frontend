@@ -5,7 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { LootboxesPage } from "./pages/LootboxesPage";
 import { AnimatePresence } from "framer-motion";
 import { Modal } from "./components/modals/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Footer } from "./components/macro/Footer";
 import { MobileSidebar } from "./components/macro/MobileSideBar";
 import OpenBox from "./pages/OpenBox";
@@ -13,7 +13,6 @@ import Homepage from "./pages/Homepage";
 import { GameResponsiblyPage } from "./pages/GameResponsiblyPage";
 import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
 import { TermsPage } from "./pages/TermsPage";
 import { Toaster } from "react-hot-toast";
@@ -21,11 +20,9 @@ import { ProtectedRoute } from "./components/micro/ProtectedRoute";
 
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
-  const auth = useSelector((state: any) => state.auth);
   const user = useSelector((state: any) => state.user);
-  const dispatch = useDispatch();
   const { publicKey, connected, disconnecting } = useWallet();
-  const { authorizeWallet, loadUserData, loadProfileData, disconnectWallet } = useAuth();
+  const { authenticateUser, disconnectWallet } = useAuth();
 
   useEffect(() => {
     WebFont.load({
@@ -38,27 +35,11 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!connected) {
       disconnectWallet();
+    } else {
+      authenticateUser();
     }
-    if (publicKey && connected && disconnecting === false) {
-      dispatch({ type: ReduxEvents.SetNeedsAuth, payload: true });
-    }
-  }, [publicKey, connected, disconnecting, dispatch]);
-
-  useEffect(() => {
-    if (auth.needsAuth) {
-      dispatch({ type: ReduxEvents.SetNeedsAuth, payload: false });
-      authorizeWallet();
-    }
-  }, [auth.needsAuth, authorizeWallet, dispatch]);
-
-  useEffect(() => {
-    if (auth.jwt && !user.id) {
-      loadUserData(auth.jwt);
-    }
-    if (auth.jwt && user.id && !user.profile) {
-      loadProfileData(auth.jwt, user.id);
-    }
-  }, [auth.jwt, user.id, user.profile, loadUserData, loadProfileData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [publicKey, connected]);
 
   return (
     <>
