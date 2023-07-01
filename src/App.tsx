@@ -15,7 +15,6 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ReduxEvents } from "./reducers/events";
 import Profile from "./pages/Profile";
-import { AffiliatesPage } from "./components/macro/AffiliatesPage";
 import { TermsPage } from "./pages/TermsPage";
 import { Toaster } from "react-hot-toast";
 

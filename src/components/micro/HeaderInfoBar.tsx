@@ -9,7 +9,7 @@ const HeaderInfoBar: React.FC = () => {
   return (
     <div className="flex h-[40px] items-center justify-between">
       <div className="left-section ml-8 font-sans font-medium text-grey_font_color">
-        <Link to="/affiliates" className="ml-4">
+        <Link to="/profile/affiliates" className="ml-4">
           Affiliates
         </Link>
         <Link to="/" className="ml-4">

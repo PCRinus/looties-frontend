@@ -58,7 +58,7 @@ const GameHistoryPage = () => {
         <ProfileOptionsHeader title={"Game history"} />
 
         {/* Game History */}
-        {games.length === 0 ? (
+        {games.length > 0 ? (
           <>
             {isXsScreen ? (
               <>
