@@ -148,8 +148,8 @@ const ProfilePage: React.FC = ({}) => {
             Links
           </span>
           <div className="flex xs:mt-4 xs:gap-4 2xl:mt-6 2xl:gap-6">
-            <img src={Twiter} className=""></img>
-            <img src={DiscordIcon} className=""></img>
+            <img src={Twiter} alt="svg"></img>
+            <img src={DiscordIcon} alt="svg"></img>
           </div>
         </div>
       </div>
