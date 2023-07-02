@@ -13,6 +13,7 @@ import GameHistoryPage from "../components/macro/GameHistoryPage";
 import TransactionsPage from "../components/macro/TransactionsPage";
 import ProfileOptionsHeader from "../components/micro/ProfileOptionsHeader";
 import MyLootboxesPage from "../components/macro/MyLootboxesPage";
+import InventoryPage from "../components/macro/InventoryPage";
 
 const Profile: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
@@ -64,7 +65,7 @@ const Profile: React.FC = () => {
                   <Route path="/" element={<ProfilePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/games" element={<GameHistoryPage />} />
-                  <Route path="/inventory" element={<MyLootboxesPage />} />
+                  <Route path="/inventory" element={<InventoryPage />} />
                   <Route path="/mylootboxes" element={<MyLootboxesPage />} />
                   <Route path="/affiliates" element={<AffiliatesPage />} />
                   <Route path="/transactions" element={<TransactionsPage />} />
