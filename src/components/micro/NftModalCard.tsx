@@ -6,12 +6,12 @@ interface NftModalCardProps {
     id: number;
     name: string;
     image: string;
-    availableToClaim: number;
-    timeStaked: string;
-    atStaking: boolean;
-    locked: boolean;
-    percentage: number;
-    rarity: string;
+    availableToClaim?: number;
+    timeStaked?: string;
+    atStaking?: boolean;
+    locked?: boolean;
+    percentage?: number;
+    rarity?: string;
     containerWidth: number;
     titleSize: number;
     labelSize: number;
