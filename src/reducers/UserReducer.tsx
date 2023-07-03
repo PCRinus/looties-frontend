@@ -14,7 +14,7 @@ const initialState = {
 export const UserReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case ReduxEvents.SetUserData:
-      return { ...action.payload };
+      return { ...state, ...action.payload };
     case ReduxEvents.SetProfileData:
       return { ...state, profile: { ...action.payload } };
     case ReduxEvents.UserLogout:
