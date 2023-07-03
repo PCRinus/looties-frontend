@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrow from "../../assets/dropdown_arrow.svg";
 import arrowUp from "../../assets/dropdown_arrow_up.svg";
+import { ReduxEvents } from "../../reducers/events";
+import { useDispatch } from "react-redux";
 type OptionType = {
   id: number;
   name: string;
@@ -19,17 +21,24 @@ const options: OptionType[] = [
 ];
 const ProfileOptionsDropDown: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(options[0]);
   const [selectedColor, setSelectedColor] = useState<number | null>(options[0].id);
 
   const handleSelect = (option: OptionType) => {
     setSelectedOption(option);
     setSelectedColor(option.id);
-    if (option.name.toLowerCase() === "profile") {
+    if (option.name.toLowerCase() === "log out") {
+      handleLogout();
+    } else if (option.name.toLowerCase() === "profile") {
       navigate("/profile");
     } else {
       navigate(`${option.name.toLowerCase()}`);
     }
+  };
+
+  const handleLogout = () => {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "LogOut" } });
   };
 
   return (
