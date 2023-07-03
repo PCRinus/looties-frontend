@@ -8,9 +8,8 @@ import React, { useEffect, useState } from "react";
 import RedArrowDown from "../../assets/RedArrowDown.svg";
 import { MobileFiltersButton } from "../micro/MobileFiltersButton";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey, TokenAccountsFilter } from "@solana/web3.js";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
-import { Metaplex } from "@metaplex-foundation/js";
+import { Metaplex, NftClient, PublicKey, walletAdapterIdentity } from "@metaplex-foundation/js";
 import { toast } from "react-hot-toast";
 
 interface Nft {
@@ -23,7 +22,7 @@ interface Nft {
 }
 
 const DepositNft = () => {
-  const { publicKey } = useWallet();
+  const { publicKey, signTransaction, wallet } = useWallet();
   const { connection } = useConnection();
   const [collection, setCollection] = useState<string>("All");
   const [price, setPrice] = useState<string>(PRICE_OPTIONS[0]);
@@ -148,6 +147,47 @@ const DepositNft = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const transferNFT = async (mintAddress: string) => {
+    try {
+      if (!publicKey || !signTransaction) {
+        throw new WalletNotConnectedError();
+      }
+      const mintToken = new PublicKey(mintAddress);
+
+      const recipientAddress = new PublicKey(process.env.REACT_APP_HOUSE_WALLET_PUBLIC_KEY as string);
+
+      const metaplex = new Metaplex(connection);
+      if (wallet != null) {
+        metaplex.use(walletAdapterIdentity(wallet.adapter));
+        const nftClient = new NftClient(metaplex);
+        const nftData = await nftClient.findByMint({
+          mintAddress: mintToken,
+        });
+        const nftTransfer = await nftClient.transfer({
+          nftOrSft: {
+            address: mintToken,
+            tokenStandard: nftData.tokenStandard,
+          },
+          toOwner: recipientAddress,
+          authorizationDetails: nftData.programmableConfig?.ruleSet
+            ? {
+                rules: nftData.programmableConfig?.ruleSet,
+              }
+            : undefined,
+        });
+        console.log(nftTransfer);
+        return nftData.name;
+      }
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const handleNftDeposit = () => {
+    const transferedNfts = selectedOptions.map((option) => walletNfts[option]);
+    transferedNfts.forEach((nft) => transferNFT(nft.mintAddress));
   };
 
   if (selectedOption === "Deposit NFT's") {
@@ -412,7 +452,7 @@ const DepositNft = () => {
           </button>
           <button
             className="flex h-[44.57px] basis-[50%] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 px-[10px] font-sans font-semibold leading-4 text-white"
-            onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "Wallet" } })}
+            onClick={handleNftDeposit}
           >
             Deposit
           </button>
