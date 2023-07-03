@@ -1,7 +1,7 @@
 import { ReduxEvents } from "../reducers/events";
 import { useWallet } from "@solana/wallet-adapter-react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import nacl from "tweetnacl";
 

@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import RedArrowDown from "../../assets/RedArrowDown.svg";
 import { MobileFiltersButton } from "../micro/MobileFiltersButton";
 
-const WithdrawNft = () => {
+const DepositNft = () => {
   const [collection, setCollection] = useState<string>(COLLECTION_OPTIONS[0]);
   const [price, setPrice] = useState<string>(PRICE_OPTIONS[0]);
   const [category, setCategory] = useState<string>(CATEGORY_OPTIONS[0]);
@@ -66,7 +66,7 @@ const WithdrawNft = () => {
 
   const dispatch = useDispatch();
 
-  const [selectedOption, setSelectedOption] = useState("Withdraw NFT's");
+  const [selectedOption, setSelectedOption] = useState("Deposit NFT's");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleOptionChange = (option: string) => {
@@ -78,13 +78,13 @@ const WithdrawNft = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  if (selectedOption === "Withdraw NFT's") {
+  if (selectedOption === "Deposit NFT's") {
   } else if (selectedOption === "Withdraw coins") {
     dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } });
   } else if (selectedOption === "Add coins") {
     dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "AddCoins" } });
-  } else if (selectedOption === "Deposit NFT's") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+  } else if (selectedOption === "Withdraw NFT's") {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawNft" } });
   }
 
   const list = [
@@ -209,20 +209,20 @@ const WithdrawNft = () => {
         </div>
         <div className="">
           <div>
-            <button
-              className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
-              onClick={() => {
-                dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
-              }}
-            >
-              <span className="font-sans text-base font-semibold text-custom_gray_2">Deposit NFT'S</span>
+            <button className="active_modal top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]">
+              <span className="font-sans text-base font-semibold text-[#F03033]">Deposit NFT'S</span>
             </button>
           </div>
         </div>
         <div className="">
           <div>
-            <button className="active_modal top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]">
-              <span className="font-sans text-base font-semibold text-[#F03033]">Withdraw NFT'S</span>
+            <button
+              className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
+              onClick={() => {
+                dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawNft" } });
+              }}
+            >
+              <span className="font-sans text-base font-semibold text-custom_gray_2">Withdraw NFT'S</span>
             </button>
           </div>
         </div>
@@ -272,13 +272,13 @@ const WithdrawNft = () => {
                     Withdraw coins
                   </li>
                   <li
-                    className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
+                    className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-[#F03033] hover:bg-gray-500 hover:text-white"
                     onClick={() => handleOptionChange("Deposit NFT's")}
                   >
                     Deposit NFT's
                   </li>
                   <li
-                    className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-[#F03033] hover:bg-gray-500 hover:text-white"
+                    className="custom_gray_2 flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
                     onClick={() => handleOptionChange("Withdraw NFT's")}
                   >
                     Withdraw NFT's
@@ -429,11 +429,11 @@ const WithdrawNft = () => {
           className="flex h-[44.57px] basis-[50%] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 px-[10px] font-sans font-semibold leading-4 text-white"
           onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "Wallet" } })}
         >
-          Withdraw
+          Deposit
         </button>
       </div>
     </div>
   );
 };
 
-export { WithdrawNft };
+export { DepositNft };
