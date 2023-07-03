@@ -17,10 +17,17 @@ import LogoutRed from "../../assets/LogoutRed.svg";
 import ProfileGrey from "../../assets/ProfileGrey.svg";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { ReduxEvents } from "../../reducers/events";
 
 const ProfileOptions: React.FC = () => {
   const navigate = useNavigate();
-  const { disconnectWallet } = useAuth();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "LogOut" } });
+    dispatch({ type: ReduxEvents.ToggleSidebar });
+  };
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const buttons = [
@@ -42,7 +49,7 @@ const ProfileOptions: React.FC = () => {
           onClick={() => {
             setActiveButton(name);
             if (name === "Log out") {
-              disconnectWallet();
+              handleLogout();
             } else if (path) {
               navigate(path);
             }

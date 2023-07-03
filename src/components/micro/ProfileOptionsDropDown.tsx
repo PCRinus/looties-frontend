@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import arrow from "../../assets/dropdown_arrow.svg";
+import arrowUp from "../../assets/dropdown_arrow_up.svg";
 type OptionType = {
   id: number;
   name: string;
@@ -36,9 +37,10 @@ const ProfileOptionsDropDown: React.FC = () => {
       {selectedOption ? (
         <button
           onClick={() => setSelectedOption(null)}
-          className="box-border flex items-center justify-center rounded-lg border border-red-500 bg-red-500 bg-opacity-20 xs:h-10 xs:w-full"
+          className="box-border flex items-center justify-center gap-1 rounded-lg border border-red-500 bg-red-500 bg-opacity-20 xs:h-10 xs:w-full"
         >
           <span className="font-sans text-base font-semibold text-custom_red_1">{selectedOption.name}</span>
+          <img className="" src={arrow} alt="svg" />
         </button>
       ) : (
         <div className=" grid grid-cols-1">
@@ -61,6 +63,7 @@ const ProfileOptionsDropDown: React.FC = () => {
               >
                 {option.name}
               </span>
+              {index === 0 && <img className="ml-1" src={arrowUp} alt="svg" />}
             </div>
           ))}
         </div>

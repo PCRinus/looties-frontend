@@ -31,13 +31,14 @@ interface IAppState {
 }
 
 const ProfilePage: React.FC = () => {
+  const profile = useSelector((state: any) => state.user.profile);
+
   const [userData, setUserData] = useState<IUserData>({});
   const user = useSelector((state: IAppState) => state.user);
   const auth = useSelector((state: IAppState) => state.auth);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      console.log(user.id);
       if (user.id) {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user.id}`, {
@@ -45,7 +46,9 @@ const ProfilePage: React.FC = () => {
               Authorization: `Bearer ${auth.jwt}`,
             },
           });
-          console.log(response?.data);
+          const referralResponse = await axios.get(`${process.env.REACT_APP_API_URL}/affiliates/${user.id}/stats`);
+          const { redeemedCount: referralsData } = referralResponse?.data;
+
           const {
             gamesPlayed: totalGameData,
             gamesWon: gamesWonData,
@@ -62,6 +65,7 @@ const ProfilePage: React.FC = () => {
             gamesLostData,
             winRatioData,
             lootboxesOpenData,
+            referralsData,
             totalWageredData,
             netProfitData,
           });
@@ -186,10 +190,10 @@ const ProfilePage: React.FC = () => {
             Links
           </span>
           <div className="flex xs:mt-4 xs:gap-4 2xl:mt-6 2xl:gap-6">
-            <a href="https://twitter.com/LootiesNFT" target="_blank" rel="noopener noreferrer">
+            <a href={profile.twitterLink ?? "#"} target="_blank" rel="noopener noreferrer">
               <img src={Twiter} alt="Twitter"></img>
             </a>
-            <a href="https://discord.com/invite/looties" target="_blank" rel="noopener noreferrer">
+            <a href={profile.discordLink ?? "#"} target="_blank" rel="noopener noreferrer">
               <img src={DiscordIcon} alt="Discord"></img>
             </a>
           </div>
