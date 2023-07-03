@@ -4,11 +4,18 @@ import { NftModalCard } from "../micro/NftModalCard";
 import { useDispatch } from "react-redux";
 import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../../mocks/filtersMocks";
 import { CustomFilter } from "../micro/CustomFilter";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RedArrowDown from "../../assets/RedArrowDown.svg";
 import { MobileFiltersButton } from "../micro/MobileFiltersButton";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey, TokenAccountsFilter } from "@solana/web3.js";
+import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
+import { Metaplex } from "@metaplex-foundation/js";
+import { toast } from "react-hot-toast";
 
 const DepositNft = () => {
+  const { publicKey } = useWallet();
+  const { connection } = useConnection();
   const [collection, setCollection] = useState<string>(COLLECTION_OPTIONS[0]);
   const [price, setPrice] = useState<string>(PRICE_OPTIONS[0]);
   const [category, setCategory] = useState<string>(CATEGORY_OPTIONS[0]);
@@ -19,6 +26,63 @@ const DepositNft = () => {
 
   const [appliedFiltersCount, setAppliedFiltersCount] = useState<number>(0);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [loading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchNfts = async () => {
+      try {
+        const metaplex = new Metaplex(connection);
+        let walletNFTs = [];
+        let walletCollections: any = [];
+
+        if (!publicKey) throw WalletNotConnectedError;
+
+        const owner = publicKey;
+
+        const allNFTs = await metaplex.nfts().findAllByOwner({ owner: owner });
+
+        for (let i = 0; i < allNFTs.length; i++) {
+          let metaData = allNFTs[i] as any;
+
+          const nft = await metaplex.nfts().load({ metadata: metaData });
+
+          const walletNFT = {
+            id: i,
+            mintAddress: metaData?.mintAddress.toString(),
+            imageUrl: nft?.json?.image || "https://cdn-icons-png.flaticon.com/256/25/25333.png",
+            collectionName: nft?.json?.symbol || "Unknown Collection",
+            itemName: nft?.json?.name || "Unknown Item #?",
+            symbol: nft.symbol,
+          };
+
+          walletNFTs.push(walletNFT);
+
+          // Check if the collection already exists in walletCollections
+          const existingCollection = walletCollections.find(
+            (collection: any) => collection.name === walletNFT.collectionName
+          );
+          if (!existingCollection) {
+            const walletCollection = {
+              name: walletNFT.collectionName,
+              symbol: walletNFT.symbol,
+            };
+            walletCollections.push(walletCollection);
+          }
+        }
+        walletCollections.sort();
+        walletCollections.unshift({ name: "All", symbol: undefined });
+      } catch (err) {
+        console.log("Error fetching NFTs: ", err);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNfts();
+  }, [connection, dispatch, publicKey]);
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(event.target.value);
@@ -63,8 +127,6 @@ const DepositNft = () => {
     setSelectedOptions(allOptionIds);
     setSelectAll(true);
   };
-
-  const dispatch = useDispatch();
 
   const [selectedOption, setSelectedOption] = useState("Deposit NFT's");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
