@@ -165,7 +165,9 @@ const DepositNft = () => {
         const nftData = await nftClient.findByMint({
           mintAddress: mintToken,
         });
-        const nftTransfer = await nftClient.transfer({
+        const {
+          response: { signature },
+        } = await nftClient.transfer({
           nftOrSft: {
             address: mintToken,
             tokenStandard: nftData.tokenStandard,
@@ -177,17 +179,18 @@ const DepositNft = () => {
               }
             : undefined,
         });
-        console.log(nftTransfer);
-        return nftData.name;
+        //TODO: send signature, mint adress and publicKey  to back-end
+        console.log(signature);
       }
     } catch (e) {
-      return null;
+      toast.error(`Transfer failed for ${mintAddress} token`);
     }
   };
 
   const handleNftDeposit = () => {
-    const transferedNfts = selectedOptions.map((option) => walletNfts[option]);
-    transferedNfts.forEach((nft) => transferNFT(nft.mintAddress));
+    const transferredNfts = selectedOptions.map((option) => walletNfts[option]);
+    dispatch({ type: ReduxEvents.CloseModal });
+    transferredNfts.forEach((nft) => transferNFT(nft.mintAddress));
   };
 
   if (selectedOption === "Deposit NFT's") {
