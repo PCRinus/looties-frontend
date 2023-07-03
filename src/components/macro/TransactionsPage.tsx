@@ -9,6 +9,7 @@ import TableWithdrawsTransactions from "../micro/TableWithdrawsTransactions";
 import LootBoxesButton from "../micro/LootBoxesButton";
 import DepositsButton from "../micro/DepositsButton";
 import WithdrawsButton from "../micro/WithdrawsButton";
+import GameHistoryMobileCard from "../micro/GameHistoryMobileCard";
 
 interface Game {
   id: number;
@@ -73,14 +74,14 @@ const TransactionsPage: React.FC = () => {
           <>
             {activeButton === "deposits" ? (
               isXsScreen ? (
-                <DepositTransactionsMobile />
+                <GameHistoryMobileCard games={games} />
               ) : (
                 <TableDepositsTransaction games={games} />
               )
             ) : isXsScreen ? (
-              <WithdrawsTransactionsMobile />
+              <GameHistoryMobileCard games={games} />
             ) : (
-              <TableWithdrawsTransactions />
+              <TableWithdrawsTransactions games={games} />
             )}
           </>
         ) : (
