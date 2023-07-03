@@ -42,7 +42,6 @@ enum ReduxEvents {
   OpenBottomBar = "OPEN_BOTTOM_BAR",
 
   //Auth actions
-  SetNeedsAuth = "SET_AUTH",
   SetJwt = "SET_JWT",
 
   //User actions

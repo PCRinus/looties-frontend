@@ -27,7 +27,7 @@ export const useAuth = () => {
     dispatch({ type: ReduxEvents.CloseModal });
   };
 
-  const authorizeWallet = async () => {
+  const authenticateUser = async () => {
     if (!publicKey) {
       console.log("Wallet not connected");
     } else if (!signMessage) {
@@ -43,27 +43,41 @@ export const useAuth = () => {
           console.log("Signature valid");
           const signatureString = signature.toString();
           const publicKeyString = publicKey.toString();
-          axios
-            .post(
-              `${process.env.REACT_APP_API_URL}/auth/connect-wallet`,
-              JSON.stringify({
-                walletPublicKey: publicKeyString,
-                signature: signatureString,
-              }),
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            )
-            .then((res) => {
-              const jwt = res.data;
-              dispatch({ type: ReduxEvents.SetJwt, payload: jwt });
-            })
-            .catch((err) => {
-              console.log(err);
-              disconnectWallet();
-            });
+
+          const { data: jwt } = await axios.post(
+            `${process.env.REACT_APP_API_URL}/auth/connect-wallet`,
+            JSON.stringify({
+              walletPublicKey: publicKeyString,
+              signature: signatureString,
+            }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          // get user data
+          const { data: userData } = await axios.get(`${process.env.REACT_APP_API_URL}/user/${publicKey}`, {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
+
+          //get profile data
+          const profileRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userData.id}`, {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
+          const profileCardRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userData.id}/card`, {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
+          const profileData = { ...profileRes.data, ...profileCardRes.data };
+          dispatch({ type: ReduxEvents.SetJwt, payload: jwt });
+          dispatch({ type: ReduxEvents.SetUserData, payload: userData });
+          dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
         }
       } catch (err) {
         console.log("Signing error: ", err);
@@ -72,42 +86,5 @@ export const useAuth = () => {
     }
   };
 
-  const loadUserData = (jwt: string) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${publicKey}`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      })
-      .then((res) => {
-        const userData = res.data;
-        dispatch({ type: ReduxEvents.SetUserData, payload: userData });
-      })
-      .catch((err) => {
-        console.log(err);
-        disconnectWallet();
-      });
-  };
-
-  const loadProfileData = async (jwt: string, userId: string) => {
-    try {
-      const profileRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      const profileCardRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userId}/card`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      const profileData = { ...profileRes.data, ...profileCardRes.data };
-      dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
-    } catch (err) {
-      console.log("Error getting user profile ", err);
-      disconnectWallet();
-    }
-  };
-
-  return { connectWallet, authorizeWallet, loadUserData, loadProfileData, disconnectWallet };
+  return { connectWallet, authenticateUser, disconnectWallet };
 };
