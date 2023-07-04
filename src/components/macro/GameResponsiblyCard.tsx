@@ -1,15 +1,18 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { GameResponsiblyDaysButton } from "../micro/GameResponsiblyDaysButton";
 import { GameResponsiblySelfExcludeButton } from "../micro/GameResponsiblySelfExcludeButton";
 import RedArrowDown from "../../assets/RedArrowDown.svg";
 import axios from "axios";
-import { userIdMock } from "../../mocks/userIdMock";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../hooks/useAuth";
 
 export const GameResponsiblyCard: FC = () => {
-  const [userSelfExcluded, setUserSelfExcluded] = useState<boolean>(false);
   const [selectedDaysOption, setSelectedDaysOption] = useState<number>(1);
   const [showSelectOptionsMobile, setShowSelectOptionsMobile] = useState<boolean>(false);
+  const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
+  const { disconnectWallet } = useAuth();
 
   const DAYS_OPTIONS = [1, 7, 14, 30, 60, 90];
 
@@ -25,40 +28,25 @@ export const GameResponsiblyCard: FC = () => {
     setShowSelectOptionsMobile(!showSelectOptionsMobile);
   };
 
-  const handleSelfExclude = () => {
-    axios
-      .post(
+  const handleSelfExclude = async () => {
+    try {
+      await axios.post(
         `${process.env.REACT_APP_API_URL}/game-responsibly`,
-        JSON.stringify({
-          userId: userIdMock,
+        {
+          userId: user.id,
           timePeriodDays: selectedDaysOption,
-        }),
+        },
         {
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.jwt}`,
           },
         }
-      )
-      .then(() => {
-        checkExcludedUser();
-      })
-      .catch((err) => console.log("Self exclude error: ", err));
+      );
+      disconnectWallet();
+    } catch (err) {
+      console.log("Self exclude error: ", err);
+    }
   };
-
-  const checkExcludedUser = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/game-responsibly/${userIdMock}`)
-      .then((res) => {
-        setUserSelfExcluded(res.data);
-      })
-      .catch((err) => {
-        console.log("Error while checking user exclusion: ", err);
-      });
-  };
-
-  useEffect(() => {
-    checkExcludedUser();
-  }, []);
 
   return (
     <div className="rounded-xl bg-gradient-to-b from-red-700 to-gray-900 pl-1 pr-1 pt-1">
@@ -83,38 +71,35 @@ export const GameResponsiblyCard: FC = () => {
           </h2>
           <hr className="h-px w-full border border-solid border-[#2C3034] bg-[#2C3034] xs:hidden 2xl:block" />
           {/* days selector for desktop view */}
-          {userSelfExcluded === false ? (
-            <div className=" flex-row items-center justify-center gap-4 xs:hidden 2xl:flex">
-              {DAYS_OPTIONS.map((option, index) => {
-                return (
-                  <GameResponsiblyDaysButton
-                    key={index}
-                    numberOfExcludedDays={option}
-                    isSelected={option === selectedDaysOption}
-                    handleSelectedDaysOption={handleSelectedDaysOption}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <h1 className="font-bold text-[#DFDFDF] xs:text-xl 2xl:text-2xl">User already excluded</h1>
-          )}
+
+          <div className=" flex-row items-center justify-center gap-4 xs:hidden 2xl:flex">
+            {DAYS_OPTIONS.map((option, index) => {
+              return (
+                <GameResponsiblyDaysButton
+                  key={index}
+                  numberOfExcludedDays={option}
+                  isSelected={option === selectedDaysOption}
+                  handleSelectedDaysOption={handleSelectedDaysOption}
+                />
+              );
+            })}
+          </div>
+
           {/* days selector for mobile view */}
-          {userSelfExcluded === false && (
-            <button
-              className=" w-full flex-row items-center justify-center gap-2 rounded-lg border border-solid border-[#F03033] bg-[#F03033]  bg-opacity-20 text-base font-semibold text-[#F03033] xs:flex xs:py-2 2xl:hidden 2xl:py-3"
-              onClick={toggleMobileOptions}
-            >
-              <h2>{selectedDaysOption} Days</h2>
-              <img
-                className={`${showSelectOptionsMobile ? "rotate-180" : ""}`}
-                src={RedArrowDown}
-                alt="Open days exclusion options"
-              ></img>
-            </button>
-          )}
-          {userSelfExcluded === false &&
-            showSelectOptionsMobile &&
+
+          <button
+            className=" w-full flex-row items-center justify-center gap-2 rounded-lg border border-solid border-[#F03033] bg-[#F03033]  bg-opacity-20 text-base font-semibold text-[#F03033] xs:flex xs:py-2 2xl:hidden 2xl:py-3"
+            onClick={toggleMobileOptions}
+          >
+            <h2>{selectedDaysOption} Days</h2>
+            <img
+              className={`${showSelectOptionsMobile ? "rotate-180" : ""}`}
+              src={RedArrowDown}
+              alt="Open days exclusion options"
+            ></img>
+          </button>
+
+          {showSelectOptionsMobile &&
             DAYS_OPTIONS.map((option, index) => {
               return option !== selectedDaysOption ? (
                 <GameResponsiblyDaysButton
@@ -125,7 +110,7 @@ export const GameResponsiblyCard: FC = () => {
                 />
               ) : null;
             })}
-          {userSelfExcluded === false && <GameResponsiblySelfExcludeButton handleSelfExclude={handleSelfExclude} />}
+          <GameResponsiblySelfExcludeButton handleSelfExclude={handleSelfExclude} />
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 enum ReduxEvents {
   // General events
-  Logout = "LOGOUT",
   LoggedIn = "LOGGED_IN",
   SetConfig = "SET_CONFIG",
   SetCollections = "SET_COLLECTIONS",
