@@ -14,6 +14,7 @@ import { GameResponsiblyPage } from "./pages/GameResponsiblyPage";
 import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Profile from "./pages/Profile";
+import { CreateLootbox } from "./pages/CreateLootbox";
 import { TermsPage } from "./pages/TermsPage";
 import { FairnessPage } from "./pages/FairnessPage";
 import { ErrorPage } from "./pages/ErrorPage";
@@ -64,6 +65,7 @@ const App: React.FC = () => {
             }
           />
           <Route path="/terms-of-service" element={<TermsPage />} />
+          <Route path="/create-lootbox" element={<CreateLootbox />} />
           <Route path="/fairness" element={<FairnessPage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<ErrorPage />} />

@@ -4,6 +4,7 @@ import { WithdrawNft } from "./WithdrawNft";
 import { LogOut } from "./LogOut";
 import { AddCoins } from "./AddCoins";
 import { ProvablyFair } from "./ProvablyFair";
+import { CreatedLootbox } from "./CreatedLootbox";
 import { WithdrawCoins } from "./WithdrawCoins";
 import { UserProfile } from "./UserProfile";
 import { NftPicker } from "./NftPicker";
@@ -23,6 +24,7 @@ const Modals: {
   LogOut,
   ProvablyFair,
   UserProfile,
+  CreatedLootbox,
   NftPicker,
   NftWin
 };
