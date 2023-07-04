@@ -7,7 +7,6 @@ import NftLootBoxCard from "../micro/NftLootBoxCard";
 import RedPlus from "../../assets/red_cross.svg";
 
 const MyLootboxesPage: React.FC = () => {
-  const [cards, setCards] = useState("");
   const [numColumns, setNumColumns] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
 
@@ -48,7 +47,9 @@ const MyLootboxesPage: React.FC = () => {
       { min: 2575, max: 2800, cols: 7 },
       { min: 2800, max: 3000, cols: 8 },
       { min: 3000, max: 3250, cols: 9 },
-      { min: 3250, max: 3400, cols: 10 },
+      { min: 3250, max: 3420, cols: 10 },
+      { min: 3420, max: 3650, cols: 11 },
+      { min: 4800, max: 5101, cols: 11 },
     ];
 
     for (let i = 0; i < intervals.length; i++) {
@@ -75,6 +76,7 @@ const MyLootboxesPage: React.FC = () => {
       } else {
         handleResizeDesktop();
       }
+      console.log(windowWidth);
     };
 
     handleResize();
@@ -82,25 +84,50 @@ const MyLootboxesPage: React.FC = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
-  const items = new Array(10).fill(null);
+
+  const items = new Array(30).fill(null);
   return (
-    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
+    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:h-[856px] 2xl:w-full">
       <ProfileOptionsHeader title={"My lootboxes"} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-7">
-        {cards.length === 0 ? (
-          <div
-            className={`grid auto-rows-max grid-cols-${numColumns}
-           place-content-start gap-4 xs:gap-4 2xl:gap-[14px]`}
-          >
-            {items.map((item, index) =>
-              index === 0 ? (
-                <button key={index} className="font-sans font-bold text-custom_red_1 xs:text-base 2xl:text-xl">
-                  <img src={PlusIcon} alt="svg" className="inline" /> Create a new lootbox
-                </button>
-              ) : (
-                <NftLootBoxCard key={index} />
-              )
-            )}
+        {items.length > 0 ? (
+          <div className="h-full w-full">
+            <Scrollbars
+              // This will activate auto hide
+              autoHide
+              // Hide delay in ms
+              autoHideTimeout={1000}
+              // Duration for hide animation in ms.
+              autoHideDuration={200}
+              autoHeight
+              autoHeightMin={0}
+              autoHeightMax={800} // Specify maximum height here
+              thumbMinSize={30}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${numColumns}, 1fr)`,
+                }}
+                className={`auto-rows-max place-content-start gap-4 xs:gap-4 2xl:gap-[14px]`}
+              >
+                {items.map((item, index) =>
+                  index === 0 ? (
+                    <button
+                      key={index}
+                      className="rounded-xl border-[1px] border-custom_gray_1 xs:h-[236px] xs:w-[158px] 2xl:h-[297px] 2xl:w-[209px]"
+                    >
+                      <img src={RedPlus} alt="svg" className="inline" />
+                      <h2 className="font-sans font-bold text-custom_red_1 xs:text-base 2xl:text-xl">
+                        Create a new <br /> lootbox
+                      </h2>
+                    </button>
+                  ) : (
+                    <NftLootBoxCard key={index} />
+                  )
+                )}
+              </div>
+            </Scrollbars>
           </div>
         ) : (
           <div className="flex w-full items-center justify-center  xs:px-6 xs:py-[58px]  2xl:min-h-[664px] 2xl:p-0">

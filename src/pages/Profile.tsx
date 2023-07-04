@@ -56,10 +56,7 @@ const Profile: React.FC = () => {
                 <UserProfileCard />
                 <ProfileOptions />
               </div>
-              <div
-                id="options-pages-grid"
-                className="h-full max-h-full w-full  overflow-y-scroll   bg-[#151719] p-[52px] "
-              >
+              <div id="options-pages-grid" className="h-full max-h-full w-full   bg-[#151719] p-[52px] ">
                 <Routes>
                   <Route path="/" element={<ProfilePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
