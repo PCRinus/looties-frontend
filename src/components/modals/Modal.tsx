@@ -6,6 +6,8 @@ import { AddCoins } from "./AddCoins";
 import { ProvablyFair } from "./ProvablyFair";
 import { WithdrawCoins } from "./WithdrawCoins";
 import { UserProfile } from "./UserProfile";
+import { NftPicker } from "./NftPicker";
+import { NftWin } from "./NftWin";
 import "../../styles/macro/Modal.scss";
 import { ReduxEvents } from "../../reducers/events";
 import { useDispatch } from "react-redux";
@@ -20,7 +22,9 @@ const Modals: {
   WithdrawCoins,
   LogOut,
   ProvablyFair,
-  UserProfile
+  UserProfile,
+  NftPicker,
+  NftWin
 };
 
 interface ModalProps {
