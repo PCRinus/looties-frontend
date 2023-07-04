@@ -2,6 +2,7 @@ import { ReduxEvents } from "../reducers/events";
 import { WalletName } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import nacl from "tweetnacl";
 
@@ -64,23 +65,38 @@ export const useAuth = () => {
           });
 
           //get profile data
-          const profileRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userData.id}`, {
+          const { data: profile } = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userData.id}`, {
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
           });
-          const profileCardRes = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${userData.id}/card`, {
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          });
-          const profileData = { ...profileRes.data, ...profileCardRes.data };
+          const { data: profileCard } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/profile/${userData.id}/card`,
+            {
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+              },
+            }
+          );
+          const profileData = { ...profile, ...profileCard };
+
+          // get token balance
+          const { data: tokensBalance } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/items/${userData.id}/tokens-balance`,
+            {
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+              },
+            }
+          );
           dispatch({ type: ReduxEvents.SetJwt, payload: jwt });
           dispatch({ type: ReduxEvents.SetUserData, payload: userData });
           dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
+          dispatch({ type: ReduxEvents.SetTokensBalance, payload: tokensBalance });
         }
       } catch (err) {
         console.log("Signing error: ", err);
+        toast.error("Signing error");
         disconnectWallet();
       }
     }
