@@ -12,7 +12,7 @@ const HeaderInfoBar: React.FC = () => {
         <Link to="/profile/affiliates" className="ml-4">
           Affiliates
         </Link>
-        <Link to="/" className="ml-4">
+        <Link to="/fairness" className="ml-4">
           Fairness
         </Link>
         <Link to="/" className="ml-4">
