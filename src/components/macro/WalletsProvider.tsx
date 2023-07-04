@@ -17,7 +17,7 @@ export const WalletsProvider: FC<Props> = ({ children }) => {
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
   const wallets = useMemo(
-    () => [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
+    () => [new PhantomWalletAdapter({ network }), new SolflareWalletAdapter({ network })],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [network]
   );

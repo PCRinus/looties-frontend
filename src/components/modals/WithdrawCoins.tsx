@@ -11,8 +11,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 interface IWithdrawalData {
-  tokenToSolExchangeRate: string;
-  solanaWithdrawalFee: string;
+  tokenPerSolExchangeRate: string;
+  solanaTransactionFee: string;
 }
 
 const WithdrawCoins = () => {
@@ -29,11 +29,10 @@ const WithdrawCoins = () => {
   useEffect(() => {
     const fetchWithdrawalData = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/withdrawal/data`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/currency/transaction-rates`, {
           headers: { Authorization: `Bearer ${auth.jwt}` },
         });
         setWithdrawalData(res.data);
-        console.log(res.data);
         setLoading(false);
       } catch (err) {
         console.log("Error fetching withdrawal data: ", err);
@@ -49,13 +48,13 @@ const WithdrawCoins = () => {
   const handleSolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSol(value);
-    setCoins(value ? (parseFloat(value) * parseFloat(withdrawalData!.tokenToSolExchangeRate)).toFixed(3) : "");
+    setCoins(value ? (parseFloat(value) * parseFloat(withdrawalData!.tokenPerSolExchangeRate)).toFixed(3) : "");
   };
 
   const handleCoinsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setCoins(value);
-    setSol(value ? (parseFloat(value) / parseFloat(withdrawalData!.tokenToSolExchangeRate)).toFixed(3) : "");
+    setSol(value ? (parseFloat(value) / parseFloat(withdrawalData!.tokenPerSolExchangeRate)).toFixed(3) : "");
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -92,18 +91,21 @@ const WithdrawCoins = () => {
 
   const handleWithdraw = async () => {
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}`,
-        JSON.stringify({
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/sol`,
+        {
           amount: coins,
-        }),
+        },
         {
           headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
         }
       );
-      console.log(res);
+      dispatch({ type: ReduxEvents.CloseModal });
+      toast.success("Transaction sent successfully");
     } catch (err) {
       console.log(err);
+      dispatch({ type: ReduxEvents.CloseModal });
+      toast.error("Withdrawal error");
     }
   };
 
@@ -252,7 +254,7 @@ const WithdrawCoins = () => {
               </div>
               <span className="block w-full md:hidden">
                 <span className="block text-xs font-bold text-[#F03033] md:hidden ">
-                  1 SOL = ≈{withdrawalData!.tokenToSolExchangeRate} Coins
+                  1 SOL = ≈{withdrawalData!.tokenPerSolExchangeRate} Coins
                 </span>
               </span>
               <img src={Equals} alt="equals" className="h-[8px] w-[16px]" />
@@ -282,7 +284,7 @@ const WithdrawCoins = () => {
                 Estimated network fee is{" "}
                 {isNaN(parseFloat(sol))
                   ? "0.00"
-                  : (parseFloat(sol) * parseFloat(withdrawalData!.solanaWithdrawalFee)).toFixed(2)}{" "}
+                  : (parseFloat(sol) * parseFloat(withdrawalData!.solanaTransactionFee)).toFixed(2)}{" "}
                 SOL
               </span>
             </div>

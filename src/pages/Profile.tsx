@@ -13,6 +13,8 @@ import GameHistoryPage from "../components/macro/GameHistoryPage";
 import TransactionsPage from "../components/macro/TransactionsPage";
 import ProfileOptionsHeader from "../components/micro/ProfileOptionsHeader";
 import MyLootboxesPage from "../components/macro/MyLootboxesPage";
+import InventoryPage from "../components/macro/InventoryPage";
+import { useSelector } from "react-redux";
 
 const Profile: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
@@ -52,7 +54,7 @@ const Profile: React.FC = () => {
         <>
           <div className="flex h-screen  w-full flex-col">
             <div className=" grid  grid-cols-[450px_1fr] grid-rows-1 ">
-              <div className="ml-[10%] mt-[10%] flex h-[806px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
+              <div className="ml-[52px] mt-[52px] flex h-[806px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
                 <UserProfileCard />
                 <ProfileOptions />
               </div>
@@ -61,7 +63,7 @@ const Profile: React.FC = () => {
                   <Route path="/" element={<ProfilePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/games" element={<GameHistoryPage />} />
-                  <Route path="/inventory" element={<MyLootboxesPage />} />
+                  <Route path="/inventory" element={<InventoryPage />} />
                   <Route path="/mylootboxes" element={<MyLootboxesPage />} />
                   <Route path="/affiliates" element={<AffiliatesPage />} />
                   <Route path="/transactions" element={<TransactionsPage />} />
