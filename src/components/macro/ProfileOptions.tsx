@@ -16,9 +16,11 @@ import TransactionsRed from "../../assets/TransactionsRed.svg";
 import LogoutRed from "../../assets/LogoutRed.svg";
 import ProfileGrey from "../../assets/ProfileGrey.svg";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const ProfileOptions: React.FC = () => {
   const navigate = useNavigate();
+  const { disconnectWallet } = useAuth();
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const buttons = [
@@ -39,11 +41,11 @@ const ProfileOptions: React.FC = () => {
           key={name}
           onClick={() => {
             setActiveButton(name);
-            if (path) {
+            if (name === "Log out") {
+              disconnectWallet();
+            } else if (path) {
               navigate(path);
-            } else {
-              // Handle the case when there's no path, like for the "Log out" button
-            } // navigate to the path corresponding to the button
+            }
           }}
           className={`flex items-center justify-normal rounded-xl border ${
             activeButton === name ? "border-red-500 bg-red-500 bg-opacity-20" : "border-custom_gray_1 bg-custom_gray_1"

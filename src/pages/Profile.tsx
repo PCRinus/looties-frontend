@@ -10,6 +10,8 @@ import { Route, Routes } from "react-router-dom";
 import SettingsPage from "../components/macro/SettingsPage";
 import { AffiliatesPage } from "../components/macro/AffiliatesPage";
 import GameHistoryPage from "../components/macro/GameHistoryPage";
+import TransactionsPage from "../components/macro/TransactionsPage";
+import ProfileOptionsHeader from "../components/micro/ProfileOptionsHeader";
 
 const Profile: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
@@ -36,7 +38,10 @@ const Profile: React.FC = () => {
             <Route path="/" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/games" element={<GameHistoryPage />} />
+            <Route path="/inventory" element={<GameHistoryPage />} />
+            <Route path="/mylootboxes" element={<GameHistoryPage />} />
             <Route path="/affiliates" element={<AffiliatesPage />} />
+            <Route path="/transactions" element={<TransactionsPage />} />
             {/* Add more Routes as needed */}
           </Routes>
 
@@ -58,7 +63,10 @@ const Profile: React.FC = () => {
                   <Route path="/" element={<ProfilePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/games" element={<GameHistoryPage />} />
+                  <Route path="/inventory" element={<ProfileOptionsHeader title={"Inventory"} />} />
+                  <Route path="/mylootboxes" element={<ProfileOptionsHeader title={"My lootboxes"} />} />
                   <Route path="/affiliates" element={<AffiliatesPage />} />
+                  <Route path="/transactions" element={<TransactionsPage />} />
                 </Routes>
               </div>
             </div>
