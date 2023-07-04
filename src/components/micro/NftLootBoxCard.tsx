@@ -17,7 +17,7 @@ const NftLootBox: React.FC = () => {
           >
             <div className="flex flex-col ">
               <div className=" flex flex-col xs:gap-3 xs:p-3 2xl:gap-3 2xl:p-4">
-                <img className="h-auto xs:w-[134px] 2xl:w-[177px]" src={Icon} alt="svg"></img>
+                <img className="h-auto rounded-xl xs:w-[134px] 2xl:w-[177px]" src={Icon} alt="svg"></img>
                 <div className="flex flex-row xs:gap-2 2xl:gap-3">
                   <button className=" flex flex-shrink-0 flex-row items-center justify-center  rounded-lg bg-gradient-to-t from-[#F03033] to-[#E5383B] text-base font-semibold text-white xs:h-[32px] xs:w-[54px] xs:text-xs  2xl:h-8 2xl:w-[89px]">
                     View
