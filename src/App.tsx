@@ -46,6 +46,10 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey, connected]);
 
+  if (user.id && new Date(user.excludedUntil) > new Date()) {
+    return <BannedPage />;
+  }
+
   return (
     <>
       <AnimatePresence>{modal && <Modal modal={modal} />}</AnimatePresence>
@@ -69,7 +73,6 @@ const App: React.FC = () => {
           <Route path="/fairness" element={<FairnessPage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<ErrorPage />} />
-          <Route path="/banned" element={<BannedPage />} />
         </Routes>
         <MobileSidebar />
         <Footer />
