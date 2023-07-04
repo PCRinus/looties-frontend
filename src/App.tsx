@@ -15,6 +15,10 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Profile from "./pages/Profile";
 import { TermsPage } from "./pages/TermsPage";
+import { FairnessPage } from "./pages/FairnessPage";
+import { ErrorPage } from "./pages/ErrorPage";
+import { SupportPage } from "./pages/SupportPage";
+import { BannedPage } from "./pages/BannedPage";
 import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "./components/micro/ProtectedRoute";
 
@@ -60,6 +64,10 @@ const App: React.FC = () => {
             }
           />
           <Route path="/terms-of-service" element={<TermsPage />} />
+          <Route path="/fairness" element={<FairnessPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/banned" element={<BannedPage />} />
         </Routes>
         <MobileSidebar />
         <Footer />
