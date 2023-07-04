@@ -2,6 +2,7 @@ import React from "react";
 import NftGradientCanva from "./NftGradientCanva";
 import NftCardContent from "./NftCardContent";
 import { ICardData, cardData } from "../../mocks/nftPriceCardMocks";
+import Scrollbars from "react-custom-scrollbars-2";
 
 const NFTPriceCard = () => {
   return (
