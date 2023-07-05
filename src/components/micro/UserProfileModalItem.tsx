@@ -10,8 +10,7 @@ import TOTAL_WAGERED from "../../assets/UserProfileModal/TOTAL_WAGERED.svg";
 import NET_PROFIT from "../../assets/UserProfileModal/NET_PROFIT.svg";
 import SOCIAL_LINKS from "../../assets/UserProfileModal/SOCIAL_LINKS.svg";
 import TwitterIcon from "../../assets/TwiterIcon.svg";
-import DiscordIcon from "../../assets/DiscordIcon.svg";
-import { useSelector } from "react-redux";
+import DiscordSmallRedIcon from "../../assets/DiscordSmallRedIcon.svg";
 
 interface Props {
   itemType: ModalItemType;
@@ -95,7 +94,7 @@ export const UserProfileModalItem: FC<Props> = ({ itemType, profile }) => {
               <img src={TwitterIcon} alt="Twitter"></img>
             </a>
             <a href={profile.discordLink ?? "#"} target="_blank" rel="noreferrer">
-              <img src={DiscordIcon} alt="Discord"></img>
+              <img src={DiscordSmallRedIcon} alt="Discord"></img>
             </a>
           </>
         );
