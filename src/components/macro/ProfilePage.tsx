@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Twiter from "../../assets/Twiter.svg";
 import DiscordIcon from "../../assets/DiscordIcon.svg";
 import TotalGameIcon from "../../assets/TotalGameIcon.svg";
@@ -9,33 +9,75 @@ import DolarFrame from "../../assets/DolarFrame.svg";
 import ReferralsIcon from "../../assets/ReferralsIcon.svg";
 import RedDropBoxIcon from "../../assets/DropboxIconRed.svg";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
+import { useSelector } from "react-redux";
+import { async } from "q";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const ProfilePage: React.FC = ({}) => {
-  // Initiate your state variables
-  const [totalGameData, setTotalGameData] = useState<number>(0);
-  const [gamesWonData, setGamesWonData] = useState<number>(0);
-  const [gamesLostData, setGamesLostData] = useState<number>(0);
-  const [winRatioData, setWinRatioData] = useState<number>(0);
-  const [lootboxesOpenData, setLootboxesOpenData] = useState<number>(0);
-  const [referralsData, setReferralsData] = useState<number>(0);
-  const [totalWageredData, setTotalWageredData] = useState<number>(0);
-  const [netProfitData, setNetProfitData] = useState<number>(0);
+interface IUserData {
+  totalGameData?: number;
+  gamesWonData?: number;
+  gamesLostData?: number;
+  winRatioData?: number;
+  lootboxesOpenData?: number;
+  referralsData?: number;
+  totalWageredData?: number;
+  netProfitData?: number;
+}
 
-  // Simulate fetching data
+interface IAppState {
+  user: { id: string };
+  auth: { jwt: string };
+}
+
+const ProfilePage: React.FC = () => {
+  const profile = useSelector((state: any) => state.user.profile);
+
+  const [userData, setUserData] = useState<IUserData>({});
+  const user = useSelector((state: IAppState) => state.user);
+  const auth = useSelector((state: IAppState) => state.auth);
+
   useEffect(() => {
-    // You will replace this with your actual fetch call
-    // For the purpose of example, I'm just going to use setTimeout to simulate latency
-    setTimeout(() => {
-      setTotalGameData(4843.3);
-      setGamesWonData(1000000);
-      setGamesLostData(100000);
-      setWinRatioData(100000);
-      setLootboxesOpenData(100000);
-      setReferralsData(100000);
-      setTotalWageredData(100000);
-      setNetProfitData(4843.3);
-    }, 1000);
-  }, []);
+    const fetchUserData = async () => {
+      if (user.id) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user.id}`, {
+            headers: {
+              Authorization: `Bearer ${auth.jwt}`,
+            },
+          });
+          const referralResponse = await axios.get(`${process.env.REACT_APP_API_URL}/affiliates/${user.id}/stats`);
+          const { redeemedCount: referralsData } = referralResponse?.data;
+
+          const {
+            gamesPlayed: totalGameData,
+            gamesWon: gamesWonData,
+            gamesLost: gamesLostData,
+            winRatio: winRatioData,
+            lootboxesOpened: lootboxesOpenData,
+            totalWagered: totalWageredData,
+            netProfit: netProfitData,
+          } = response?.data;
+
+          setUserData({
+            totalGameData,
+            gamesWonData,
+            gamesLostData,
+            winRatioData,
+            lootboxesOpenData,
+            referralsData,
+            totalWageredData,
+            netProfitData,
+          });
+        } catch (error) {
+          console.log("Error while fetching user data:", error);
+          toast.error("Failed to fetch user data");
+        }
+      }
+    };
+    fetchUserData();
+  }, [user.id, auth.jwt]);
+
   return (
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"My Profile"} />
@@ -51,7 +93,7 @@ const ProfilePage: React.FC = ({}) => {
                     Total game
                   </span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {totalGameData}
+                    {userData.totalGameData}
                   </span>
                 </div>
               </div>
@@ -63,7 +105,7 @@ const ProfilePage: React.FC = ({}) => {
                 <div className="flex flex-col">
                   <span className="font-sans font-semibold text-custom_gray_2 xs:text-xs 2xl:text-base">Games Won</span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {gamesWonData}
+                    {userData.gamesWonData}
                   </span>
                 </div>
               </div>
@@ -77,7 +119,7 @@ const ProfilePage: React.FC = ({}) => {
                     Games lost
                   </span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {gamesLostData}
+                    {userData.gamesLostData}
                   </span>
                 </div>
               </div>
@@ -88,7 +130,7 @@ const ProfilePage: React.FC = ({}) => {
                 <div className="flex flex-col">
                   <span className="font-sans font-semibold text-custom_gray_2 xs:text-xs 2xl:text-base">Win ratio</span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {winRatioData.toLocaleString("de-DE", { minimumFractionDigits: 2 })} %
+                    {userData.winRatioData?.toLocaleString("de-DE", { minimumFractionDigits: 2 })} %
                   </span>
                 </div>
               </div>
@@ -101,7 +143,7 @@ const ProfilePage: React.FC = ({}) => {
                     Lootboxes open
                   </span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {lootboxesOpenData}
+                    {userData.lootboxesOpenData}
                   </span>
                 </div>
               </div>
@@ -112,7 +154,7 @@ const ProfilePage: React.FC = ({}) => {
                 <div className="flex flex-col">
                   <span className="font-sans font-semibold text-custom_gray_2 xs:text-xs 2xl:text-base">Referrals</span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {referralsData}
+                    {userData.referralsData}
                   </span>
                 </div>
               </div>
@@ -125,7 +167,7 @@ const ProfilePage: React.FC = ({}) => {
                     Total wagered
                   </span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    {totalWageredData.toLocaleString("de-DE", { minimumFractionDigits: 2 })}
+                    {userData.totalWageredData?.toLocaleString("de-DE", { minimumFractionDigits: 2 })}
                   </span>
                 </div>
               </div>
@@ -138,7 +180,7 @@ const ProfilePage: React.FC = ({}) => {
                     Net Profit
                   </span>
                   <span className="font-sans font-semibold text-custom_white_1 xs:text-xs 2xl:text-base">
-                    + {netProfitData.toLocaleString("de-DE", { minimumFractionDigits: 2 })}
+                    + {userData.netProfitData?.toLocaleString("de-DE", { minimumFractionDigits: 2 })}
                   </span>
                 </div>
               </div>
@@ -148,8 +190,12 @@ const ProfilePage: React.FC = ({}) => {
             Links
           </span>
           <div className="flex xs:mt-4 xs:gap-4 2xl:mt-6 2xl:gap-6">
-            <img src={Twiter} alt="svg"></img>
-            <img src={DiscordIcon} alt="svg"></img>
+            <a href={profile.twitterLink ?? "#"} target="_blank" rel="noopener noreferrer">
+              <img src={Twiter} alt="Twitter"></img>
+            </a>
+            <a href={profile.discordLink ?? "#"} target="_blank" rel="noopener noreferrer">
+              <img src={DiscordIcon} alt="Discord"></img>
+            </a>
           </div>
         </div>
       </div>
