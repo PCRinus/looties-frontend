@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../styles/micro/LiveDropHeader.scss";
 import InfoIcon from "../../assets/InfoIcon.svg";
+// import {useDispatch} from "react-redux";
+import { LiveDropsInfo } from "./LiveDropsInfo";
+
 
 interface Props {
   itemsOrder: string;
@@ -8,12 +11,26 @@ interface Props {
 }
 
 const LiveDropHeader: React.FC<Props> = ({ itemsOrder, handleItemsOrder }) => {
+
+  const [showInfo, setShowInfo] = useState(false);
+
+  const handleInfoButtonClick = () => {
+    setShowInfo(true);
+  };
+
+  const handleInfoClose = () => {
+    setShowInfo(false);
+  };
+
   return (
     <div className="livedrop-header flex h-[60px] w-full justify-between">
       <div className="flex items-center justify-center">
         <label className="ml-8 font-sans font-semibold text-custom_white_1">Live drops</label>
-        <span className="ml-[9.87px]">
-          <img src={InfoIcon} alt="info-icon-svg"></img>
+        <span className="ml-[9.87px] flex justify-center items-center">
+          {/*<img src={InfoIcon} alt="info-icon-svg"></img>*/}
+          <button id="info-button" onClick={handleInfoButtonClick}>
+          <img src={InfoIcon} alt="Info"></img>
+        </button>
           <i className=""></i>
         </span>
       </div>
@@ -35,6 +52,7 @@ const LiveDropHeader: React.FC<Props> = ({ itemsOrder, handleItemsOrder }) => {
           All
         </button>
       </div>
+      {showInfo && <LiveDropsInfo closeInfo={handleInfoClose} />}
     </div>
   );
 };
