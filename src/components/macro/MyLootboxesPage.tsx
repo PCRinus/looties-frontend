@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
 import PlusIcon from "../../assets/plusIcon.svg";
-import NFTPriceCard from "../micro/NFTPriceCard";
 import Scrollbars from "react-custom-scrollbars-2";
 import LootBoxCard from "../micro/LootBoxCard";
 import RedPlus from "../../assets/red_cross.svg";

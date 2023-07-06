@@ -9,6 +9,13 @@ const initialState = {
   excludedUntil: "",
   redeemedCode: "",
   profile: undefined,
+  settings: {
+    nickname: "",
+    hideStats: false,
+    isAnonymous: false,
+    soundEffects: false,
+    notifications: false,
+  },
   tokensBalance: 0,
 };
 
@@ -22,6 +29,14 @@ export const UserReducer = (state = initialState, action: any) => {
       return { ...state, tokensBalance: action.payload };
     case ReduxEvents.UserLogout:
       return { ...initialState };
+    case ReduxEvents.UpdateUserSettings:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.payload,
+        },
+      };
 
     default:
       return state;

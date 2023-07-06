@@ -9,9 +9,11 @@ import SettingsSoundEffects from "../micro/SettingsSoundEffects";
 import SettingsNotifications from "../micro/SettingsNotifications";
 import SettingsHideStatistics from "../micro/SettingsHideStatistics";
 import SettingsAnonymousMode from "../micro/SettingsAnonymousMode";
+import { useSelector } from "react-redux";
 
 const SettingsPage: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     const screenSizeChange = () => {
@@ -32,7 +34,7 @@ const SettingsPage: React.FC = () => {
         <div id="content" className=" h-full w-full xs:p-6 2xl:p-8">
           <div className="flex h-full w-full flex-col">
             <span className=" font-sans font-bold text-custom_white_1 xs:text-base 2xl:text-xl">
-              User info<span className="text-[#767676]">- Accout ID: RC-618288</span>
+              User info<span className="text-[#767676]">- Accout ID: {user.id} </span>
             </span>
             <div className={isXsScreen ? "mt-4 grid grid-cols-1 gap-4" : "mt-6 grid grid-cols-2 grid-rows-1 gap-4"}>
               <SettingsNicknameChange />

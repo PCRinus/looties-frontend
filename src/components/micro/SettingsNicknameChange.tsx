@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxEvents } from "../../reducers/events";
 
 const SettingsNicknameChange: React.FC = () => {
-  const [newNickname, setNewNickname] = useState("");
+  const dispatch = useDispatch();
+  const settings = useSelector((state: any) => state.user.settings);
+  const nickname = settings.nickname;
+  const [newNickname, setNewNickname] = useState(nickname || "");
+
+  useEffect(() => {
+    setNewNickname(nickname);
+  }, [nickname]);
 
   const handleChangeNickname = () => {
-    localStorage.setItem("nickname", newNickname);
+    dispatch({
+      type: ReduxEvents.UpdateUserSettings,
+      payload: { nickname: newNickname },
+    });
   };
-  //needts to be saved to db not in localstorage
-  useEffect(() => {
-    const savedNickname = localStorage.getItem("nickname");
-    if (savedNickname) {
-      setNewNickname(savedNickname);
-    }
-  }, []);
 
   return (
     <div className="flex flex-col">
