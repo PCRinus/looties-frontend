@@ -44,7 +44,7 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchUserProfileData = async () => {
       try {
-        const { data: profile } = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${modalData}`, {
+        const { data: profile } = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${modalData}/modal`, {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },

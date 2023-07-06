@@ -70,15 +70,6 @@ export const useAuth = () => {
               Authorization: `Bearer ${jwt}`,
             },
           });
-          const { data: profileCard } = await axios.get(
-            `${process.env.REACT_APP_API_URL}/profile/${userData.id}/card`,
-            {
-              headers: {
-                Authorization: `Bearer ${jwt}`,
-              },
-            }
-          );
-          const profileData = { ...profile, ...profileCard };
 
           // get token balance
           const { data: tokensBalance } = await axios.get(
@@ -99,7 +90,7 @@ export const useAuth = () => {
 
           dispatch({ type: ReduxEvents.SetJwt, payload: jwt });
           dispatch({ type: ReduxEvents.SetUserData, payload: userData });
-          dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
+          dispatch({ type: ReduxEvents.SetProfileData, payload: profile });
           dispatch({ type: ReduxEvents.UpdateUserSettings, payload: settingsResponse.data });
           dispatch({ type: ReduxEvents.SetTokensBalance, payload: tokensBalance });
         }

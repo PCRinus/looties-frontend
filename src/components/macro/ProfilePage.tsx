@@ -9,10 +9,11 @@ import DolarFrame from "../../assets/DolarFrame.svg";
 import ReferralsIcon from "../../assets/ReferralsIcon.svg";
 import RedDropBoxIcon from "../../assets/DropboxIconRed.svg";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { async } from "q";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ReduxEvents } from "../../reducers/events";
 
 interface IUserData {
   totalGameData?: number;
@@ -32,6 +33,7 @@ interface IAppState {
 
 const ProfilePage: React.FC = () => {
   const profile = useSelector((state: any) => state.user.profile);
+  const dispatch = useDispatch();
 
   const [userData, setUserData] = useState<IUserData>({});
   const user = useSelector((state: IAppState) => state.user);
@@ -69,6 +71,7 @@ const ProfilePage: React.FC = () => {
             totalWageredData,
             netProfitData,
           });
+          dispatch({ type: ReduxEvents.SetProfileData, payload: response.data });
         } catch (error) {
           console.log("Error while fetching user data:", error);
           toast.error("Failed to fetch user data");
@@ -76,7 +79,7 @@ const ProfilePage: React.FC = () => {
       }
     };
     fetchUserData();
-  }, [user.id, auth.jwt]);
+  }, [user.id, auth.jwt, dispatch]);
 
   return (
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
