@@ -37,7 +37,7 @@ const WithdrawCoins = () => {
         );
 
         const { data: tokensBalance } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/items/${user.id}/tokens-balance`,
+          `${process.env.REACT_APP_API_URL}/tokens/${user.id}/balance`,
           {
             headers: {
               Authorization: `Bearer ${auth.jwt}`,

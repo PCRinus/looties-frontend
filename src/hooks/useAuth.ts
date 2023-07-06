@@ -74,7 +74,7 @@ export const useAuth = () => {
 
           // get token balance
           const { data: tokensBalance } = await axios.get(
-            `${process.env.REACT_APP_API_URL}/items/${userData.id}/tokens-balance`,
+            `${process.env.REACT_APP_API_URL}/tokens/${userData.id}/balance`,
             {
               headers: {
                 Authorization: `Bearer ${jwt}`,
