@@ -1,7 +1,7 @@
 import { ReduxEvents } from "../../reducers/events";
 import { ReactComponent as Close } from "../../assets/Close.svg";
 import { NftModalCard } from "../micro/NftModalCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../../mocks/filtersMocks";
 import { CustomFilter } from "../micro/CustomFilter";
 import React, { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { Metaplex, NftClient, PublicKey, walletAdapterIdentity } from "@metaplex-foundation/js";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 interface Nft {
   id: number;
@@ -38,6 +39,9 @@ const DepositNft = () => {
   const [loading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
+
+  const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     const fetchNfts = async () => {
@@ -159,38 +163,56 @@ const DepositNft = () => {
       const recipientAddress = new PublicKey(process.env.REACT_APP_HOUSE_WALLET_PUBLIC_KEY as string);
 
       const metaplex = new Metaplex(connection);
-      if (wallet != null) {
-        metaplex.use(walletAdapterIdentity(wallet.adapter));
-        const nftClient = new NftClient(metaplex);
-        const nftData = await nftClient.findByMint({
-          mintAddress: mintToken,
-        });
-        const {
-          response: { signature },
-        } = await nftClient.transfer({
-          nftOrSft: {
-            address: mintToken,
-            tokenStandard: nftData.tokenStandard,
-          },
-          toOwner: recipientAddress,
-          authorizationDetails: nftData.programmableConfig?.ruleSet
-            ? {
-                rules: nftData.programmableConfig?.ruleSet,
-              }
-            : undefined,
-        });
-        //TODO: send signature, mint adress and publicKey  to back-end
-        console.log(signature);
+
+      if (!wallet) {
+        throw new Error('Wallet not connected');
       }
+
+      metaplex.use(walletAdapterIdentity(wallet.adapter));
+
+      const nftClient = new NftClient(metaplex);
+      const nftData = await nftClient.findByMint({
+        mintAddress: mintToken,
+      });
+
+      const { response } = await nftClient.transfer({
+        nftOrSft: {
+          address: mintToken,
+          tokenStandard: nftData.tokenStandard,
+        },
+        toOwner: recipientAddress,
+        authorizationDetails: nftData.programmableConfig?.ruleSet
+          ? {
+              rules: nftData.programmableConfig?.ruleSet,
+            }
+          : undefined,
+      });
+
+      const { signature } = response;
+
+      console.log(signature);
+
+      return { mintAddress, txHash: signature };
     } catch (e) {
       toast.error(`Transfer failed for ${mintAddress} token`);
+
+      return { mintAddress, txHash: null };
     }
   };
 
-  const handleNftDeposit = () => {
+  const handleNftDeposit = async () => {
     const transferredNfts = selectedOptions.map((option) => walletNfts[option]);
     dispatch({ type: ReduxEvents.CloseModal });
-    transferredNfts.forEach((nft) => transferNFT(nft.mintAddress));
+    const mappedTransactions = await Promise.all(transferredNfts.map((nft) => transferNFT(nft.mintAddress)));
+    if (!mappedTransactions) {
+      throw new Error('No transactions');
+    }
+
+    await axios.post(`${process.env.REACT_APP_API_URL}/deposit/${user.id}/nft`, mappedTransactions, {
+      headers: {
+        'Authorization': `Bearer ${auth.jwt}`
+      }
+    });
   };
 
   if (selectedOption === "Deposit NFT's") {
