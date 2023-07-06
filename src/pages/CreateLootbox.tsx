@@ -7,7 +7,7 @@ import SupportChat from "../assets/SupportChat.svg";
 import Copy from "../assets/Copy.svg";
 import toast from "react-hot-toast";
 import { ReduxEvents } from "../reducers/events";
-import { NftLootboxCard } from "../components/micro/NftLootboxCard";
+import { NftLootiesCard } from "../components/micro/NftLootiesCard";
 import { useDispatch } from "react-redux";
 import { COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../mocks/filtersMocks";
 import { CustomFilter } from "../components/micro/CustomFilter";
@@ -439,7 +439,7 @@ export const CreateLootbox = () => {
                         {list
                           .filter((nft) => nft.name.toLowerCase().includes(searchValue.toLowerCase()))
                           .map((nft) => (
-                            <NftLootboxCard
+                            <NftLootiesCard
                               key={nft.id}
                               id={nft.id}
                               name={nft.name}
