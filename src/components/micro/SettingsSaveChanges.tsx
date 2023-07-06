@@ -13,9 +13,8 @@ const SettingsSaveChanges: React.FC = () => {
     setInitialSettings(settings);
   }, []);
 
-  //TO DO: Ce inseamna sa schimb nickname? nu e in baza de date.
   const handleSaveChanges = async () => {
-    const { hideStats, isAnonymous, soundEffects, notifications, nickname } = settings;
+    const { hideStats, isAnonymous, soundEffects, notifications } = settings;
     const settingsToPost = {
       hideStats,
       isAnonymous,
