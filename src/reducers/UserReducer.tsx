@@ -10,7 +10,6 @@ const initialState = {
   redeemedCode: "",
   profile: undefined,
   settings: {
-    nickname: "",
     hideStats: false,
     isAnonymous: false,
     soundEffects: false,
