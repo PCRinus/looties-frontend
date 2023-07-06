@@ -4,8 +4,11 @@ import { WithdrawNft } from "./WithdrawNft";
 import { LogOut } from "./LogOut";
 import { AddCoins } from "./AddCoins";
 import { ProvablyFair } from "./ProvablyFair";
+import { CreatedLootbox } from "./CreatedLootbox";
 import { WithdrawCoins } from "./WithdrawCoins";
 import { UserProfile } from "./UserProfile";
+import { NftPicker } from "./NftPicker";
+import { NftWin } from "./NftWin";
 import "../../styles/macro/Modal.scss";
 import { ReduxEvents } from "../../reducers/events";
 import { useDispatch } from "react-redux";
@@ -20,7 +23,10 @@ const Modals: {
   WithdrawCoins,
   LogOut,
   ProvablyFair,
-  UserProfile
+  UserProfile,
+  CreatedLootbox,
+  NftPicker,
+  NftWin
 };
 
 interface ModalProps {

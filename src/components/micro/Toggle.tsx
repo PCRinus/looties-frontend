@@ -1,23 +1,26 @@
-import { useState } from "react";
+import React from "react";
 
-export default function Toggle() {
-  const [enabled, setEnabled] = useState(false);
+interface ToggleProps {
+  onToggle: () => void;
+  isEnabled: boolean;
+}
 
+const Toggle: React.FC<ToggleProps> = ({ onToggle, isEnabled }) => {
   return (
     <div className="relative flex h-full flex-col items-center justify-center overflow-hidden">
       <div className="flex">
         <label className="relative mr-5 inline-flex cursor-pointer items-center">
-          <input type="checkbox" className="peer sr-only" checked={enabled} readOnly />
+          <input type="checkbox" className="peer sr-only" checked={isEnabled} readOnly />
           <div
-            onClick={() => {
-              setEnabled(!enabled);
-            }}
+            onClick={onToggle}
             className={`peer h-4 w-[38px] rounded-full bg-custom_gray_1 after:absolute  after:left-[2px] after:top-[2px] after:h-3 after:w-3 after:rounded-full after:border after:border-black after:transition-all after:content-[''] peer-checked:bg-custom_red_1 peer-checked:after:translate-x-[22px] peer-checked:after:border-white peer-focus:ring-green-300 ${
-              enabled ? "after:bg-white" : "after:border-black after:bg-black "
+              isEnabled ? "after:bg-white" : "after:border-black after:bg-black "
             }`}
           ></div>
         </label>
       </div>
     </div>
   );
-}
+};
+
+export default Toggle;

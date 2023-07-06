@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
 import Scrollbars from "react-custom-scrollbars-2";
-import NftLootBoxCard from "../micro/NftLootBoxCard";
 import InventoryItemCard from "../micro/InventoryItemCard";
 
 const InventoryPage = () => {

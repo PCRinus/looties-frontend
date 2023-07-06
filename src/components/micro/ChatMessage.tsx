@@ -8,6 +8,8 @@ import UserIcon from "../../assets/UserIcon.svg";
 import ChatReplyArrow from "../../assets/ChatReplyArrow.svg";
 import ChatVerticalBar from "../../assets/ChatVerticalBar.svg";
 import { Message } from "../macro/Chat";
+import { useDispatch } from "react-redux";
+import { ReduxEvents } from "../../reducers/events";
 
 export interface Props {
   currentUser: any;
@@ -42,6 +44,12 @@ export const ChatMessage: React.FC<Props> = ({
   handleLike,
   handleUnlike,
 }) => {
+  const dispatch = useDispatch();
+  const openProfileModal = (profileModalUserId: string) => {
+    dispatch({ type: ReduxEvents.StoreModalData, payload: { data: profileModalUserId } });
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "UserProfile" } });
+  };
+
   const createdAtDate = new Date(createdAt);
   const updatedAtDate = new Date(updatedAt);
   let displayedTime = createdAtDate;
@@ -61,7 +69,10 @@ export const ChatMessage: React.FC<Props> = ({
             <div className="h-6 w-6 flex-shrink-0">
               <img src={UserIcon} alt="User icon"></img>
             </div>
-            <span className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium text-[#DFDFDF]">
+            <span
+              className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium text-[#DFDFDF] hover:underline"
+              onClick={() => openProfileModal(repliedMessage.userId)}
+            >
               @{repliedMessage.name}
             </span>
             <div className="h-4 w-1">
@@ -82,7 +93,10 @@ export const ChatMessage: React.FC<Props> = ({
           {/* user info and like/reply */}
           <div className=" flex w-full flex-row items-center justify-between gap-2">
             <div className="flex flex-row items-center justify-start gap-1 ">
-              <h3 className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-[#DFDFDF]">
+              <h3
+                className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-[#DFDFDF] hover:underline"
+                onClick={() => openProfileModal(userId)}
+              >
                 {userName}
               </h3>
               <div className={`rounded-md bg-red-500 px-2 py-1 text-[10px] font-medium text-[#1A1C20] `}>{level}</div>

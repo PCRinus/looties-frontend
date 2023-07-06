@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import EmojiIcon from "../../assets/EmojiIcon.svg";
 import ChatSendButtonIcon from "../../assets/ChatSendButton.svg";
 import CancelReplyIcon from "../../assets/CancelReplyIcon.svg";
@@ -37,6 +37,16 @@ export const ChatInput: FC<Props> = ({
 
   const handleEmojiPick = (emoji: any) => {
     setInputText((prevInputText) => prevInputText + emoji.emoji);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      setTimeout(() => {
+        isReply ? handleReply(inputText) : handleMessage(inputText);
+        setInputText("");
+        setOpenEmojiPicker(false);
+      }, 1);
+    }
   };
 
   useEffect(() => {
@@ -93,6 +103,7 @@ export const ChatInput: FC<Props> = ({
           onChange={handleInputChange}
           ref={inputFieldRef}
           value={inputText}
+          onKeyDown={handleKeyDown}
         ></textarea>
 
         <button onClick={toggleEmojiPicker}>

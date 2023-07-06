@@ -1,6 +1,5 @@
 enum ReduxEvents {
   // General events
-  Logout = "LOGOUT",
   LoggedIn = "LOGGED_IN",
   SetConfig = "SET_CONFIG",
   SetCollections = "SET_COLLECTIONS",
@@ -48,6 +47,12 @@ enum ReduxEvents {
   SetUserData = "SET_USER_DATA",
   SetProfileData = "SET_PROFILE_DATA",
   UserLogout = "USER_LOGOUT",
+
+  //Settings events
+  UpdateUserSettings = "UPDATE_USER_SETTINGS",
+
+  //Token
+  SetTokensBalance = "SET_TOKEN_BALANCE",
 }
 
 export { ReduxEvents };

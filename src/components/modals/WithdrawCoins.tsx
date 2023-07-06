@@ -29,13 +29,26 @@ const WithdrawCoins = () => {
   useEffect(() => {
     const fetchWithdrawalData = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/currency/transaction-rates`, {
-          headers: { Authorization: `Bearer ${auth.jwt}` },
-        });
-        setWithdrawalData(res.data);
-        setLoading(false);
+        const { data: withdrawalData } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/currency/transaction-rates`,
+          {
+            headers: { Authorization: `Bearer ${auth.jwt}` },
+          }
+        );
+
+        const { data: tokensBalance } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/items/${user.id}/tokens-balance`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.jwt}`,
+            },
+          }
+        );
+        dispatch({ type: ReduxEvents.SetTokensBalance, payload: tokensBalance });
+        setWithdrawalData(withdrawalData);
       } catch (err) {
-        console.log("Error fetching withdrawal data: ", err);
+        console.log(err);
+        toast.error("Error fetching withdrawal data");
         setError(true);
       } finally {
         setLoading(false);
@@ -43,7 +56,7 @@ const WithdrawCoins = () => {
     };
 
     fetchWithdrawalData();
-  }, [auth.jwt]);
+  }, [auth.jwt, user.id, dispatch]);
 
   const handleSolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -89,23 +102,34 @@ const WithdrawCoins = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const validateCoinsAmount = (coins: string) => {
+    if (parseFloat(coins) >= parseFloat(user.tokensBalance)) {
+      return false;
+    }
+    return true;
+  };
+
   const handleWithdraw = async () => {
-    try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/sol`,
-        {
-          amount: coins,
-        },
-        {
-          headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
-        }
-      );
-      dispatch({ type: ReduxEvents.CloseModal });
-      toast.success("Transaction sent successfully");
-    } catch (err) {
-      console.log(err);
-      dispatch({ type: ReduxEvents.CloseModal });
-      toast.error("Withdrawal error");
+    if (validateCoinsAmount(coins)) {
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/sol`,
+          {
+            amount: coins,
+          },
+          {
+            headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+          }
+        );
+        dispatch({ type: ReduxEvents.CloseModal });
+        toast.success("Transaction sent successfully");
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: ReduxEvents.CloseModal });
+        toast.error("Withdrawal error");
+      }
+    } else {
+      toast.error("Invalid coins amount");
     }
   };
 

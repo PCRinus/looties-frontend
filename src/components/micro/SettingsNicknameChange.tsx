@@ -1,18 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxEvents } from "../../reducers/events";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const SettingsNicknameChange: React.FC = () => {
-  const [newNickname, setNewNickname] = useState("");
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
+  const [newNickname, setNewNickname] = useState(user.profile.userName || "");
 
-  const handleChangeNickname = () => {
-    localStorage.setItem("nickname", newNickname);
-  };
-  //needts to be saved to db not in localstorage
   useEffect(() => {
-    const savedNickname = localStorage.getItem("nickname");
-    if (savedNickname) {
-      setNewNickname(savedNickname);
+    setNewNickname(user.profile.userName);
+  }, [user.profile.userName]);
+
+  const handleChangeNickname = async () => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/profile/${user.id}/username`,
+        {
+          newUsername: newNickname,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.jwt}`,
+          },
+        }
+      );
+      const { data: profile } = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.jwt}`,
+        },
+      });
+      dispatch({ type: ReduxEvents.SetProfileData, payload: profile });
+      toast.success("Nickname updated");
+    } catch (err) {
+      console.log("Error updating nickname: ", err);
+      toast.error("Nickname change failed");
     }
-  }, []);
+  };
 
   return (
     <div className="flex flex-col">

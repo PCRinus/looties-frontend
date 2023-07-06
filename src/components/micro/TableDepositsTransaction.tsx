@@ -18,14 +18,14 @@ const TableDepositsTransaction: React.FC<TableGameHistoryProps> = ({ games }) =>
   return (
     <div className="w-full p-8">
       <div className="overflow-hidden rounded-xl border border-custom_gray_1">
-        <table className="w-full divide-y divide-custom_gray_1 font-sans text-base font-semibold text-custom_gray_2">
+        <table className="w-full flex-nowrap divide-y divide-custom_gray_1  font-sans text-base font-semibold text-custom_gray_2">
           <thead className=" bg-[#1E2124]">
             <tr className="h-12">
-              <th className=" pl-4 text-left">ID</th>
-              <th className=" pl-4 text-center">Coins/NFT's</th>
-              <th className=" pl-4 text-left">Withdraw method</th>
-              <th className="  text-left">Status</th>
-              <th className=" pl-24 text-left">Date</th>
+              <th className=" whitespace-nowrap  pl-4 text-left">ID</th>
+              <th className=" whitespace-nowrap  text-left">Coins/NFT's</th>
+              <th className=" whitespace-nowrap  text-left">Withdraw method</th>
+              <th className="  whitespace-nowrap text-left">Status</th>
+              <th className=" whitespace-nowrap  text-left">Date</th>
             </tr>
           </thead>
           <tbody className=" divide-y divide-custom_gray_1">
@@ -36,11 +36,11 @@ const TableDepositsTransaction: React.FC<TableGameHistoryProps> = ({ games }) =>
                 }`}
                 key={game.id}
               >
-                <td className="pl-4 text-left ">{game.id}</td>
-                <td className="pl-24 text-left">{game.game}</td>
-                <td className="pl-4 text-left">{game.betAmount}</td>
-                <td className=" text-left">{game.winning}</td>
-                <td className="pl-24 text-left">{game.date}</td>
+                <td className="whitespace-nowrap   pl-4 text-left">{game.id}</td>
+                <td className="whitespace-nowrap  text-left">{game.game}</td>
+                <td className="whitespace-nowrap  text-left">{game.betAmount}</td>
+                <td className="whitespace-nowrap  text-left">{game.winning}</td>
+                <td className="whitespace-nowrap  text-left">{game.date}</td>
               </tr>
             ))}
           </tbody>
