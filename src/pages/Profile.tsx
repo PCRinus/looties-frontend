@@ -41,7 +41,7 @@ const Profile: React.FC = () => {
             <Route path="/" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/games" element={<GameHistoryPage />} />
-            <Route path="/inventory" element={<MyLootboxesPage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/mylootboxes" element={<MyLootboxesPage />} />
             <Route path="/affiliates" element={<AffiliatesPage />} />
             <Route path="/transactions" element={<TransactionsPage />} />
