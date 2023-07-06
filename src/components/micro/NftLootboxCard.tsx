@@ -50,24 +50,24 @@ const NftLootboxCard = (props: NftLootboxCardProps) => {
             {props.name}
           </div>
         </div>
-      </div>
-      <div
+          </div>
+          <div
         className="nft-card flex h-full w-full flex-col rounded-b-xl border-b-4 border-l-4 border-r-4 border-t-0 border-[#2C3034] p-4"
         style={{
           gap: `${props.containerWidth / 100}px`,
           background: "linear-gradient(360deg, #272727 0%, rgba(21, 23, 25, 0.00) 100%)",
         }}
-      >
+          >
         <div className="card-image mb-4">
           <img className="w-full" src={props.image} alt="nft" />
-        </div>
+                </div>
         <div className="range-slider-wrapper mb-2">
           <div className="range-slider-values flex justify-between">
             <div className="left-side">
               <span className="text-xs text-[#848B8D]">
                 ${props.minPrice >= 1000 ? `${(props.minPrice / 1000).toFixed(2)}k` : props.minPrice}
               </span>
-            </div>
+              </div>
             <div className="right-side">
               <span className="text-xs text-[#848B8D]">
                 ${props.maxPrice >= 1000 ? `${(props.maxPrice / 1000).toFixed(2)}k` : props.maxPrice}
@@ -112,7 +112,7 @@ const NftLootboxCard = (props: NftLootboxCardProps) => {
                 className="h-full w-[50%] flex-1 items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] p-[3px] font-sans text-xs font-semibold text-white outline-0"
               />
             </div>
-          </div>
+            </div>
         ) : (
           <button
             className="mt-auto flex h-8 w-full items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans text-xs font-bold text-white"
@@ -120,11 +120,12 @@ const NftLootboxCard = (props: NftLootboxCardProps) => {
           >
             <div>
               <p>Select</p>
-            </div>
+          </div>
           </button>
         )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
