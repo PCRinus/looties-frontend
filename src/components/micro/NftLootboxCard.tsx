@@ -128,4 +128,4 @@ const NftLootboxCard = (props: NftLootboxCardProps) => {
   );
 };
 
-export default NftLootboxCard;
+export { NftLootboxCard };
