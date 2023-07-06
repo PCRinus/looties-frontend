@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const SettingsWalletAddress: React.FC = () => {
-  const walletAddress = "0x59c48fb3b6260D6611a606CACEa2D9470C9c3192";
+  const userData = useSelector((state: any) => state.user);
+  const walletAddress = userData.walletAddress;
   return (
     <>
       <div className="flex flex-col">

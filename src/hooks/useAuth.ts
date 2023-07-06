@@ -89,9 +89,18 @@ export const useAuth = () => {
               },
             }
           );
+
+          // Fetch settings data
+          const settingsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/user-settings/${userData.id}`, {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
+
           dispatch({ type: ReduxEvents.SetJwt, payload: jwt });
           dispatch({ type: ReduxEvents.SetUserData, payload: userData });
           dispatch({ type: ReduxEvents.SetProfileData, payload: profileData });
+          dispatch({ type: ReduxEvents.UpdateUserSettings, payload: settingsResponse.data });
           dispatch({ type: ReduxEvents.SetTokensBalance, payload: tokensBalance });
         }
       } catch (err) {
