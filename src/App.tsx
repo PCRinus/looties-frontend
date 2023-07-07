@@ -26,8 +26,8 @@ import { ProtectedRoute } from "./components/micro/ProtectedRoute";
 const App: React.FC = () => {
   const modal = useSelector((state: any) => state.modals.currentModal);
   const user = useSelector((state: any) => state.user);
-  const { publicKey, connected, disconnecting } = useWallet();
-  const { authenticateUser, disconnectWallet } = useAuth();
+  const { publicKey, connected, wallet } = useWallet();
+  const { authenticateUser, connectWallet, disconnectUser } = useAuth();
 
   useEffect(() => {
     WebFont.load({
@@ -38,13 +38,15 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!connected) {
-      disconnectWallet();
+    if (wallet && !connected) {
+      connectWallet();
+    } else if (!connected) {
+      disconnectUser();
     } else {
       authenticateUser();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [publicKey, connected]);
+  }, [publicKey, connected, wallet]);
 
   if (user.id && new Date(user.excludedUntil) > new Date()) {
     return <BannedPage />;
