@@ -9,13 +9,12 @@ import Phantom from "../../assets/Phantom.svg";
 import Ledger from "../../assets/Ledger.svg";
 import { useDispatch } from "react-redux";
 import { PhantomWalletName, SolflareWalletName } from "@solana/wallet-adapter-wallets";
-import { useAuth } from "../../hooks/useAuth";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Wallet = () => {
   const dispatch = useDispatch();
-
+  const { select } = useWallet();
   const [seeMore, setSeeMore] = useState<boolean>(false);
-  const { connectWallet } = useAuth();
 
   return (
     <div className="flex--column modal--content wallet" onClick={(e) => e.stopPropagation()}>
@@ -43,7 +42,7 @@ const Wallet = () => {
           <button
             className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
             onClick={() => {
-              connectWallet(SolflareWalletName);
+              select(SolflareWalletName);
             }}
           >
             <img className="mr-2 " src={Solflare} alt="solflare-svg-icon" />
@@ -61,7 +60,7 @@ const Wallet = () => {
               <button
                 className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
                 onClick={() => {
-                  connectWallet(PhantomWalletName);
+                  select(PhantomWalletName);
                 }}
               >
                 <img className="mr-2 " src={Phantom} alt="phantom-svg-icon" />

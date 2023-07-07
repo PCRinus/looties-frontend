@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useSelector } from "react-redux";
 
 export const BannedPage = () => {
-  const { disconnectWallet } = useAuth();
+  const { disconnectUser } = useAuth();
   const user = useSelector((state: any) => state.user);
 
   return (
@@ -31,7 +31,7 @@ export const BannedPage = () => {
             <button
               className="flex h-[44.57px] w-[150px] items-center justify-center gap-2 rounded-lg bg-gradient-to-t from-red-700 to-red-500 px-[10px] font-sans font-semibold leading-4 text-white"
               onClick={() => {
-                disconnectWallet();
+                disconnectUser();
               }}
             >
               <span className="font-bold">Log out</span>
