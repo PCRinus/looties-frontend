@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 const WelcomeBox: React.FC = () => {
   return (
-    <div className="custom-gradient-bg-color-wbox flex w-full rounded-xl border-solid border-[#2C3034] xs:h-[300px] xs:justify-center xs:border-2 2xl:h-[268px] 2xl:justify-between 2xl:border-4">
+    <div className="custom-gradient-bg-color-wbox flex w-full  rounded-xl border-solid border-[#2C3034] xs:h-[300px] xs:justify-center xs:border-2 2xl:h-[268px] 2xl:min-w-[1071px] 2xl:justify-between 2xl:border-4">
       <img
         src={Avatar2}
         alt="avatar-icon.svg"

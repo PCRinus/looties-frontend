@@ -11,7 +11,7 @@ const Homepage = () => {
     <div className="flex w-screen flex-row items-center  justify-center xs:h-[calc(100vh-80px-64px-32px)] 2xl:h-[calc(100vh-120px)]">
       <LiveDropSidebar />
       <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
-        <div className="flex flex-col xs:p-4 xs:pt-8 2xl:mt-[70px] 2xl:p-14">
+        <div className="flex flex-shrink-0 flex-col xs:p-4 xs:pt-8 2xl:mt-[70px] 2xl:p-14">
           <WelcomeBox />
           <div className="xs:mt-8 2xl:mt-14">
             <Games />
