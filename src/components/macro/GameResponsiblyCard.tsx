@@ -12,7 +12,7 @@ export const GameResponsiblyCard: FC = () => {
   const [showSelectOptionsMobile, setShowSelectOptionsMobile] = useState<boolean>(false);
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
-  const { disconnectWallet } = useAuth();
+  const { disconnectUser } = useAuth();
 
   const DAYS_OPTIONS = [1, 7, 14, 30, 60, 90];
 
@@ -42,7 +42,7 @@ export const GameResponsiblyCard: FC = () => {
           },
         }
       );
-      disconnectWallet();
+      disconnectUser();
     } catch (err) {
       console.log("Self exclude error: ", err);
     }

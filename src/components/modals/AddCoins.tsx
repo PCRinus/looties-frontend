@@ -143,6 +143,8 @@ const AddCoins = () => {
     dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } });
   } else if (selectedOption === "Withdraw NFT's") {
     dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawNft" } });
+  } else if (selectedOption === "Deposit NFT's") {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
   }
 
   if (error) {
@@ -154,7 +156,7 @@ const AddCoins = () => {
   } else
     return (
       <div
-        className="flex--column autoheight modal--content w-[100vw] md:w-[712px]"
+        className="flex--column autoheight modal--content w-[100vw] md:w-[81vw] lg:w-[986px]"
         style={{ height: `calc(100vh - 144px)`, justifyContent: "start" }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -173,6 +175,18 @@ const AddCoins = () => {
                 onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } })}
               >
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Withdraw coins</span>
+              </button>
+            </div>
+          </div>
+          <div className="">
+            <div>
+              <button
+                className=" top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
+                onClick={() => {
+                  dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+                }}
+              >
+                <span className="font-sans text-base font-semibold text-custom_gray_2">Deposit NFT'S</span>
               </button>
             </div>
           </div>
@@ -231,6 +245,12 @@ const AddCoins = () => {
                       onClick={() => handleOptionChange("Withdraw coins")}
                     >
                       Withdraw coins
+                    </li>
+                    <li
+                      className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
+                      onClick={() => handleOptionChange("Deposit NFT's")}
+                    >
+                      Deposit NFT's
                     </li>
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"

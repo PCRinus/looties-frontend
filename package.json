@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
+    "@metaplex-foundation/js": "^0.19.4",
     "@ramonak/react-progress-bar": "^5.0.3",
     "@reduxjs/toolkit": "^1.9.5",
     "@solana/wallet-adapter-base": "^0.9.22",

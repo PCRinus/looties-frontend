@@ -7,7 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 const LogOut = () => {
   const dispatch = useDispatch();
-  const { disconnectWallet } = useAuth();
+  const { disconnectUser } = useAuth();
 
   return (
     <div className="flex--column modal--content wallet" onClick={(e) => e.stopPropagation()}>
@@ -28,7 +28,7 @@ const LogOut = () => {
       <div className="flex flex-row items-center justify-center gap-5 rounded-b-[12px] border-t-[1px] border-[#2C3034] bg-[#1A1D20] px-8 py-4">
         <button
           className="flex h-[44.57px] basis-[50%] items-center justify-center rounded-lg bg-[#2C3034] font-sans font-semibold text-white"
-          onClick={disconnectWallet}
+          onClick={disconnectUser}
         >
           Yes
         </button>

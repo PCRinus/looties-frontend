@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Wallet } from "./Wallet";
 import { WithdrawNft } from "./WithdrawNft";
+import { DepositNft } from "./DepositNft";
 import { LogOut } from "./LogOut";
 import { AddCoins } from "./AddCoins";
 import { ProvablyFair } from "./ProvablyFair";
@@ -18,6 +19,7 @@ const Modals: {
   [key: string]: any;
 } = {
   Wallet,
+  DepositNft,
   WithdrawNft,
   AddCoins,
   WithdrawCoins,
@@ -45,7 +47,7 @@ const Modal = (props: ModalProps) => {
   return (
     <>
       <motion.div
-        className="flex flex-row modal--wrapper"
+        className="modal--wrapper flex flex-row"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

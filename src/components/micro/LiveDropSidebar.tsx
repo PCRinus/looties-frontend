@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 const LiveDropSidebar: React.FC = () => {
   const auth = useSelector((state: any) => state.auth);
-  const [itemsDropped, setItemsDropped] = useState<any>([]);
+  const [itemsDropped, setItemsDropped] = useState<Array<any>>([]);
   const [itemsOrder, setItemsOrder] = useState<string>("top");
 
   const handleItemsOrder = (orderBy: string) => {
