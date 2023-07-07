@@ -1,5 +1,4 @@
 import { ReduxEvents } from "../reducers/events";
-import { WalletName } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -7,11 +6,10 @@ import { useDispatch } from "react-redux";
 import nacl from "tweetnacl";
 
 export const useAuth = () => {
-  const { publicKey, select, connect, disconnect, signMessage } = useWallet();
+  const { publicKey, connect, disconnect, signMessage } = useWallet();
   const dispatch = useDispatch();
 
-  const connectWallet = async (walletName: WalletName) => {
-    select(walletName);
+  const connectWallet = async () => {
     try {
       await connect();
     } catch (error) {
