@@ -35,9 +35,9 @@ const HeaderUserBar: React.FC = () => {
           </Link>
         </div>
 
-        <div className="ml-4">
+        {/* <div className="ml-4">
           <ProvablyFairButton />
-        </div>
+        </div> */}
       </div>
 
       {user.id && user.profile ? (
