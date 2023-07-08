@@ -32,13 +32,14 @@ const Wallet = () => {
           <span className="font-sans text-xs font-semibold">Log Into Your Account</span>
         </div>
         <div className="text flex flex-col items-center justify-center gap-4">
+          {/* TO DO - add back after MVP
           <button
             className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
             onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "Wallet" } })}
           >
             <img className="mr-2 " src={MetaMask} alt="metamask-svg-icon" />
             Continue with MetaMask
-          </button>
+          </button> */}
           <button
             className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
             onClick={() => {
@@ -50,13 +51,13 @@ const Wallet = () => {
           </button>
           {seeMore ? (
             <>
-              <button
+              {/* <button
                 className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
                 onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "Wallet" } })}
               >
                 <img className="mr-2 " src={Ledger} alt="ledger-svg-icon" />
                 Continue with Ledger
-              </button>
+              </button> */}
               <button
                 className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
                 onClick={() => {

@@ -165,7 +165,7 @@ const DepositNft = () => {
       const metaplex = new Metaplex(connection);
 
       if (!wallet) {
-        throw new Error("Wallet not connected");
+        throw new WalletNotConnectedError();
       }
 
       metaplex.use(walletAdapterIdentity(wallet.adapter));
@@ -205,14 +205,36 @@ const DepositNft = () => {
     dispatch({ type: ReduxEvents.CloseModal });
     const mappedTransactions = await Promise.all(transferredNfts.map((nft) => transferNFT(nft.mintAddress)));
     if (!mappedTransactions) {
-      throw new Error("No transactions");
+      toast.error("No transactions");
+    } else {
+      try {
+        const { data: successfullyDepositedNfts } = await axios.post(
+          `${process.env.REACT_APP_API_URL}/deposit/${user.id}/nft`,
+          mappedTransactions,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.jwt}`,
+            },
+          }
+        );
+        if (successfullyDepositedNfts.length === mappedTransactions.length) {
+          toast.success("Deposit successful");
+        } else {
+          mappedTransactions.forEach((mappedTransaction) => {
+            const found = successfullyDepositedNfts.find(
+              (depositedNft: any) => depositedNft.mintAddress === mappedTransaction.mintAddress
+            );
+            //transaction was initiated successfully in transferNft function, but failed on the chain
+            if (!found && mappedTransaction.txHash !== null) {
+              toast.error(`Transaction failed for ${mappedTransaction.mintAddress} token`);
+            }
+          });
+        }
+      } catch (err) {
+        console.log("Deposit failed: ", err);
+        toast.error("Deposit failed");
+      }
     }
-
-    await axios.post(`${process.env.REACT_APP_API_URL}/deposit/${user.id}/nft`, mappedTransactions, {
-      headers: {
-        Authorization: `Bearer ${auth.jwt}`,
-      },
-    });
   };
 
   if (selectedOption === "Deposit NFT's") {
