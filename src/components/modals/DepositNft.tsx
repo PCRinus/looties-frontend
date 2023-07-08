@@ -165,7 +165,7 @@ const DepositNft = () => {
       const metaplex = new Metaplex(connection);
 
       if (!wallet) {
-        throw new Error('Wallet not connected');
+        throw new Error("Wallet not connected");
       }
 
       metaplex.use(walletAdapterIdentity(wallet.adapter));
@@ -205,13 +205,13 @@ const DepositNft = () => {
     dispatch({ type: ReduxEvents.CloseModal });
     const mappedTransactions = await Promise.all(transferredNfts.map((nft) => transferNFT(nft.mintAddress)));
     if (!mappedTransactions) {
-      throw new Error('No transactions');
+      throw new Error("No transactions");
     }
 
     await axios.post(`${process.env.REACT_APP_API_URL}/deposit/${user.id}/nft`, mappedTransactions, {
       headers: {
-        'Authorization': `Bearer ${auth.jwt}`
-      }
+        Authorization: `Bearer ${auth.jwt}`,
+      },
     });
   };
 

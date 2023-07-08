@@ -11,7 +11,6 @@ const PaymentMethod: React.FC = () => {
       </div>
       <div className="mt-6 flex items-center justify-center gap-4">
         <img src={LogoImg1} alt="img-svg"></img>
-        <img src={LogoImg2} alt="img-svg"></img>
         <img src={LogoImg3} alt="img-svg"></img>
       </div>
     </div>
