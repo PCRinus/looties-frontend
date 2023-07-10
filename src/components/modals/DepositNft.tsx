@@ -194,6 +194,7 @@ const DepositNft = () => {
 
       return { mintAddress, txHash: signature };
     } catch (e) {
+      console.error(e);
       toast.error(`Transfer failed for ${mintAddress} token`);
 
       return { mintAddress, txHash: null };
