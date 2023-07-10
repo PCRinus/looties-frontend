@@ -28,7 +28,7 @@ const HomepageFooter = () => {
               <a href="#" className="py-2 font-sans   text-base font-semibold text-custom_gray_2 2xl:mt-6">
                 FAQ
               </a>
-              <a href="#" className="py-2 font-sans   text-base font-semibold text-custom_gray_2">
+              <a href="/support" className="py-2 font-sans   text-base font-semibold text-custom_gray_2">
                 Support
               </a>
               <Link

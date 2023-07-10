@@ -64,8 +64,7 @@ export const GameResponsiblyCard: FC = () => {
             to play, deposit and withdraw, claim rewards and free cases, or view other players games. By self-excluding,
             you agree that it is not reversible. If you wish to get a permament ban, please contact our support{" "}
             <span className="text-[#F03033]">
-              {/* TODO: add link*/}
-              <Link to="/">here</Link>
+              <Link to="/support">here</Link>
             </span>
             .
           </h2>

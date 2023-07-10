@@ -2,6 +2,7 @@ import React from "react";
 import LogoImg1 from "../../assets/Solana_logo 2.svg";
 import LogoImg2 from "../../assets/Solana_logo 3.svg";
 import LogoImg3 from "../../assets/Solana_logo 4.svg";
+import { Link } from "react-router-dom";
 
 const PaymentMethod: React.FC = () => {
   return (
@@ -10,7 +11,9 @@ const PaymentMethod: React.FC = () => {
         Deposit with <span className=" text-custom_red_1">your preferred payment method</span>
       </div>
       <div className="mt-6 flex items-center justify-center gap-4">
-        <img src={LogoImg1} alt="img-svg"></img>
+        <Link to="https://solana.com/">
+          <img src={LogoImg1} alt="img-svg" />
+        </Link>
         <img src={LogoImg3} alt="img-svg"></img>
       </div>
     </div>
