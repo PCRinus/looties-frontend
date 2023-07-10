@@ -2,10 +2,48 @@ import React, { useEffect, useState } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
 import Scrollbars from "react-custom-scrollbars-2";
 import InventoryItemCard from "../micro/InventoryItemCard";
-
-const InventoryPage = () => {
+import { useSelector } from "react-redux";
+import axios from "axios";
+interface IAppState {
+  user: { id: string };
+  auth: { jwt: string };
+}
+interface NftProps {
+  name: string;
+  url: string;
+  price: number;
+}
+const InventoryPage: React.FC = () => {
   const [numColumns, setNumColumns] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+
+  const user = useSelector((state: IAppState) => state.user);
+  const auth = useSelector((state: IAppState) => state.auth);
+  const [nfts, setNfts] = useState<NftProps[]>([]);
+  useEffect(() => {
+    const fetchNfts = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/nft/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${auth.jwt}`,
+          },
+        });
+
+        const nftsData: NftProps[] = response.data.map((item: any) => ({
+          name: item.name,
+          url: item.url,
+          price: item.price,
+        }));
+        setNfts(nftsData);
+      } catch (error) {
+        console.log("Error while fetching NFTs:", error);
+      }
+    };
+
+    if (user.id && auth.jwt) {
+      fetchNfts();
+    }
+  }, [user.id, auth.jwt]);
 
   const handleResizeMobile = () => {
     const windowWidth = window.innerWidth;
@@ -73,7 +111,6 @@ const InventoryPage = () => {
       } else {
         handleResizeDesktop();
       }
-      console.log(windowWidth);
     };
 
     handleResize();
@@ -81,12 +118,11 @@ const InventoryPage = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
-  const items = new Array(30).fill(null);
   return (
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6  xs:min-h-[337px] 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"Inventory"} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-8">
-        {items.length > 0 ? (
+        {nfts.length > 0 ? (
           <div className="h-full w-full">
             <Scrollbars
               // This will activate auto hide
@@ -107,8 +143,13 @@ const InventoryPage = () => {
                 }}
                 className={`auto-rows-max place-content-start gap-4 xs:gap-4 2xl:gap-[14px]`}
               >
-                {items.map((item, index) => (
-                  <InventoryItemCard key={index} />
+                {nfts.map((item, index) => (
+                  <InventoryItemCard
+                    key={index}
+                    name={nfts[index]?.name}
+                    price={nfts[index]?.price}
+                    url={nfts[index]?.url}
+                  />
                 ))}
               </div>
             </Scrollbars>
