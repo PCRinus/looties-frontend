@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
-import SettingsSaveChanges from "../micro/SettingsSaveChanges";
 import ContactSupport from "../micro/ContactSupport";
 import GameHistoryMobileCard from "../micro/GameHistoryMobileCard";
 import TableGameHistory from "../micro/TableGameHistory";
-
+import { useSelector } from "react-redux";
+import axios from "axios";
 interface Game {
   id: number;
   game: string;
@@ -14,12 +14,68 @@ interface Game {
 }
 
 const GameHistoryPage = () => {
-  // Here we're initializing our games array to be empty.
-  // In a real app, you'd likely fetch this data from an API or a database.
-  const [games, setGames] = useState<Game[]>([]);
-  const [displayCount, setDisplayCount] = useState(10);
+  const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
+  const [isXsScreen, setIsXsScreen] = useState(false);
 
-  const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
+  const [games, setGames] = useState<Game[]>([]);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [displayedGames, setDisplayedGames] = useState<Game[]>([]);
+  const [hiddenGames, setHiddenGames] = useState<Game[]>([]);
+
+  const observerTarget = useRef(null);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/game-history/${user.id}?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${auth.jwt}`,
+        },
+      });
+      const data: Game[] = await response.data;
+      const newDisplayedGames = [...displayedGames, ...hiddenGames, ...data.slice(0, 10)];
+      const newHiddenGames = data.slice(10);
+
+      setDisplayedGames(newDisplayedGames);
+      setHiddenGames(newHiddenGames);
+    } catch (error) {
+      setError(error as Error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setDisplayedGames((prevGames) => [...prevGames, ...hiddenGames]);
+          setHiddenGames([]);
+          setPage((prevPage) => prevPage + 1);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
 
   useEffect(() => {
     const screenSizeChange = () => {
@@ -48,10 +104,6 @@ const GameHistoryPage = () => {
     setGames(dummyGames);
   }, []);
 
-  const loadMoreGames = () => {
-    setDisplayCount((count) => count + 10);
-  };
-
   return (
     <>
       <div className=" bottom-fade mb-[52px] flex-auto rounded-xl  bg-custom_black_2 xs:mx-6 xs:h-auto   2xl:w-full">
@@ -61,11 +113,9 @@ const GameHistoryPage = () => {
         {games.length > 0 ? (
           <>
             {isXsScreen ? (
-              <>
-                <GameHistoryMobileCard games={games} />
-              </>
+              <GameHistoryMobileCard games={displayedGames} />
             ) : (
-              <TableGameHistory games={games} />
+              <TableGameHistory games={displayedGames} />
             )}
           </>
         ) : (
@@ -78,6 +128,8 @@ const GameHistoryPage = () => {
             </div>
           </div>
         )}
+        {isLoading && <div>Loading ...</div>}
+        <div ref={observerTarget}></div>
       </div>
       <ContactSupport />
     </>

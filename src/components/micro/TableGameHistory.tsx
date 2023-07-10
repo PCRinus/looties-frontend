@@ -29,19 +29,13 @@ const TableGameHistory: React.FC<TableGameHistoryProps> = ({ games }) => {
             </tr>
           </thead>
           <tbody className=" divide-y divide-custom_gray_1">
-            {games.slice(0, 10).map((game, index) => (
+            {games.map((game, index) => (
               <tr
                 className={`${index % 2 === 0 ? "h-12 bg-[#1A1D20]" : "h-12 bg-[#1E2124]"} ${
                   games.length - 1 === index ? "rounded-b-lg" : ""
                 }`}
                 key={game.id}
-              >
-                <td className="text- pl-4 ">{game.id}</td>
-                <td className="text- pl-4">{game.game}</td>
-                <td className="text- pl-4">{game.betAmount}</td>
-                <td className="text- pl-4">{game.winning}</td>
-                <td className="text- pl-4">{game.date}</td>
-              </tr>
+              ></tr>
             ))}
           </tbody>
         </table>
