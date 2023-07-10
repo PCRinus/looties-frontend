@@ -116,7 +116,7 @@ const AddCoins = () => {
         } = await connection.getLatestBlockhashAndContext();
 
         const signature = await sendTransaction(transaction, connection, { minContextSlot });
-        const { data: updatedTokensBalance } = await axios.post(
+        const { data: updatedTokensBalance } = await axios.post<string>(
           `${process.env.REACT_APP_API_URL}/deposit/${user.id}/sol`,
           {
             txHash: signature,
@@ -130,8 +130,8 @@ const AddCoins = () => {
         );
         console.log(updatedTokensBalance);
 
-        dispatch({ type: ReduxEvents.CloseModal });
         dispatch({ type: ReduxEvents.SetTokensBalance, payload: updatedTokensBalance });
+        dispatch({ type: ReduxEvents.CloseModal });
         toast.success("Transaction sent successfully");
       } catch (error) {
         console.error("Error while sending transaction:", error);

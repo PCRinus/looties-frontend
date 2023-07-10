@@ -112,7 +112,7 @@ const WithdrawCoins = () => {
   const handleWithdraw = async () => {
     if (validateCoinsAmount(coins)) {
       try {
-        await axios.post(
+        const { data } = await axios.post<{signature: string, updatedBalance: string}>(
           `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/sol`,
           {
             amount: coins,
@@ -121,6 +121,10 @@ const WithdrawCoins = () => {
             headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
           }
         );
+
+        console.log('Withdraw', data);
+
+        dispatch({ type: ReduxEvents.SetTokensBalance, payload: data.updatedBalance });
         dispatch({ type: ReduxEvents.CloseModal });
         toast.success("Transaction sent successfully");
       } catch (err) {
