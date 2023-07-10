@@ -128,7 +128,6 @@ const AddCoins = () => {
             },
           }
         );
-        console.log(updatedTokensBalance);
 
         dispatch({ type: ReduxEvents.SetTokensBalance, payload: updatedTokensBalance });
         dispatch({ type: ReduxEvents.CloseModal });

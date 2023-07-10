@@ -122,8 +122,6 @@ const WithdrawCoins = () => {
           }
         );
 
-        console.log('Withdraw', data);
-
         dispatch({ type: ReduxEvents.SetTokensBalance, payload: data.updatedBalance });
         dispatch({ type: ReduxEvents.CloseModal });
         toast.success("Transaction sent successfully");
