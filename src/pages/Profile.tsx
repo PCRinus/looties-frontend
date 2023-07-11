@@ -34,22 +34,22 @@ const Profile: React.FC = () => {
   return (
     <div className="flex w-screen xs:h-[calc(100vh-80px-64px)] xs:flex-col 2xl:h-[calc(100vh-120px)] 2xl:flex-row ">
       {isXsScreen ? (
-        <Scrollbars autoHide universal>
-          <ProfileSideBar />
+        <>
+          <Scrollbars autoHide universal>
+            <ProfileSideBar />
 
-          <Routes>
-            <Route path="/" element={<ProfilePage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/games" element={<GameHistoryPage />} />
-            <Route path="/inventory" element={<InventoryPage />} />
-            <Route path="/mylootboxes" element={<MyLootboxesPage />} />
-            <Route path="/affiliates" element={<AffiliatesPage />} />
-            <Route path="/transactions" element={<TransactionsPage />} />
-            {/* Add more Routes as needed */}
-          </Routes>
-
+            <Routes>
+              <Route path="/" element={<ProfilePage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/games" element={<GameHistoryPage />} />
+              <Route path="/inventory" element={<InventoryPage />} />
+              <Route path="/mylootboxes" element={<MyLootboxesPage />} />
+              <Route path="/affiliates" element={<AffiliatesPage />} />
+              <Route path="/transactions" element={<TransactionsPage />} />
+            </Routes>
+          </Scrollbars>
           <Chat />
-        </Scrollbars>
+        </>
       ) : (
         <>
           <div className="flex h-screen  w-full flex-col">
