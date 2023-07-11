@@ -1,6 +1,5 @@
 import React from "react";
 import Scrollbars from "react-custom-scrollbars-2";
-// Define the Game type
 interface Game {
   id: number;
   game: string;
@@ -8,8 +7,6 @@ interface Game {
   winning: number;
   date: string;
 }
-
-// Define the props type for GameHistoryMobileCard component
 interface GameHistoryMobileCardProps {
   games: Game[];
 }
