@@ -124,11 +124,20 @@ const WithdrawNft = () => {
       .map((nft) => ({ id: nft.id, mintAddress: nft.mintAddress }));
     dispatch({ type: ReduxEvents.CloseModal });
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/nft`, withdrawnNfts, {
-        headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
-      });
-      console.log(data);
-      toast.success("Withdrawal successful");
+      const { data: successfullyWithdrawnNfts } = await axios.post(
+        `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/nft`,
+        withdrawnNfts,
+        {
+          headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+        }
+      );
+      if (successfullyWithdrawnNfts.length === withdrawnNfts.length) {
+        toast.success("Withdrawal successful");
+      } else if (successfullyWithdrawnNfts.length === 0) {
+        toast.error("Withdrawal failed");
+      } else {
+        toast.error("Withdrawal partially failed");
+      }
     } catch (err) {
       console.log(err);
       toast.error("Withdrawal error");
