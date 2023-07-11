@@ -23,8 +23,8 @@ const TableDepositsTransaction: React.FC<TableGameHistoryProps> = ({ games }) =>
             <tr className="h-12">
               <th className=" whitespace-nowrap  pl-4 text-left">ID</th>
               <th className=" whitespace-nowrap  text-left">Coins/NFT's</th>
-              <th className=" whitespace-nowrap  text-left">Withdraw method</th>
-              <th className="  whitespace-nowrap text-left">Status</th>
+              <th className=" whitespace-nowrap  text-left">Deposit method</th>
+              <th className="  whitespace-nowrap text-left">Amount</th>
               <th className=" whitespace-nowrap  text-left">Date</th>
             </tr>
           </thead>
