@@ -89,28 +89,13 @@ const GameHistoryPage = () => {
     };
   }, []);
 
-  // Fetch games when component mounts
-  useEffect(() => {
-    // In a real app, fetch games from API and set state
-    // For this example, we'll create 50 dummy game entries
-    const dummyGames: Game[] = Array.from({ length: 20 }, (_, id) => ({
-      id,
-      game: `Game ${id + 1}`,
-      betAmount: Math.floor(Math.random() * 100),
-      winning: Math.floor(Math.random() * 100),
-      date: new Date().toLocaleDateString(),
-    }));
-
-    setGames(dummyGames);
-  }, []);
-
   return (
     <>
       <div className=" bottom-fade mb-[52px] flex-auto rounded-xl  bg-custom_black_2 xs:mx-6 xs:h-auto   2xl:w-full">
         <ProfileOptionsHeader title={"Game history"} />
 
         {/* Game History */}
-        {games.length > 0 ? (
+        {displayedGames.length > 0 ? (
           <>
             {isXsScreen ? (
               <GameHistoryMobileCard games={displayedGames} />
@@ -137,3 +122,8 @@ const GameHistoryPage = () => {
 };
 
 export default GameHistoryPage;
+
+/**READ ME
+ * This code will initially display 10 items, then display 10 more when the user scrolls to the bottom
+ * of the page. It will then fetch 20 more items from the server, preparing for the next two scrolling events.
+ */
