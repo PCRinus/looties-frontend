@@ -25,16 +25,13 @@ interface Transaction {
 const TransactionsPage: React.FC = () => {
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
-
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 1535px)").matches);
+
+  const [items, setItems] = useState<Transaction[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [displayedTransactions, setDisplayedTransactions] = useState<Transaction[]>([]);
-  const [hiddenTransactions, setHiddenTransactions] = useState<Transaction[]>([]);
   const [activeButton, setActiveButton] = useState("deposits");
-
-  const observerTarget = useRef(null);
 
   const fetchDeposits = () => {
     setIsLoading(true);
@@ -48,12 +45,8 @@ const TransactionsPage: React.FC = () => {
       })
       .then((response) => {
         const data = response.data;
-        console.log(data);
-        const newDisplayedTransactions = [...displayedTransactions, ...hiddenTransactions, ...data.slice(0, 10)];
-        const newHiddenTransactions = data.slice(10);
-
-        setDisplayedTransactions(newDisplayedTransactions);
-        setHiddenTransactions(newHiddenTransactions);
+        setItems((prevItems) => [...prevItems, ...data]);
+        setPage((prevPage) => prevPage + 1);
       })
       .catch((error) => {
         setError(error);
@@ -75,12 +68,8 @@ const TransactionsPage: React.FC = () => {
       })
       .then((response) => {
         const data = response.data;
-        console.log(data);
-        const newDisplayedTransactions = [...displayedTransactions, ...hiddenTransactions, ...data.slice(0, 10)];
-        const newHiddenTransactions = data.slice(10);
-
-        setDisplayedTransactions(newDisplayedTransactions);
-        setHiddenTransactions(newHiddenTransactions);
+        setItems((prevItems) => [...prevItems, ...data]);
+        setPage((prevPage) => prevPage + 1);
       })
       .catch((error) => {
         setError(error);
@@ -93,48 +82,16 @@ const TransactionsPage: React.FC = () => {
   const handleButtonChange = (type: string) => {
     setActiveButton(type);
     setPage(1);
-    setDisplayedTransactions([]);
-    setHiddenTransactions([]);
-
     if (type === "deposits") {
       fetchDeposits();
     } else if (type === "withdraws") {
+      setItems([]);
       fetchWithdrawals();
     }
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setDisplayedTransactions((prevTransactions) => [...prevTransactions, ...hiddenTransactions]);
-          setHiddenTransactions([]);
-          setPage((prevPage) => prevPage + 1);
-        }
-      },
-      { threshold: 1 }
-    );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (activeButton === "deposits") {
-      fetchDeposits();
-    } else if (activeButton === "withdraws") {
-      fetchWithdrawals();
-    }
-  }, [page, activeButton]);
-
-  useEffect(() => {
+    fetchDeposits();
     const screenSizeChange = () => {
       setIsXsScreen(window.matchMedia("(max-width: 1535px)").matches);
     };
@@ -155,21 +112,18 @@ const TransactionsPage: React.FC = () => {
           <WithdrawsButton onClick={() => handleButtonChange("withdraws")} enabled={activeButton === "withdraws"} />
         </div>
 
-        {displayedTransactions.length > 0 ? (
+        {items.length > 0 ? (
           <>
             {activeButton === "deposits" ? (
               isXsScreen ? (
-                <DepositTransactionsMobile transactions={displayedTransactions} />
+                <DepositTransactionsMobile transactions={items} />
               ) : (
-                <div></div>
-                // <TableDepositsTransaction displayedTransactions={displayedTransactions} />
+                <TableDepositsTransaction transactions={items} />
               )
             ) : isXsScreen ? (
-              <div></div>
+              <WithdrawsTransactionsMobile transactions={items} />
             ) : (
-              // <WithdrawsTransactionsMobile displayedTransactions={displayedTransactions} />
-              <div></div>
-              // <TableWithdrawsTransactions displayedTransactionsv={displayedTransactions} />
+              <TableWithdrawsTransactions transactions={items} />
             )}
           </>
         ) : (
@@ -184,8 +138,6 @@ const TransactionsPage: React.FC = () => {
             </div>
           </div>
         )}
-        {isLoading && <div>Loading ...</div>}
-        <div ref={observerTarget}></div>
       </div>
       <ContactSupport />
     </>

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 interface Game {
   id: number;
-  game: string;
+  gameType: string;
   betAmount: number;
   winning: number;
   date: string;
@@ -17,16 +17,13 @@ const GameHistoryPage = () => {
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 1535px)").matches);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [displayedGames, setDisplayedGames] = useState<Game[]>([]);
-  const [hiddenGames, setHiddenGames] = useState<Game[]>([]);
 
-  const observerTarget = useRef(null);
+  const [items, setItems] = useState<Game[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
 
   const fetchData = () => {
-    console.log(user);
     setIsLoading(true);
     setError(null);
 
@@ -38,11 +35,8 @@ const GameHistoryPage = () => {
       })
       .then((response) => {
         const data = response.data;
-        const newDisplayedGames = [...displayedGames, ...hiddenGames, ...data.slice(0, 10)];
-        const newHiddenGames = data.slice(10);
-
-        setDisplayedGames(newDisplayedGames);
-        setHiddenGames(newHiddenGames);
+        setItems((prevItems) => [...prevItems, ...data]);
+        setPage((prevPage) => prevPage + 1);
       })
       .catch((error) => {
         setError(error);
@@ -51,33 +45,24 @@ const GameHistoryPage = () => {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setDisplayedGames((prevGames) => [...prevGames, ...hiddenGames]);
-          setHiddenGames([]);
-          setPage((prevPage) => prevPage + 1);
-        }
-      },
-      { threshold: 1 }
-    );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-      }
-    };
-  }, []);
-
   useEffect(() => {
     fetchData();
-  }, [page]);
+  }, []);
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight ||
+      isLoading
+    ) {
+      return;
+    }
+    fetchData();
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLoading]);
 
   useEffect(() => {
     const screenSizeChange = () => {
@@ -97,14 +82,8 @@ const GameHistoryPage = () => {
         <ProfileOptionsHeader title={"Game history"} />
 
         {/* Game History */}
-        {displayedGames.length > 0 ? (
-          <>
-            {isXsScreen ? (
-              <GameHistoryMobileCard games={displayedGames} />
-            ) : (
-              <TableGameHistory games={displayedGames} />
-            )}
-          </>
+        {items.length > 0 ? (
+          <>{isXsScreen ? <GameHistoryMobileCard games={items} /> : <TableGameHistory games={items} />}</>
         ) : (
           <div className="flex w-full items-center justify-center  xs:px-6 xs:py-[58px]  2xl:min-h-[664px] 2xl:p-0">
             <div className="flex flex-col items-center justify-center gap-4 font-sans ">
@@ -115,8 +94,6 @@ const GameHistoryPage = () => {
             </div>
           </div>
         )}
-        {isLoading && <div>Loading ...</div>}
-        <div ref={observerTarget}></div>
       </div>
       <ContactSupport />
     </>

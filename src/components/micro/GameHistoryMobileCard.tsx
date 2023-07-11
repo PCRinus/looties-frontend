@@ -2,7 +2,7 @@ import React from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 interface Game {
   id: number;
-  game: string;
+  gameType: string;
   betAmount: number;
   winning: number;
   date: string;
@@ -33,7 +33,7 @@ const GameHistoryMobileCard: React.FC<GameHistoryMobileCardProps> = ({ games }) 
               <div className="font-sans text-base font-semibold">
                 <span className="mr-3 text-[#888888]">Game</span>
 
-                <span className="text-[#DFDFDF]">{game.game}</span>
+                <span className="text-[#DFDFDF]">{game.gameType}</span>
               </div>
               <div className="font-sans text-base font-semibold">
                 <span className="mr-3 text-[#888888]">Bet Amount</span>
