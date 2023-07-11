@@ -16,9 +16,7 @@ interface Game {
 const GameHistoryPage = () => {
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
-  const [isXsScreen, setIsXsScreen] = useState(false);
-
-  const [games, setGames] = useState<Game[]>([]);
+  const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 1535px)").matches);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -27,27 +25,31 @@ const GameHistoryPage = () => {
 
   const observerTarget = useRef(null);
 
-  const fetchData = async () => {
+  const fetchData = () => {
+    console.log(user);
     setIsLoading(true);
     setError(null);
 
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/game-history/${user.id}?page=${page}`, {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/game-history/${user.id}?page=${page}`, {
         headers: {
           Authorization: `Bearer ${auth.jwt}`,
         },
-      });
-      const data: Game[] = await response.data;
-      const newDisplayedGames = [...displayedGames, ...hiddenGames, ...data.slice(0, 10)];
-      const newHiddenGames = data.slice(10);
+      })
+      .then((response) => {
+        const data = response.data;
+        const newDisplayedGames = [...displayedGames, ...hiddenGames, ...data.slice(0, 10)];
+        const newHiddenGames = data.slice(10);
 
-      setDisplayedGames(newDisplayedGames);
-      setHiddenGames(newHiddenGames);
-    } catch (error) {
-      setError(error as Error);
-    } finally {
-      setIsLoading(false);
-    }
+        setDisplayedGames(newDisplayedGames);
+        setHiddenGames(newHiddenGames);
+      })
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {

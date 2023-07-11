@@ -1,37 +1,138 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
-import SettingsSaveChanges from "../micro/SettingsSaveChanges";
 import ContactSupport from "../micro/ContactSupport";
-import DepositTransactionsMobile from "../micro/DepositTransactionsMobile";
 import TableDepositsTransaction from "../micro/TableDepositsTransaction";
-import WithdrawsTransactionsMobile from "../micro/WithdrawsTransactionsMobile";
 import TableWithdrawsTransactions from "../micro/TableWithdrawsTransactions";
-import LootBoxesButton from "../micro/LootBoxesButton";
 import DepositsButton from "../micro/DepositsButton";
 import WithdrawsButton from "../micro/WithdrawsButton";
-import GameHistoryMobileCard from "../micro/GameHistoryMobileCard";
+import DepositTransactionsMobile from "../micro/DepositTransactionsMobile";
+import WithdrawsTransactionsMobile from "../micro/WithdrawsTransactionsMobile";
+import { useSelector } from "react-redux";
 
-interface Game {
+interface Transaction {
   id: number;
-  game: string;
-  betAmount: number;
-  winning: number;
-  date: string;
+  type: string;
+  hash: string;
+  coinsAmount: string;
+  nftName: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
 }
 
 const TransactionsPage: React.FC = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [displayCount, setDisplayCount] = useState(10);
-  const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 576px)").matches);
+  const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
+
+  const [isXsScreen, setIsXsScreen] = useState(window.matchMedia("(max-width: 1535px)").matches);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [displayedTransactions, setDisplayedTransactions] = useState<Transaction[]>([]);
+  const [hiddenTransactions, setHiddenTransactions] = useState<Transaction[]>([]);
   const [activeButton, setActiveButton] = useState("deposits");
 
-  const handleDeposits = () => {
-    setActiveButton("deposits");
+  const observerTarget = useRef(null);
+
+  const fetchDeposits = () => {
+    setIsLoading(true);
+    setError(null);
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/transactions/${user.id}?transactionType=DEPOSIT&page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${auth.jwt}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        const newDisplayedTransactions = [...displayedTransactions, ...hiddenTransactions, ...data.slice(0, 10)];
+        const newHiddenTransactions = data.slice(10);
+
+        setDisplayedTransactions(newDisplayedTransactions);
+        setHiddenTransactions(newHiddenTransactions);
+      })
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
-  const handleWithdraws = () => {
-    setActiveButton("withdraws");
+  const fetchWithdrawals = () => {
+    setIsLoading(true);
+    setError(null);
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/transactions/${user.id}?transactionType=WITHDRAWAL&page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${auth.jwt}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        const newDisplayedTransactions = [...displayedTransactions, ...hiddenTransactions, ...data.slice(0, 10)];
+        const newHiddenTransactions = data.slice(10);
+
+        setDisplayedTransactions(newDisplayedTransactions);
+        setHiddenTransactions(newHiddenTransactions);
+      })
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+
+  const handleButtonChange = (type: string) => {
+    setActiveButton(type);
+    setPage(1);
+    setDisplayedTransactions([]);
+    setHiddenTransactions([]);
+
+    if (type === "deposits") {
+      fetchDeposits();
+    } else if (type === "withdraws") {
+      fetchWithdrawals();
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setDisplayedTransactions((prevTransactions) => [...prevTransactions, ...hiddenTransactions]);
+          setHiddenTransactions([]);
+          setPage((prevPage) => prevPage + 1);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (activeButton === "deposits") {
+      fetchDeposits();
+    } else if (activeButton === "withdraws") {
+      fetchWithdrawals();
+    }
+  }, [page, activeButton]);
 
   useEffect(() => {
     const screenSizeChange = () => {
@@ -45,43 +146,30 @@ const TransactionsPage: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const dummyGames: Game[] = Array.from({ length: 20 }, (_, id) => ({
-      id,
-      game: `Game ${id + 1}`,
-      betAmount: Math.floor(Math.random() * 100),
-      winning: Math.floor(Math.random() * 100),
-      date: new Date().toLocaleDateString(),
-    }));
-
-    setGames(dummyGames);
-  }, []);
-
-  const loadMoreGames = () => {
-    setDisplayCount((count) => count + 10);
-  };
-
   return (
     <>
       <div className="bottom-fade mb-[52px] flex-auto rounded-xl bg-custom_black_2 xs:mx-6 xs:h-auto 2xl:w-full">
         <ProfileOptionsHeader title={"Transactions"} />
         <div className="flex gap-4 xs:p-6 2xl:p-8">
-          <DepositsButton onClick={handleDeposits} enabled={activeButton === "deposits"} />
-          <WithdrawsButton onClick={handleWithdraws} enabled={activeButton === "withdraws"} />
+          <DepositsButton onClick={() => handleButtonChange("deposits")} enabled={activeButton === "deposits"} />
+          <WithdrawsButton onClick={() => handleButtonChange("withdraws")} enabled={activeButton === "withdraws"} />
         </div>
 
-        {games.length > 0 ? (
+        {displayedTransactions.length > 0 ? (
           <>
             {activeButton === "deposits" ? (
               isXsScreen ? (
-                <GameHistoryMobileCard games={games} />
+                <DepositTransactionsMobile transactions={displayedTransactions} />
               ) : (
-                <TableDepositsTransaction games={games} />
+                <div></div>
+                // <TableDepositsTransaction displayedTransactions={displayedTransactions} />
               )
             ) : isXsScreen ? (
-              <GameHistoryMobileCard games={games} />
+              <div></div>
             ) : (
-              <TableWithdrawsTransactions games={games} />
+              // <WithdrawsTransactionsMobile displayedTransactions={displayedTransactions} />
+              <div></div>
+              // <TableWithdrawsTransactions displayedTransactionsv={displayedTransactions} />
             )}
           </>
         ) : (
@@ -96,6 +184,8 @@ const TransactionsPage: React.FC = () => {
             </div>
           </div>
         )}
+        {isLoading && <div>Loading ...</div>}
+        <div ref={observerTarget}></div>
       </div>
       <ContactSupport />
     </>
