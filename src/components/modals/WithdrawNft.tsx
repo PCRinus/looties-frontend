@@ -35,7 +35,7 @@ const WithdrawNft = () => {
         });
         let nftCollections: any = [];
         nfts.forEach((nft: any) => {
-          const existingCollection = nftCollections.find((collection: any) => collection.name === nft.collectionName);
+          const existingCollection = nftCollections.find((collection: any) => collection.symbol === nft.symbol);
           if (!existingCollection) {
             const walletCollection = {
               name: nft.symbol,
@@ -370,7 +370,11 @@ const WithdrawNft = () => {
           <div className="content-cardbox flex flex-row">
             <div className="row-cardbox grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {nfts
-                .filter((nft) => nft.name.toLowerCase().includes(searchValue.toLowerCase()))
+                .filter(
+                  (nft) =>
+                    nft.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+                    (nft.symbol.toLowerCase() === collection.toLowerCase() || collection.toLowerCase() === "all")
+                )
                 .map((nft) => (
                   <NftModalCard
                     key={nft.id}
