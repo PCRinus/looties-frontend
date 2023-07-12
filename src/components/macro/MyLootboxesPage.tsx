@@ -75,7 +75,6 @@ const MyLootboxesPage: React.FC = () => {
       } else {
         handleResizeDesktop();
       }
-      console.log(windowWidth);
     };
 
     handleResize();

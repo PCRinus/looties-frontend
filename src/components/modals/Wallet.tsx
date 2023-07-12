@@ -14,7 +14,8 @@ import { useWallet } from "@solana/wallet-adapter-react";
 const Wallet = () => {
   const dispatch = useDispatch();
   const { select } = useWallet();
-  const [seeMore, setSeeMore] = useState<boolean>(false);
+  // always true for initial release
+  const [seeMore, setSeeMore] = useState<boolean>(true);
 
   return (
     <div className="flex--column modal--content wallet" onClick={(e) => e.stopPropagation()}>
@@ -71,10 +72,11 @@ const Wallet = () => {
           ) : (
             <></>
           )}
-          <div className="flex cursor-pointer flex-row gap-2" onClick={() => setSeeMore(!seeMore)}>
+          {/* commented for initial release */}
+          {/* <div className="flex cursor-pointer flex-row gap-2" onClick={() => setSeeMore(!seeMore)}>
             <span className="font-sans text-base text-[#848B8D]">{seeMore ? "Less options" : "More options"}</span>
             <img src={RedArrowDown} alt="arrow-svg-icon" className={`${seeMore ? "rotate-180" : ""}`} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
