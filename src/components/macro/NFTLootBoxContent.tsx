@@ -53,12 +53,9 @@ const NFTLootBoxContent = () => {
           <div></div>
         )}
       </span>
-      <div
-        className="flex flex-row flex-wrap justify-center xs:mt-[26px] xs:gap-[1.3rem] 2xl:mt-[36px] 2xl:gap-6
-      "
-      >
+      <div className="flex flex-row flex-wrap justify-center xs:mt-[26px] xs:gap-[1.3rem] 2xl:mt-[36px] 2xl:gap-6">
         <NFTPriceCard lootboxContent={lootboxContent} />
-        <PrizeCard />
+        <PrizeCard lootboxContent={lootboxContent} />
       </div>
     </div>
   );

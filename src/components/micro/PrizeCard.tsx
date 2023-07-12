@@ -3,30 +3,34 @@ import { ICardData, cardData } from "../../mocks/prizeCardsMocks";
 import PrizeCardCanva from "./PrizeCardCanva";
 import PrizeCardContent from "./PrizeCardContent";
 import FreeOpenCard from "./FreeOpenCard";
+import { ILootboxContent } from "../macro/NFTLootBoxContent";
+import EmptyBoxCardContent from "./EmptyBoxCardContent";
 
-const PrizeCard: React.FC = () => {
+interface Props {
+  lootboxContent?: ILootboxContent;
+}
+
+const PrizeCard: React.FC<Props> = ({ lootboxContent }) => {
   return (
     <>
-      {cardData.slice(0, 3).map((data: ICardData, index: number) => (
-        <div className="" key={index}>
-          <PrizeCardCanva
-            cardTitle={data.cardInfo}
-            cardInfo={data.cardPercentage}
-            className=" flex-col items-center justify-center"
-          >
-            {data.cardInfo === "Coins" && (
-              <>
-                <PrizeCardContent value={16.444} />
-              </>
-            )}
-            {data.cardInfo === "Open" && (
-              <>
-                <FreeOpenCard />
-              </>
-            )}
-          </PrizeCardCanva>
-        </div>
-      ))}
+      {lootboxContent && lootboxContent.tokens && (
+        <PrizeCardCanva
+          cardTitle="Coins"
+          cardInfo={lootboxContent.tokens.dropChance}
+          className=" flex-col items-center justify-center"
+        >
+          <PrizeCardContent value={lootboxContent.tokens.amount} />
+        </PrizeCardCanva>
+      )}
+      {lootboxContent && lootboxContent.emptyBoxChance && (
+        <PrizeCardCanva
+          cardTitle="Empty box"
+          cardInfo={lootboxContent.emptyBoxChance}
+          className=" flex-col items-center justify-center"
+        >
+          <EmptyBoxCardContent value={lootboxContent.tokens.amount} />
+        </PrizeCardCanva>
+      )}
     </>
   );
 };
