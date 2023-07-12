@@ -1,18 +1,22 @@
-import React from "react";
+import React, { FC } from "react";
 import NftGradientCanva from "./NftGradientCanva";
 import NftCardContent from "./NftCardContent";
-import { ICardData, cardData } from "../../mocks/nftPriceCardMocks";
 import { useDispatch, useSelector } from "react-redux";
 import RedPlus from "../../assets/RedPlus.svg";
 import { ReduxEvents } from "../../reducers/events";
+import { ILootboxContent } from "../macro/NFTLootBoxContent";
 
-const NFTPriceCard = () => {
+interface Props {
+  lootboxContent?: ILootboxContent;
+}
+
+const NFTPriceCard: FC<Props> = ({ lootboxContent }) => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
 
   return (
     <>
-      {user.id && user.profile ? (
+      {/* {user.id && user.profile ? (
         <div className="custom-style-gray flex cursor-pointer items-start justify-center rounded-xl xs:h-[270px] xs:w-[160px] 2xl:h-[400px] 2xl:w-64">
           <div
             className=" content flex-column h-full cursor-pointer items-start pb-3"
@@ -36,20 +40,21 @@ const NFTPriceCard = () => {
         </div>
       ) : (
         <></>
-      )}
-      {cardData.slice(0, 10).map((data: ICardData, index: number) => (
-        <NftGradientCanva key={index} cardTitle={data.cardTitle} cardInfo={data.cardInfo}>
+      )} */}
+
+      {lootboxContent && lootboxContent.nft && (
+        <NftGradientCanva cardTitle="NFT" cardInfo={lootboxContent.nft.dropChance}>
           <div className="card_item mx-2 mt-2 2xl:mx-3 2xl:mt-3">
             <NftCardContent
-              priceLeft={data.priceLeft}
-              price={data.price}
-              priceRight={data.priceRight}
-              cardName={data.cardName}
-              icon={data.icon}
+              // priceLeft={data.priceLeft}
+              // price={data.price}
+              // priceRight={data.priceRight}
+              cardName={lootboxContent.nft.name}
+              icon={lootboxContent.nft.url}
             />
           </div>
         </NftGradientCanva>
-      ))}
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { Chat } from "../components/macro/Chat";
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InfoIcon from "../assets/InfoIcon.svg";
 import Discord from "../assets/Discord.svg";
 import RedTwitter from "../assets/RedTwitter.svg";
@@ -10,17 +10,16 @@ import Copy from "../assets/Copy.svg";
 import toast from "react-hot-toast";
 import { ReduxEvents } from "../reducers/events";
 import { NftLootiesCard } from "../components/micro/NftLootiesCard";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../mocks/filtersMocks";
 import { CustomFilter } from "../components/micro/CustomFilter";
 import { MobileFiltersButton } from "../components/micro/MobileFiltersButton";
 import axios from "axios";
-import {LAMPORTS_PER_SOL} from "@solana/web3.js";
-import { EventEmitter } from 'events';
-import {Simulate} from "react-dom/test-utils";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { EventEmitter } from "events";
+import { Simulate } from "react-dom/test-utils";
 import input = Simulate.input;
 export const emitter = new EventEmitter();
-
 
 export const CreateLootbox = () => {
   const [lootboxInput, setlootboxInput] = useState<string>("");
@@ -55,8 +54,7 @@ export const CreateLootbox = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   // const [InputPercentage, setInputPercentage] = useState(0);
 
-  const [inputValues, setInputValues] = useState<{ [key: number]: string }>({
-  });
+  const [inputValues, setInputValues] = useState<{ [key: number]: string }>({});
   const handleStateChange = (index: any, value: any, id: any) => {
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
@@ -70,7 +68,6 @@ export const CreateLootbox = () => {
   // };
 
   const checkNumber = () => {
-
     for (const [key, value] of Object.entries(inputValues)) {
       if (selectedOptions.some((option) => option === key)) {
         const number = Number(value);
@@ -83,11 +80,11 @@ export const CreateLootbox = () => {
   };
 
   const calculateSum = () => {
-    let sum= 0;
+    let sum = 0;
     for (const [key, value] of Object.entries(inputValues)) {
       if (selectedOptions.some((option) => option === key)) {
         const number = Number(value);
-        sum=sum+number;
+        sum = sum + number;
       }
     }
     return sum;
@@ -107,17 +104,15 @@ export const CreateLootbox = () => {
   };
 
   const handleSelectAll = () => {
-    const allOptionIds = list.map((card) => (card.id));
+    const allOptionIds = list.map((card) => card.id);
     setSelectedOptions(allOptionIds);
     setSelectAll(true);
   };
-
 
   const dispatch = useDispatch();
 
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
-
 
   const [selectAll, setSelectAll] = useState(false);
 
@@ -134,12 +129,12 @@ export const CreateLootbox = () => {
       if (user.id) {
         try {
           const response = await axios.get(
-              `${process.env.REACT_APP_API_URL}/lootbox/${user.id}/available-lootbox-items`,
-              {
-                headers: {
-                  Authorization: `Bearer ${auth.jwt}`,
-                },
-              }
+            `${process.env.REACT_APP_API_URL}/lootbox/${user.id}/available-lootbox-items`,
+            {
+              headers: {
+                Authorization: `Bearer ${auth.jwt}`,
+              },
+            }
           );
           const availableNfts = response?.data.availableNfts;
           setList(availableNfts);
@@ -156,14 +151,14 @@ export const CreateLootbox = () => {
   const createLootbox = async () => {
     if (user.id) {
       try {
-        const selectedNFTs = list.filter(item => selectedOptions.includes(item.id));
+        const selectedNFTs = list.filter((item) => selectedOptions.includes(item.id));
 
         const returnData = () => {
           const returndropchance = [];
           for (const [key, value] of Object.entries(inputValues)) {
             if (selectedOptions.some((option) => option === key)) {
-                const number = Number(value);
-                returndropchance.push([key,number]);
+              const number = Number(value);
+              returndropchance.push([key, number]);
             }
           }
           return returndropchance;
@@ -171,11 +166,11 @@ export const CreateLootbox = () => {
 
         let dropchance = returnData();
 
-        const nftData = selectedNFTs.map(nft => {
+        const nftData = selectedNFTs.map((nft) => {
           const matchingItem = dropchance.find((item: any) => item[0] === nft.id);
           if (matchingItem) {
-                const matchedNFT = list.find((item) => item.id === nft.id);
-                const imageUrl = matchedNFT ? matchedNFT.url : '';
+            const matchedNFT = list.find((item) => item.id === nft.id);
+            const imageUrl = matchedNFT ? matchedNFT.url : "";
             return {
               id: nft.id,
               imageUrl: imageUrl,
@@ -184,7 +179,7 @@ export const CreateLootbox = () => {
           }
           return {
             id: nft.id,
-            imageUrl: '',
+            imageUrl: "",
             dropChance: 0,
           };
         });
@@ -198,17 +193,15 @@ export const CreateLootbox = () => {
 
         const formattedPrice = totalPrice.toFixed(2);
 
-
-
         const returnValuesEmptyCoins = () => {
           const returnvalues = [];
 
           for (const [key, value] of Object.entries(inputValues)) {
             if (selectedOptions.some((option) => option === key)) {
-              if (key==="coins") {
+              if (key === "coins") {
                 returnvalues[0] = Number(value);
               }
-              if (key==="empty") {
+              if (key === "empty") {
                 returnvalues[1] = Number(value);
               }
             }
@@ -218,35 +211,43 @@ export const CreateLootbox = () => {
 
         let data = returnValuesEmptyCoins();
 
-        if (checkNumber() === false) { toast.error("Percentages for selected items should be between 0.01 and 99.99"); return;}
+        if (checkNumber() === false) {
+          toast.error("Percentages for selected items should be between 0.01 and 99.99");
+          return;
+        }
 
-        if (nftData.length > 1) { toast.error("Choose only one NFT"); return;}
+        if (nftData.length > 1) {
+          toast.error("Choose only one NFT");
+          return;
+        }
 
         if (calculateSum() === 100) {
-
+          console.log(parseFloat(user.tokensBalance).toFixed(2).toString());
           await axios.post(
-              `${process.env.REACT_APP_API_URL}/lootbox/${user.id}/create-lootbox`,
-              {
-                name: lootboxInput,
-                price: formattedPrice,
-                tokens: {
-                  id: "tokens",
-                  amount: parseFloat(user.tokensBalance).toFixed(2).toString(),
-                  dropChance: data[0].toString(),
-                },
-                nft: {
-                  id: nftData[0]?.id,
-                  imageUrl: nftData[0]?.imageUrl,
-                  dropChance: nftData[0]?.dropChance,
-                },
-                emptyBoxChance: data[1].toString(),
+            `${process.env.REACT_APP_API_URL}/lootbox/${user.id}/create-lootbox`,
+            {
+              name: lootboxInput,
+              price: formattedPrice,
+              tokens: {
+                id: "tokens",
+                amount: parseFloat(user.tokensBalance).toFixed(2).toString(),
+                dropChance: data[0].toString(),
               },
-              {
-                headers: {Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json"},
-              }
+              nft: {
+                id: nftData[0]?.id,
+                imageUrl: nftData[0]?.imageUrl,
+                dropChance: nftData[0]?.dropChance,
+              },
+              emptyBoxChance: data[1].toString(),
+            },
+            {
+              headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+            }
           );
+        } else {
+          toast.error("Sum of all percentages must be 100%");
+          return;
         }
-        else { toast.error("Sum of all percentages must be 100%"); return;}
         dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "CreatedLootbox" } });
         toast.success("Created Lootbox successfully");
       } catch (err) {
@@ -257,7 +258,6 @@ export const CreateLootbox = () => {
       toast.error("You are not logged in!");
     }
   };
-
 
   const handleReferralChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -319,17 +319,17 @@ export const CreateLootbox = () => {
                         </div>
                         <div className="flex h-[48px] w-full items-center justify-start gap-2 rounded-lg border border-[#2C3034] bg-[#1E2023] p-[7px] font-sans font-semibold text-custom_gray_2 md:justify-center">
                           <input
-                              type="text"
-                              className="h-full w-full flex-1 items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] px-[5px] py-[3px] font-sans text-sm font-semibold text-white outline-0 md:w-[142px] md:text-base"
-                              placeholder={lootboxInput?.toString()}
-                              value={lootboxInput}
-                              onChange={handleReferralChange}
-                              onKeyPress={(event) => {
-                                if (event.key === " ") {
-                                  event.preventDefault();
-                                }
-                              }}
-                              maxLength={14}
+                            type="text"
+                            className="h-full w-full flex-1 items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] px-[5px] py-[3px] font-sans text-sm font-semibold text-white outline-0 md:w-[142px] md:text-base"
+                            placeholder={lootboxInput?.toString()}
+                            value={lootboxInput}
+                            onChange={handleReferralChange}
+                            onKeyPress={(event) => {
+                              if (event.key === " ") {
+                                event.preventDefault();
+                              }
+                            }}
+                            maxLength={14}
                           />
                           <button className="top-[56-px] ml-auto flex h-full w-[77px] items-center justify-center rounded-xl bg-transparent px-[8px] text-[#F03033]">
                             <span className="font-sans text-base font-bold text-[#F03033]">Change</span>
@@ -526,8 +526,8 @@ export const CreateLootbox = () => {
                           .filter((nft) => nft?.name?.toLowerCase().includes(searchValue.toLowerCase()))
                           .map((nft, index: number) => (
                             <NftLootiesCard
-                              key={index+2}
-                              index={index+2}
+                              key={index + 2}
+                              index={index + 2}
                               id={nft.id}
                               name={nft.name}
                               image={nft.url}
@@ -536,49 +536,49 @@ export const CreateLootbox = () => {
                               maxPrice={1600}
                               percentage={100 / 1 - ((1 - 1) * 2) / 1}
                               containerWidth={300}
-                              selected={selectAll || selectedOptions.includes((nft.id))}
+                              selected={selectAll || selectedOptions.includes(nft.id)}
                               handleStateChange={handleStateChange}
                               withSlider={true}
                               onSelect={handleSelectOption}
                               selectAll={selectAll}
-                              inputValue={'' || inputValues[index + 2]} // Pass the inputValue prop
+                              inputValue={"" || inputValues[index + 2]} // Pass the inputValue prop
                             />
                           ))}
                         <NftLootiesCard
-                            key={'coins'}
-                            id={'coins'}
-                            index={1000}
-                            name={`${parseFloat(user.tokensBalance).toFixed(2)} Coins`}
-                            image={RedCoins}
-                            minPrice={500}
-                            price={700}
-                            maxPrice={1600}
-                            percentage={100 / 1 - ((1 - 1) * 2) / 1}
-                            handleStateChange={handleStateChange}
-                            containerWidth={300}
-                            selected={selectAll || selectedOptions.includes(("coins"))}
-                            withSlider={false}
-                            onSelect={handleSelectOption}
-                            selectAll={selectAll}
-                            inputValue={'' || inputValues[0]} // Pass the inputValue prop
+                          key={"coins"}
+                          id={"coins"}
+                          index={1000}
+                          name={`${parseFloat(user.tokensBalance).toFixed(2)} Coins`}
+                          image={RedCoins}
+                          minPrice={500}
+                          price={700}
+                          maxPrice={1600}
+                          percentage={100 / 1 - ((1 - 1) * 2) / 1}
+                          handleStateChange={handleStateChange}
+                          containerWidth={300}
+                          selected={selectAll || selectedOptions.includes("coins")}
+                          withSlider={false}
+                          onSelect={handleSelectOption}
+                          selectAll={selectAll}
+                          inputValue={"" || inputValues[0]} // Pass the inputValue prop
                         />
                         <NftLootiesCard
-                            key={'empty'}
-                            id={'empty'}
-                            index={1001}
-                            name={"Empty Lootobx"}
-                            image={EmptyBox}
-                            minPrice={500}
-                            price={600}
-                            maxPrice={1600}
-                            percentage={100 / 1 - ((1 - 1) * 2) / 1}
-                            handleStateChange={handleStateChange}
-                            containerWidth={300}
-                            selected={selectAll || selectedOptions.includes(("empty"))}
-                            withSlider={false}
-                            onSelect={handleSelectOption}
-                            selectAll={selectAll}
-                            inputValue={'' || inputValues[1]} // Pass the inputValue prop
+                          key={"empty"}
+                          id={"empty"}
+                          index={1001}
+                          name={"Empty Lootobx"}
+                          image={EmptyBox}
+                          minPrice={500}
+                          price={600}
+                          maxPrice={1600}
+                          percentage={100 / 1 - ((1 - 1) * 2) / 1}
+                          handleStateChange={handleStateChange}
+                          containerWidth={300}
+                          selected={selectAll || selectedOptions.includes("empty")}
+                          withSlider={false}
+                          onSelect={handleSelectOption}
+                          selectAll={selectAll}
+                          inputValue={"" || inputValues[1]} // Pass the inputValue prop
                         />
                       </div>
                     </div>
@@ -590,7 +590,7 @@ export const CreateLootbox = () => {
                     </button>
                     <button
                       className="flex h-[44.57px] basis-[50%] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 px-[10px] font-sans font-semibold leading-4 text-white"
-                        onClick={createLootbox}
+                      onClick={createLootbox}
                     >
                       Create the lootbox
                     </button>
