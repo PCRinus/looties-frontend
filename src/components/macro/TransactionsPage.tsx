@@ -83,6 +83,7 @@ const TransactionsPage: React.FC = () => {
     setActiveButton(type);
     setPage(1);
     if (type === "deposits") {
+      setItems([]);
       fetchDeposits();
     } else if (type === "withdraws") {
       setItems([]);
