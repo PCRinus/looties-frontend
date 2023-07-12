@@ -6,7 +6,7 @@ import LastTopNFTs from "../components/macro/LastTopNFTs";
 import LiveDropSidebar from "../components/micro/LiveDropSidebar";
 import { Chat } from "../components/macro/Chat";
 
-const OpenBox: React.FC = () => {
+const OpenLootbox: React.FC = () => {
   return (
     <div className="flex w-screen flex-row items-center justify-center xs:h-[calc(100vh-80px-64px)] 2xl:h-[calc(100vh-120px)]">
       <LiveDropSidebar />
@@ -38,4 +38,4 @@ const OpenBox: React.FC = () => {
   );
 };
 
-export default OpenBox;
+export default OpenLootbox;

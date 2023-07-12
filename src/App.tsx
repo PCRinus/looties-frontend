@@ -8,7 +8,7 @@ import { Modal } from "./components/modals/Modal";
 import { useSelector } from "react-redux";
 import { Footer } from "./components/macro/Footer";
 import { MobileSidebar } from "./components/macro/MobileSideBar";
-import OpenBox from "./pages/OpenBox";
+import OpenLootbox from "./pages/OpenBox";
 import Homepage from "./pages/Homepage";
 import { GameResponsiblyPage } from "./pages/GameResponsiblyPage";
 import { useAuth } from "./hooks/useAuth";
@@ -60,7 +60,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
           <Route path="/lootboxes" element={<LootboxesPage />} />
-          <Route path="/lootboxes/:lootboxId" element={<OpenBox />} />
+          <Route path="/lootboxes/:lootboxId" element={<OpenLootbox />} />
           <Route path="/" element={<Homepage />} />
           <Route
             path="/profile/*"
