@@ -25,12 +25,13 @@ const OpenBox: React.FC = () => {
         <div className="xs:p-4  2xl:mx-9 ">
           <NFTLootBoxContent />
         </div>
-        <div className="pb-4 xs:p-4  2xl:mx-9 ">
+        {/* commented for MVP */}
+        {/* <div className="pb-4 xs:p-4  2xl:mx-9 ">
           <LastTopNFTs />
         </div>
         <div className="pb-4 xs:p-4  2xl:mx-9 ">
           <RecommendedBoxes />
-        </div>
+        </div> */}
       </Scrollbars>
       <Chat />
     </div>
