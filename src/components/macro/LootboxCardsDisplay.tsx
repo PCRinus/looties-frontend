@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { CustomFilter } from "../micro/CustomFilter";
 import { SearchBar } from "../micro/SearchBar";
 import { NFC_CARDS_DATA } from "../../mocks/nftsMocks";
-import { NftCard } from "../micro/NftCard";
 import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../../mocks/filtersMocks";
 import { MobileFiltersButton } from "../micro/MobileFiltersButton";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReduxEvents } from "../../reducers/events";
-
+import { NftCard } from "../micro/NftCard";
 
 export const LootboxCardsDisplay: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -65,7 +64,6 @@ export const LootboxCardsDisplay: React.FC = () => {
     };
   }, [category, collection, price, sortBy]);
 
-
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
@@ -82,14 +80,11 @@ export const LootboxCardsDisplay: React.FC = () => {
     const fetchAvailableNFTs = async () => {
       if (user.id) {
         try {
-          const response = await axios.get(
-              `${process.env.REACT_APP_API_URL}/lootbox?page=1`,
-              {
-                headers: {
-                  Authorization: `Bearer ${auth.jwt}`,
-                },
-              },
-          );
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/lootbox?page=1`, {
+            headers: {
+              Authorization: `Bearer ${auth.jwt}`,
+            },
+          });
           const availableNfts = response?.data;
           setList(availableNfts);
           console.log(list);
@@ -104,7 +99,7 @@ export const LootboxCardsDisplay: React.FC = () => {
     fetchAvailableNFTs();
   }, [user.id]);
 
-
+  console.log(list);
   return (
     <div
       id="lootbox-cards-display"
@@ -133,7 +128,12 @@ export const LootboxCardsDisplay: React.FC = () => {
                 handleFilterChange={handleCollectionChange}
                 value={collection}
               />
-              <CustomFilter filterName="Price" options={PRICE_OPTIONS} handleFilterChange={handlePriceChange} value={price} />
+              <CustomFilter
+                filterName="Price"
+                options={PRICE_OPTIONS}
+                handleFilterChange={handlePriceChange}
+                value={price}
+              />
               <CustomFilter
                 filterName="Sory by"
                 options={SORT_BY_OPTIONS}
@@ -161,7 +161,12 @@ export const LootboxCardsDisplay: React.FC = () => {
             handleFilterChange={handleCollectionChange}
             value={collection}
           />
-          <CustomFilter filterName="Price" options={PRICE_OPTIONS} handleFilterChange={handlePriceChange} value={price} />
+          <CustomFilter
+            filterName="Price"
+            options={PRICE_OPTIONS}
+            handleFilterChange={handlePriceChange}
+            value={price}
+          />
           <CustomFilter
             filterName="Sory by"
             options={SORT_BY_OPTIONS}
@@ -171,34 +176,35 @@ export const LootboxCardsDisplay: React.FC = () => {
         </div>
       </div>
       <div className="mt-9 flex flex-row flex-wrap items-start justify-center gap-4">
-        {list && list.filter((nft) => nft.name.toLowerCase().includes(searchValue.toLowerCase())).map(
-            (nft, index) => (
-                <NftCard
-                    key={index}
-                    cardTitle={nft.name}
-                    cost={nft.price}
-                    label={"Created"}
-                    itemsCount={"3"}
-                    icon={nft.nftImage}
-                />
-            )
-        )}
-        {list && list.filter((nft) => nft.name.toLowerCase().includes(searchValue.toLowerCase())).length === 0 && (
-            <div className="flex flex-col justify-center items-center text-center h-full mt-32">
+        {list &&
+          list
+            .filter((lootbox) => lootbox.name.toLowerCase().includes(searchValue.toLowerCase()))
+            .map((lootbox, index) => (
+              <NftCard
+                key={index}
+                cardTitle={lootbox.name}
+                cost={lootbox.price}
+                label={"Created"}
+                itemsCount={"3"}
+                icon={lootbox.nftImage}
+                lootboxId={lootbox.id}
+              />
+            ))}
+        {list &&
+          list.filter((lootbox) => lootbox.name.toLowerCase().includes(searchValue.toLowerCase())).length === 0 && (
+            <div className="mt-32 flex h-full flex-col items-center justify-center text-center">
               <div className="text-center text-[24px] font-bold text-[#F03033]">No lootbox matched</div>
               <div className="flex flex-col items-center justify-center gap-2 text-center">
                 <div className="text-center text-[12px] font-semibold text-[#848B8D]">
-                  Your search "<span className="text-[#F03033] text-semibold">{searchValue}</span>" returned no results.
+                  Your search "<span className="text-semibold text-[#F03033]">{searchValue}</span>" returned no results.
                 </div>
                 <div className="text-center text-[12px] font-semibold text-[#848B8D]">
                   Please check your spelling or try again with a less accurate term.
                 </div>
               </div>
             </div>
-        )}
+          )}
       </div>
-
-
     </div>
   );
 };

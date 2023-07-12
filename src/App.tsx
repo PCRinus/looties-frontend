@@ -60,7 +60,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/game-responsibly" element={<GameResponsiblyPage />} />
           <Route path="/lootboxes" element={<LootboxesPage />} />
-          <Route path="/openbox" element={<OpenBox />} />
+          <Route path="/lootboxes/:lootboxId" element={<OpenBox />} />
           <Route path="/" element={<Homepage />} />
           <Route
             path="/profile/*"

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import dolarFrame from "../../assets/DolarFrame.svg";
 
 interface Props {
@@ -6,9 +7,10 @@ interface Props {
   label: string;
   cost: string | number;
   icon: string;
+  lootboxId: string;
 }
 
-export const NftCard: React.FC<Props> = ({ cardTitle, itemsCount, label, cost, icon }) => {
+export const NftCard: React.FC<Props> = ({ cardTitle, itemsCount, label, cost, icon, lootboxId }) => {
   return (
     <div className="xs:h-[280px] xs:w-[155px] lg:h-[399px] lg:w-64">
       <div className="flex flex-row items-center justify-between rounded-t-xl border-2 border-solid border-[#2C3034] bg-[#1E2124] xs:h-8 lg:h-12">
@@ -43,9 +45,11 @@ export const NftCard: React.FC<Props> = ({ cardTitle, itemsCount, label, cost, i
           </div>
         </div>
         <div className="flex flex-row items-center justify-center">
-          <button className="rounded-lg bg-gradient-to-t from-[#F03033] to-[#E5383B] text-white xs:h-[29px] xs:w-[158px] xs:text-xs lg:h-[40px] lg:w-[224px] lg:text-base">
-            Open
-          </button>
+          <Link to={`/lootboxes/${lootboxId}`}>
+            <button className="rounded-lg bg-gradient-to-t from-[#F03033] to-[#E5383B] text-white xs:h-[29px] xs:w-[158px] xs:text-xs lg:h-[40px] lg:w-[224px] lg:text-base">
+              Open
+            </button>
+          </Link>
         </div>
       </div>
     </div>
