@@ -9,6 +9,7 @@ import RedArrowDown from "../../assets/RedArrowDown.svg";
 import { MobileFiltersButton } from "../micro/MobileFiltersButton";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { ColorRing } from "react-loader-spinner";
 
 const WithdrawNft = () => {
   const [collection, setCollection] = useState<string>(COLLECTION_OPTIONS[0]);
@@ -117,29 +118,39 @@ const WithdrawNft = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleWithdraw = async () => {
-    const withdrawnNfts = nfts
-      .filter((nft) => selectedOptions.includes(nft.id))
-      .map((nft) => ({ id: nft.id, mintAddress: nft.mintAddress }));
-    dispatch({ type: ReduxEvents.CloseModal });
-    try {
-      const { data: successfullyWithdrawnNfts } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/nft`,
-        withdrawnNfts,
-        {
-          headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+  const validateNftWithdraw = () => {
+    if (selectedOptions.length === 0) {
+      toast.error("You need to select at least one NFT to withdraw");
+      return false;
+    }
+    return true;
+  };
+
+  const handleNftWithdraw = async () => {
+    if (validateNftWithdraw()) {
+      const withdrawnNfts = nfts
+        .filter((nft) => selectedOptions.includes(nft.id))
+        .map((nft) => ({ id: nft.id, mintAddress: nft.mintAddress }));
+      dispatch({ type: ReduxEvents.CloseModal });
+      try {
+        const { data: successfullyWithdrawnNfts } = await axios.post(
+          `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/nft`,
+          withdrawnNfts,
+          {
+            headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+          }
+        );
+        if (successfullyWithdrawnNfts.length === withdrawnNfts.length) {
+          toast.success("Withdrawal successful");
+        } else if (successfullyWithdrawnNfts.length === 0) {
+          toast.error("Withdrawal failed");
+        } else {
+          toast.error("Withdrawal partially failed");
         }
-      );
-      if (successfullyWithdrawnNfts.length === withdrawnNfts.length) {
-        toast.success("Withdrawal successful");
-      } else if (successfullyWithdrawnNfts.length === 0) {
-        toast.error("Withdrawal failed");
-      } else {
-        toast.error("Withdrawal partially failed");
+      } catch (err) {
+        console.log(err);
+        toast.error("Withdrawal error");
       }
-    } catch (err) {
-      console.log(err);
-      toast.error("Withdrawal error");
     }
   };
 
@@ -155,9 +166,6 @@ const WithdrawNft = () => {
   if (error) {
     dispatch({ type: ReduxEvents.CloseModal });
     toast.error("Error fetching NFTs");
-  } else if (loading) {
-    // TODO: implement loading spinner
-    return <></>;
   } else
     return (
       <div
@@ -365,32 +373,39 @@ const WithdrawNft = () => {
             </button>
           </div>
         </div>
-        <div className={`noscroll flex h-auto flex-col overflow-y-auto px-[32px] md:h-[355px] md:max-h-[500px]`}>
-          <div className="content-cardbox flex flex-row">
-            <div className="row-cardbox grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {nfts
-                .filter(
-                  (nft) =>
-                    nft.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-                    (nft.symbol.toLowerCase() === collection.toLowerCase() || collection.toLowerCase() === "all")
-                )
-                .map((nft) => (
-                  <NftModalCard
-                    key={nft.id}
-                    id={nft.id}
-                    name={nft.name}
-                    image={nft.url}
-                    containerWidth={350}
-                    labelSize={12}
-                    titleSize={16}
-                    selected={selectAll || selectedOptions.includes(nft.id)}
-                    onSelect={handleSelectOption}
-                    selectAll={selectAll}
-                  />
-                ))}
+        {loading ? (
+          <div className="flex h-full flex-col items-center justify-center px-[32px] md:min-h-[355px]">
+            <ColorRing colors={["#F03033", "#F03033", "#F03033", "#F03033", "#F03033"]} />
+            <h1 className="text-[#F03033] xs:text-xl xs:font-bold 2xl:text-2xl 2xl:font-bold">Loading your NFT's...</h1>
+          </div>
+        ) : (
+          <div className={`noscroll flex h-auto flex-col overflow-y-auto px-[32px] md:h-[355px] md:max-h-[500px]`}>
+            <div className="content-cardbox flex flex-row">
+              <div className="row-cardbox grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                {nfts
+                  .filter(
+                    (nft) =>
+                      nft.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+                      (nft.symbol.toLowerCase() === collection.toLowerCase() || collection.toLowerCase() === "all")
+                  )
+                  .map((nft) => (
+                    <NftModalCard
+                      key={nft.id}
+                      id={nft.id}
+                      name={nft.name}
+                      image={nft.url}
+                      containerWidth={350}
+                      labelSize={12}
+                      titleSize={16}
+                      selected={selectAll || selectedOptions.includes(nft.id)}
+                      onSelect={handleSelectOption}
+                      selectAll={selectAll}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="pointer-events-none absolute bottom-[77px] h-[136px] w-full bg-gradient-to-b from-transparent to-[#151719]"></div>
         <div className="footer mt-auto flex flex-row items-center justify-center gap-5 rounded-b-[12px] border-t-[1px] border-[#2C3034] bg-[#1A1D20] px-8 py-4">
@@ -404,7 +419,7 @@ const WithdrawNft = () => {
           </button>
           <button
             className="flex h-[44.57px] basis-[50%] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 px-[10px] font-sans font-semibold leading-4 text-white"
-            onClick={handleWithdraw}
+            onClick={handleNftWithdraw}
           >
             Withdraw
           </button>

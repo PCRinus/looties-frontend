@@ -468,7 +468,7 @@ const DepositNft = () => {
         {loading ? (
           <div className="flex h-full flex-col items-center justify-center px-[32px] md:min-h-[355px]">
             <ColorRing colors={["#F03033", "#F03033", "#F03033", "#F03033", "#F03033"]} />
-            <h1 className="text-[#F03033] xs:text-xl xs:font-bold 2xl:text-2xl 2xl:font-bold">Loading yourNFT's...</h1>
+            <h1 className="text-[#F03033] xs:text-xl xs:font-bold 2xl:text-2xl 2xl:font-bold">Loading your NFT's...</h1>
           </div>
         ) : (
           <div className={`noscroll flex h-auto flex-col overflow-y-auto px-[32px] md:h-[355px] md:max-h-[500px]`}>
