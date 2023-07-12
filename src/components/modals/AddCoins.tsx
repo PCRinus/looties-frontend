@@ -27,8 +27,8 @@ const AddCoins = () => {
   const auth = useSelector((state: any) => state.auth);
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
-  const [sol, setSol] = useState("");
-  const [coins, setCoins] = useState("");
+  const [sol, setSol] = useState("0.00");
+  const [coins, setCoins] = useState("0.00");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [depositData, setDepositData] = useState<IDepositData>();
@@ -96,46 +96,65 @@ const AddCoins = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const validateDeposit = async () => {
+    const balance = await connection.getBalance(publicKey!);
+    console.log(balance);
+    if (parseFloat(sol) === 0) {
+      toast.error("Deposited amount needs to be higher than 0.00");
+      return false;
+    } else if (!sol) {
+      toast.error("You need to enter an amount");
+      return false;
+    } else if (parseFloat(sol) > balance / LAMPORTS_PER_SOL) {
+      toast.error("Insufficient SOL in wallet");
+      return false;
+    }
+    return true;
+  };
+
   const handleDeposit = async () => {
-    if (!sendTransaction || !publicKey) {
-      dispatch({ type: ReduxEvents.CloseModal });
-      toast.error("Wallet not connected");
-    } else {
-      try {
-        const transaction = new Transaction();
-        transaction.add(
-          SystemProgram.transfer({
-            fromPubkey: publicKey,
-            toPubkey: new PublicKey(process.env.REACT_APP_HOUSE_WALLET_PUBLIC_KEY!),
-            lamports: parseFloat(sol) * LAMPORTS_PER_SOL,
-          })
-        );
+    const isDepositValid = await validateDeposit();
+    if (isDepositValid) {
+      if (!sendTransaction || !publicKey) {
+        dispatch({ type: ReduxEvents.CloseModal });
+        toast.error("Wallet not connected");
+      } else {
+        try {
+          const transaction = new Transaction();
+          transaction.add(
+            SystemProgram.transfer({
+              fromPubkey: publicKey,
+              toPubkey: new PublicKey(process.env.REACT_APP_HOUSE_WALLET_PUBLIC_KEY!),
+              lamports: parseFloat(sol) * LAMPORTS_PER_SOL,
+            })
+          );
 
-        const {
-          context: { slot: minContextSlot },
-        } = await connection.getLatestBlockhashAndContext();
+          const {
+            context: { slot: minContextSlot },
+          } = await connection.getLatestBlockhashAndContext();
 
-        const signature = await sendTransaction(transaction, connection, { minContextSlot });
-        const { data: updatedTokensBalance } = await axios.post<string>(
-          `${process.env.REACT_APP_API_URL}/deposit/${user.id}/sol`,
-          {
-            txHash: signature,
-            lamports: parseFloat(sol) * LAMPORTS_PER_SOL,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${auth.jwt}`,
+          const signature = await sendTransaction(transaction, connection, { minContextSlot });
+          const { data: updatedTokensBalance } = await axios.post<string>(
+            `${process.env.REACT_APP_API_URL}/deposit/${user.id}/sol`,
+            {
+              txHash: signature,
+              lamports: parseFloat(sol) * LAMPORTS_PER_SOL,
             },
-          }
-        );
+            {
+              headers: {
+                Authorization: `Bearer ${auth.jwt}`,
+              },
+            }
+          );
 
-        dispatch({ type: ReduxEvents.SetTokensBalance, payload: updatedTokensBalance });
-        dispatch({ type: ReduxEvents.CloseModal });
-        toast.success("Transaction sent successfully");
-      } catch (error) {
-        console.error("Error while sending transaction:", error);
-        dispatch({ type: ReduxEvents.CloseModal });
-        toast.error("Error while sending transaction");
+          dispatch({ type: ReduxEvents.SetTokensBalance, payload: updatedTokensBalance });
+          dispatch({ type: ReduxEvents.CloseModal });
+          toast.success("Transaction sent successfully");
+        } catch (error) {
+          console.error("Error while sending transaction:", error);
+          dispatch({ type: ReduxEvents.CloseModal });
+          toast.error("Error while sending transaction");
+        }
       }
     }
   };
@@ -295,7 +314,6 @@ const AddCoins = () => {
                 <img className="h-5 w-5" src={Solana} alt="red-dollar" />
                 <input
                   type="number"
-                  placeholder="0.00"
                   value={sol}
                   className="h-full w-full flex-1 items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] p-[3px] font-sans text-base font-semibold text-custom_gray_2 outline-0 md:w-[142px]"
                   onChange={handleSolChange}
@@ -321,7 +339,6 @@ const AddCoins = () => {
                 <img className="ml-1 h-5 w-5" src={RedDollar} alt="red-dollar" />
                 <input
                   type="number"
-                  placeholder="0.00"
                   value={coins}
                   className="flex h-full w-[142px] w-full items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] p-[3px] font-sans text-base font-semibold text-custom_gray_2 outline-0"
                   onChange={handleCoinsChange}
