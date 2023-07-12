@@ -1,10 +1,8 @@
 import React from "react";
 import Logo from "../../assets/Looties_wordmark 1.svg";
-import FaceBookIcon from "../../assets/FacebookIcon.svg";
 import TwiterIcon from "../../assets/TwiterIcon.svg";
-import InstagramIcon from "../../assets/InstagramIcon.svg";
-import MailIcon from "../../assets/MailIcon.svg";
 import AdultImg from "../../assets/18+.svg";
+import DiscordIcon from "../../assets/DiscordSmallRedIcon.svg";
 import { Link } from "react-router-dom";
 
 const HomepageFooter = () => {
@@ -46,14 +44,11 @@ const HomepageFooter = () => {
             <div id="social" className="flex flex-col">
               <span className="pb-2 font-sans  text-xl font-semibold text-custom_white_1">Social</span>
               <div className="social-icons mt-4 flex items-center justify-start gap-5 2xl:mt-6">
-                <a href="#" className="social-icon ">
+                <a href="https://twitter.com/i/flow/login?redirect_after_login=%2FLootiesNFT" className="social-icon ">
                   <img src={TwiterIcon} alt="twiter-icon " />
                 </a>
-                <a href="#" className="social-icon ">
-                  <img src={InstagramIcon} alt="instagram-icon" />
-                </a>
-                <a href="#" className="social-icon ">
-                  <img src={MailIcon} alt="mail-icon" />
+                <a href="https://discord.gg/looties" className="social-icon ">
+                  <img src={DiscordIcon} alt="discord-icon" />
                 </a>
               </div>
               <img src={AdultImg} alt="img-svg" className="ml-[-50px] h-40  w-40 xs:inline 2xl:hidden" />

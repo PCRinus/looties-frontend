@@ -1,23 +1,15 @@
 import React from "react";
-import FaceBookIcon from "../../assets/FacebookIcon.svg";
 import TwiterIcon from "../../assets/TwiterIcon.svg";
-import InstagramIcon from "../../assets/InstagramIcon.svg";
-import MailIcon from "../../assets/MailIcon.svg";
+import DiscordIcon from "../../assets/DiscordSmallRedIcon.svg";
 
 export const MobileSocialButtons: React.FC = () => {
   return (
     <div className="flex w-3/4 flex-row items-center justify-end gap-5">
-      <a href="#">
-        <img src={FaceBookIcon} alt="facebook-icon" />
-      </a>
-      <a href="#">
+      <a href="https://twitter.com/i/flow/login?redirect_after_login=%2FLootiesNFT">
         <img src={TwiterIcon} alt="twiter-icon " />
       </a>
-      <a href="#">
-        <img src={InstagramIcon} alt="instagram-icon" />
-      </a>
-      <a href="#">
-        <img src={MailIcon} alt="mail-icon" />
+      <a href="https://discord.gg/looties">
+        <img src={DiscordIcon} alt="instagram-icon" />
       </a>
     </div>
   );
