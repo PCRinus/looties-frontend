@@ -105,7 +105,6 @@ const DepositNft = () => {
   };
 
   const handleCollectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
     setCollection(event.target.value);
   };
   const handlePriceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -189,8 +188,6 @@ const DepositNft = () => {
       });
 
       const { signature } = response;
-
-      console.log(signature);
 
       return { mintAddress, txHash: signature };
     } catch (e) {

@@ -46,7 +46,6 @@ const WithdrawNft = () => {
         });
         nftCollections.sort();
         nftCollections.unshift({ name: "All", symbol: undefined });
-        console.log(nfts);
         setNfts(nfts);
         setNftCollections(nftCollections);
       } catch (err) {
