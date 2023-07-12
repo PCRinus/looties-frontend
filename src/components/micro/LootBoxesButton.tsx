@@ -4,7 +4,7 @@ import DropBoxIconRed from "../../assets/DropboxIconRed.svg";
 import { useLocation } from "react-router-dom";
 const LootBoxesButton: React.FC = () => {
   const location = useLocation();
-  const isLootboxesPage = location.pathname === "/lootboxes";
+  const isLootboxesPage = location.pathname.includes("/lootboxes");
   return (
     <>
       <button
