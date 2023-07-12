@@ -100,7 +100,6 @@ const WithdrawCoins = () => {
   };
 
   const validateCoinsAmount = (coins: string) => {
-    console.log(parseFloat(coins),parseFloat(user.tokensBalance))
     if (parseFloat(coins) > parseFloat(user.tokensBalance)) {
       toast.error("Insufficient funds");
       return false;
@@ -128,7 +127,10 @@ const WithdrawCoins = () => {
           }
         );
 
-        dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(data.updatedBalance) * 100) / 100 });
+        dispatch({
+          type: ReduxEvents.SetTokensBalance,
+          payload: Math.floor(parseFloat(data.updatedBalance) * 100) / 100,
+        });
         toast.success("Transaction sent successfully");
       } catch (err) {
         console.log(err);

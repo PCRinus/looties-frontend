@@ -12,6 +12,7 @@ import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { Metaplex, NftClient, PublicKey, walletAdapterIdentity } from "@metaplex-foundation/js";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { ColorRing } from "react-loader-spinner";
 
 interface Nft {
   id: number;
@@ -198,39 +199,49 @@ const DepositNft = () => {
     }
   };
 
+  const validateNftDeposit = () => {
+    if (selectedOptions.length === 0) {
+      toast.error("You need to select at least one NFT to deposit");
+      return false;
+    }
+    return true;
+  };
+
   const handleNftDeposit = async () => {
-    const transferredNfts = selectedOptions.map((option) => walletNfts[option]);
-    dispatch({ type: ReduxEvents.CloseModal });
-    const mappedTransactions = await Promise.all(transferredNfts.map((nft) => transferNFT(nft.mintAddress)));
-    if (!mappedTransactions) {
-      toast.error("No transactions");
-    } else {
-      try {
-        const { data: successfullyDepositedNfts } = await axios.post(
-          `${process.env.REACT_APP_API_URL}/deposit/${user.id}/nft`,
-          mappedTransactions,
-          {
-            headers: {
-              Authorization: `Bearer ${auth.jwt}`,
-            },
-          }
-        );
-        if (successfullyDepositedNfts.length === mappedTransactions.length) {
-          toast.success("Deposit successful");
-        } else {
-          mappedTransactions.forEach((mappedTransaction) => {
-            const found = successfullyDepositedNfts.find(
-              (depositedNft: any) => depositedNft.mintAddress === mappedTransaction.mintAddress
-            );
-            //transaction was initiated successfully in transferNft function, but failed on the chain
-            if (!found && mappedTransaction.txHash !== null) {
-              toast.error(`Transaction failed for ${mappedTransaction.mintAddress} token`);
+    if (validateNftDeposit()) {
+      const transferredNfts = selectedOptions.map((option) => walletNfts[option]);
+      dispatch({ type: ReduxEvents.CloseModal });
+      const mappedTransactions = await Promise.all(transferredNfts.map((nft) => transferNFT(nft.mintAddress)));
+      if (!mappedTransactions) {
+        toast.error("No transactions");
+      } else {
+        try {
+          const { data: successfullyDepositedNfts } = await axios.post(
+            `${process.env.REACT_APP_API_URL}/deposit/${user.id}/nft`,
+            mappedTransactions,
+            {
+              headers: {
+                Authorization: `Bearer ${auth.jwt}`,
+              },
             }
-          });
+          );
+          if (successfullyDepositedNfts.length === mappedTransactions.length) {
+            toast.success("Deposit successful");
+          } else {
+            mappedTransactions.forEach((mappedTransaction) => {
+              const found = successfullyDepositedNfts.find(
+                (depositedNft: any) => depositedNft.mintAddress === mappedTransaction.mintAddress
+              );
+              //transaction was initiated successfully in transferNft function, but failed on the chain
+              if (!found && mappedTransaction.txHash !== null) {
+                toast.error(`Transaction failed for ${mappedTransaction.mintAddress} token`);
+              }
+            });
+          }
+        } catch (err) {
+          console.log("Deposit failed: ", err);
+          toast.error("Deposit failed");
         }
-      } catch (err) {
-        console.log("Deposit failed: ", err);
-        toast.error("Deposit failed");
       }
     }
   };
@@ -247,9 +258,6 @@ const DepositNft = () => {
   if (error) {
     dispatch({ type: ReduxEvents.CloseModal });
     toast.error("Error fetching NFTs from wallet");
-  } else if (loading) {
-    //TO DO: implement loading spinner
-    return <></>;
   } else
     return (
       <div
@@ -457,33 +465,40 @@ const DepositNft = () => {
             </button>
           </div>
         </div>
-        <div className={`noscroll flex h-auto flex-col overflow-y-auto px-[32px] md:h-[355px] md:max-h-[500px]`}>
-          <div className="content-cardbox flex flex-row">
-            <div className="row-cardbox grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {walletNfts
-                .filter(
-                  (nft) =>
-                    nft.itemName.toLowerCase().includes(searchValue.toLowerCase()) &&
-                    (nft.collectionName.toLowerCase() === collection.toLowerCase() ||
-                      collection.toLowerCase() === "all")
-                )
-                .map((nft) => (
-                  <NftModalCard
-                    key={nft.id}
-                    id={nft.id}
-                    name={nft.itemName}
-                    image={nft.imageUrl}
-                    containerWidth={250}
-                    labelSize={12}
-                    titleSize={16}
-                    selected={selectAll || selectedOptions.includes(nft.id)}
-                    onSelect={handleSelectOption}
-                    selectAll={selectAll}
-                  />
-                ))}
+        {loading ? (
+          <div className="flex h-full flex-col items-center justify-center px-[32px] md:min-h-[355px]">
+            <ColorRing colors={["#F03033", "#F03033", "#F03033", "#F03033", "#F03033"]} />
+            <h1 className="text-[#F03033] xs:text-xl xs:font-bold 2xl:text-2xl 2xl:font-bold">Loading yourNFT's...</h1>
+          </div>
+        ) : (
+          <div className={`noscroll flex h-auto flex-col overflow-y-auto px-[32px] md:h-[355px] md:max-h-[500px]`}>
+            <div className="content-cardbox flex flex-row">
+              <div className="row-cardbox grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                {walletNfts
+                  .filter(
+                    (nft) =>
+                      nft.itemName.toLowerCase().includes(searchValue.toLowerCase()) &&
+                      (nft.collectionName.toLowerCase() === collection.toLowerCase() ||
+                        collection.toLowerCase() === "all")
+                  )
+                  .map((nft) => (
+                    <NftModalCard
+                      key={nft.id}
+                      id={nft.id}
+                      name={nft.itemName}
+                      image={nft.imageUrl}
+                      containerWidth={250}
+                      labelSize={12}
+                      titleSize={16}
+                      selected={selectAll || selectedOptions.includes(nft.id)}
+                      onSelect={handleSelectOption}
+                      selectAll={selectAll}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="pointer-events-none absolute bottom-[77px] h-[136px] w-full bg-gradient-to-b from-transparent to-[#151719]"></div>
         <div className="footer mt-auto flex flex-row items-center justify-center gap-5 rounded-b-[12px] border-t-[1px] border-[#2C3034] bg-[#1A1D20] px-8 py-4">
