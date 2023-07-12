@@ -50,6 +50,15 @@ const Wallet = () => {
             <img className="mr-2 " src={Solflare} alt="solflare-svg-icon" />
             Continue with Solflare
           </button>
+            <button
+                className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
+                onClick={() => {
+                    select(PhantomWalletName);
+                }}
+            >
+                <img className="mr-2 " src={Phantom} alt="phantom-svg-icon" />
+                Continue with Phantom
+            </button>
           {seeMore ? (
             <>
               {/* <button
@@ -59,15 +68,6 @@ const Wallet = () => {
                 <img className="mr-2 " src={Ledger} alt="ledger-svg-icon" />
                 Continue with Ledger
               </button> */}
-              <button
-                className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
-                onClick={() => {
-                  select(PhantomWalletName);
-                }}
-              >
-                <img className="mr-2 " src={Phantom} alt="phantom-svg-icon" />
-                Continue with Phantom
-              </button>
             </>
           ) : (
             <></>

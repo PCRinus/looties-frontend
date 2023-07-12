@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
 import PlusIcon from "../../assets/plusIcon.svg";
 import Scrollbars from "react-custom-scrollbars-2";
-import LootBoxCard from "../micro/LootBoxCard";
 import RedPlus from "../../assets/red_cross.svg";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { ReduxEvents } from "../../reducers/events";
+import { LootBoxCard } from "../micro/LootBoxCard";
+import { Link } from "react-router-dom";
+
 
 const MyLootboxesPage: React.FC = () => {
   const [numColumns, setNumColumns] = useState(1);
@@ -32,6 +38,46 @@ const MyLootboxesPage: React.FC = () => {
 
     setNumColumns(numCols);
   };
+
+
+  const user = useSelector((state: any) => state.user);
+  const auth = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
+
+  interface NFT {
+    id: string;
+    name: string;
+    price: number;
+    nftImage: string;
+  }
+
+  const [list, setList] = useState<NFT[]>([]);
+  useEffect(() => {
+    const fetchAvailableNFTs = async () => {
+      if (user.id) {
+        try {
+          const response = await axios.get(
+              `${process.env.REACT_APP_API_URL}/lootbox/${user.id}?page=1`,
+              {
+                headers: {
+                  Authorization: `Bearer ${auth.jwt}`,
+                },
+              },
+          );
+          const availableNfts = response?.data;
+          setList(availableNfts);
+          console.log(list);
+          // console.log(response.data);
+        } catch (error) {
+          console.log("Error while fetching your NFTs:", error);
+          toast.error("Failed to fetch your NFTs");
+        }
+      }
+    };
+
+    fetchAvailableNFTs();
+  }, [user.id]);
+
 
   const handleResizeDesktop = () => {
     const windowWidth = window.innerWidth;
@@ -85,7 +131,7 @@ const MyLootboxesPage: React.FC = () => {
 
   const items = new Array(30).fill(null);
   return (
-    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:h-[856px] 2xl:w-full">
+    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2 xs:h-auto xs:min-h-full 2xl:h-[856px] 2xl:w-full">
       <ProfileOptionsHeader title={"My lootboxes"} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-7">
         {items.length > 0 ? (
@@ -109,19 +155,40 @@ const MyLootboxesPage: React.FC = () => {
                 }}
                 className={`auto-rows-max place-content-start gap-4 xs:gap-4 2xl:gap-[14px]`}
               >
-                {items.map((item, index) =>
+                {list.map((item, index) =>
                   index === 0 ? (
+                      <div className="flex flex-row justify-center items-center gap-4">
+                      <Link to="/create-lootbox">
                     <button
                       key={index}
                       className="rounded-xl border-[1px] border-custom_gray_1 xs:h-[236px] xs:w-[158px] 2xl:h-[297px] 2xl:w-[209px]"
+
                     >
                       <img src={RedPlus} alt="svg" className="inline" />
                       <h2 className="font-sans font-bold text-custom_red_1 xs:text-base 2xl:text-xl">
                         Create a new <br /> lootbox
                       </h2>
                     </button>
+                      </Link>
+                        <LootBoxCard
+                            key={index}
+                            cardTitle={item.name}
+                            cost={item.price}
+                            label={"Created"}
+                            itemsCount={"3"}
+                            icon={item.nftImage}
+                        />
+                    </div>
+
                   ) : (
-                    <LootBoxCard key={index} />
+                      <LootBoxCard
+                          key={index}
+                          cardTitle={item.name}
+                          cost={item.price}
+                          label={"Created"}
+                          itemsCount={"3"}
+                          icon={item.nftImage}
+                      />
                   )
                 )}
               </div>

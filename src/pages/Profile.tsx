@@ -32,51 +32,65 @@ const Profile: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex w-screen xs:h-[calc(100vh-80px-64px)] xs:flex-col 2xl:h-[calc(100vh-120px)] 2xl:flex-row ">
-      {isXsScreen ? (
-        <>
-          <Scrollbars autoHide universal>
-            <ProfileSideBar />
-
-            <Routes>
-              <Route path="/" element={<ProfilePage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/games" element={<GameHistoryPage />} />
-              <Route path="/inventory" element={<InventoryPage />} />
-              <Route path="/mylootboxes" element={<MyLootboxesPage />} />
-              <Route path="/affiliates" element={<AffiliatesPage />} />
-              <Route path="/transactions" element={<TransactionsPage />} />
-            </Routes>
-          </Scrollbars>
-          <Chat />
-        </>
-      ) : (
-        <>
-          <div className="flex h-screen  w-full flex-col">
-            <div className=" grid  grid-cols-[450px_1fr] grid-rows-1 ">
-              <div className="ml-[52px] mt-[52px] flex h-[806px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
+      <div className="flex w-screen flex-row items-center justify-center xs:h-[calc(100vh-80px-64px)] 2xl:h-[calc(100vh-120px)]">
+        <div className="flex h-full w-full flex-col">
+          <div className="flex w-full flex-col overflow-y-scroll lg:h-full lg:flex-row lg:overflow-y-hidden">
+            {isXsScreen ? (
+                    <></>
+                ) :
+            <div className="flex h-full w-full flex-col gap-10 bg-[#151719] xs:px-6 xs:pt-8 lg:max-w-[392px] lg:overflow-y-scroll 2xl:py-[52px] 2xl:pl-[52px] 2xl:pr-0 ">
+             <div className="flex h-[806px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
                 <UserProfileCard />
                 <ProfileOptions />
               </div>
-              <div id="options-pages-grid" className="h-full max-h-full w-full   bg-[#151719] p-[52px] ">
-                <Routes>
-                  <Route path="/" element={<ProfilePage />} />
-                  <Route path="/settings" element={<SettingsPage />} />
-                  <Route path="/games" element={<GameHistoryPage />} />
-                  <Route path="/inventory" element={<InventoryPage />} />
-                  <Route path="/mylootboxes" element={<MyLootboxesPage />} />
-                  <Route path="/affiliates" element={<AffiliatesPage />} />
-                  <Route path="/transactions" element={<TransactionsPage />} />
-                </Routes>
+            </div>
+            }
+            <div className="mb-2 w-full bg-[#151719] lg:h-full lg:max-h-full lg:overflow-y-scroll">
+              <div className="autoheight w-full">
+                  {isXsScreen ? (
+                      <div className="flex w-screen xs:h-[calc(100vh-80px-64px)] xs:flex-col 2xl:h-[calc(100vh-120px)] 2xl:flex-row">
+                      <Scrollbars autoHide universal>
+                                   <ProfileSideBar />
+                        <div className="mx-[21px]">
+                                   <Routes>
+                                     <Route path="/" element={<ProfilePage />} />
+                                     <Route path="/settings" element={<SettingsPage />} />
+                                     <Route path="/games" element={<GameHistoryPage />} />
+                                     <Route path="/inventory" element={<InventoryPage />} />
+                                     <Route path="/mylootboxes" element={<MyLootboxesPage />} />
+                                     <Route path="/affiliates" element={<AffiliatesPage />} />
+                                     <Route path="/transactions" element={<TransactionsPage />} />
+                                   </Routes>
+                        </div>
+                        <Chat />
+                          </Scrollbars>
+                      </div>
+                        ) : (
+                          <>
+                            <div className="flex h-screen  w-full flex-col">
+                              <div className="grid grid-rows-1 ">
+                                <div id="options-pages-grid" className="h-full max-h-full w-full   bg-[#151719] p-[52px] ">
+                                  <Routes>
+                                    <Route path="/" element={<ProfilePage />} />
+                                    <Route path="/settings" element={<SettingsPage />} />
+                                    <Route path="/games" element={<GameHistoryPage />} />
+                                    <Route path="/inventory" element={<InventoryPage />} />
+                                    <Route path="/mylootboxes" element={<MyLootboxesPage />} />
+                                    <Route path="/affiliates" element={<AffiliatesPage />} />
+                                    <Route path="/transactions" element={<TransactionsPage />} />
+                                  </Routes>
+                                </div>
+                              </div>
+                              <div className=" flex-auto bg-[#151719]"></div>
+                            </div>
+                          </>
+                        )}
               </div>
             </div>
-            <div className=" flex-auto bg-[#151719]"></div>
           </div>
-
-          <Chat />
-        </>
-      )}
-    </div>
+        </div>
+        <Chat />
+      </div>
   );
 };
 

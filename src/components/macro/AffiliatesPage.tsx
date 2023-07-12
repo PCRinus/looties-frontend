@@ -222,7 +222,7 @@ export const AffiliatesPage = () => {
   };
 
   return (
-    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
+    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"Affiliates"} />
       <div
         className={`relative flex flex-col bg-[#1a1d20] px-[32px] text-[14px] font-semibold leading-5 text-[#848B8D] sm:text-[16px]`}
@@ -232,7 +232,7 @@ export const AffiliatesPage = () => {
             className="flex w-full flex-col items-center justify-center rounded-xl md:max-h-[176px] md:flex-row  "
             style={{ background: "linear-gradient(360deg, #272727 0%, rgba(21, 23, 25, 0) 100%), #191D20" }}
           >
-            <div className="ml-0 flex w-full basis-[100%] flex-col items-center justify-center gap-3 rounded-t-[12px] border-solid border-[#2C3034] bg-[#1E2124] p-8 xs:h-16 md:ml-[52px] md:basis-[55%] md:items-start md:p-0 2xl:h-20 ">
+            <div className="ml-0 flex w-full basis-[100%] flex-col items-center justify-center gap-3 rounded-t-[12px] border-solid border-[#2C3034] bg-transparent p-8 xs:h-16 md:ml-[52px] md:basis-[55%] md:items-start md:p-0 2xl:h-20 ">
               <h1 className="text-center font-bold text-[#F03033] xs:text-xl md:text-start 2xl:text-2xl">
                 {" "}
                 Earn up to 5% from your friends
@@ -272,7 +272,7 @@ export const AffiliatesPage = () => {
           </button>
         </div>
         <h1 className="py-5 text-xl font-bold text-[#DFDFDF]"> Set up your referral code </h1>
-        <div className="mt-2 flex flex-col items-start justify-start gap-3 md:flex-row md:items-center">
+        <div className="mt-2 flex flex-col items-start justify-start gap-3 md:flex-wrap md:flex-row md:items-center">
           <div className="flex w-full flex-col items-start justify-center gap-2 md:w-[275px]">
             <h1 className="text-xs font-semibold text-[#848B8D]">Set your referral code</h1>
             <div className="flex h-[48px] w-full items-center justify-start gap-2 rounded-lg border border-[#2C3034] bg-[#1E2023] p-[7px] font-sans font-semibold text-custom_gray_2 md:justify-center">

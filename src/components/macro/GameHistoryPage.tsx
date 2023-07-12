@@ -78,7 +78,7 @@ const GameHistoryPage = () => {
 
   return (
     <>
-      <div className=" bottom-fade mb-[52px] flex-auto rounded-xl  bg-custom_black_2 xs:mx-6 xs:h-auto   2xl:w-full">
+      <div className=" bottom-fade mb-[52px] flex-auto rounded-xl  bg-custom_black_2 xs:h-auto   2xl:w-full">
         <ProfileOptionsHeader title={"Game history"} />
 
         {/* Game History */}

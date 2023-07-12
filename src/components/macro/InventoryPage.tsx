@@ -119,7 +119,7 @@ const InventoryPage: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
   return (
-    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6  xs:min-h-[337px] 2xl:min-h-0 2xl:w-full">
+    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2 xs:min-h-[337px] 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"Inventory"} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-8">
         {nfts.length > 0 ? (

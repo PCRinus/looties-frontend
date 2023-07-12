@@ -82,7 +82,7 @@ const ProfilePage: React.FC = () => {
   }, [user.id, auth.jwt, dispatch]);
 
   return (
-    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:mx-6 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
+    <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2 xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"My Profile"} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-8">
         <div className="h-full w-full ">

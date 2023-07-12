@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const ContactSupport: React.FC = () => {
   return (
     <>
-      <div className="flex items-center rounded-xl bg-[#1A1D20] xs:mx-6 xs:h-[137px] xs:w-auto xs:flex-col  xs:justify-center xs:gap-4 2xl:h-20 2xl:w-full  2xl:flex-row 2xl:justify-between 2xl:gap-0 ">
+      <div className="flex items-center rounded-xl bg-[#1A1D20] xs:h-[137px] xs:w-auto xs:flex-col  xs:justify-center xs:gap-4 2xl:h-20 2xl:w-full  2xl:flex-row 2xl:justify-between 2xl:gap-0 ">
         <span className="font-sans text-xl font-bold text-custom_white_1 2xl:ml-8">If you have an issue ?</span>
         <Link
           to="/support"
