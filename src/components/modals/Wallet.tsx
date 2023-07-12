@@ -27,7 +27,7 @@ const Wallet = () => {
       >
         <Close />
       </div>
-      <div className={`flex--column body ${seeMore ? "h-[483px]" : "h-[355px]"}`}>
+      <div className='flex--column body'>
         <div className="type mt-6 flex flex-col items-center justify-center">
           <img className="logo-img left-[73px] top-[34px] h-[36px] w-[160.94px]" src={LootiesLogo} alt="logo" />
           <span className="font-sans text-xs font-semibold">Log Into Your Account</span>
@@ -50,15 +50,15 @@ const Wallet = () => {
             <img className="mr-2 " src={Solflare} alt="solflare-svg-icon" />
             Continue with Solflare
           </button>
-            <button
-                className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
-                onClick={() => {
-                    select(PhantomWalletName);
-                }}
-            >
-                <img className="mr-2 " src={Phantom} alt="phantom-svg-icon" />
-                Continue with Phantom
-            </button>
+          <button
+            className="flex h-[44.57px] w-[270px] items-center justify-center rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white sm:w-[345px]"
+            onClick={() => {
+              select(PhantomWalletName);
+            }}
+          >
+            <img className="mr-2 " src={Phantom} alt="phantom-svg-icon" />
+            Continue with Phantom
+          </button>
           {seeMore ? (
             <>
               {/* <button
