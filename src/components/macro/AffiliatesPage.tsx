@@ -11,6 +11,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
 import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
+import InfoIconRed from "../../assets/InfoIconRed.svg";
+import RedeemCodeInfoBubble from "../micro/RedeemCodeInfoBubble";
 
 export const AffiliatesPage = () => {
   const [referralInput, setReferralInput] = useState<string>("");
@@ -20,6 +22,7 @@ export const AffiliatesPage = () => {
   const [availableCommission, setavailableCommission] = useState(0);
   const [referralEarnings, setreferralEarnings] = useState(0);
   const [redeemedCount, setredeemedCount] = useState(0);
+  const [isInfoVisible, setInfoVisible] = useState(false);
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
 
@@ -221,6 +224,10 @@ export const AffiliatesPage = () => {
     window.open(shareUrl);
   };
 
+  const handleInfoClick = () => {
+    setInfoVisible(!isInfoVisible);
+  };
+
   return (
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
       <ProfileOptionsHeader title={"Affiliates"} />
@@ -248,9 +255,12 @@ export const AffiliatesPage = () => {
             </div>
           </div>
         </div>
-        <div className="mt-6 flex flex-row items-center justify-start gap-3">
+        <div className="relative mt-6 flex flex-row items-center justify-start gap-3">
           <h1 className="text-xl font-bold text-[#DFDFDF]"> Redeem a code </h1>
-          <img src={InfoIcon} className="h-4 w-4" alt="info-icon-svg"></img>
+          <button onClick={handleInfoClick}>
+            <img src={isInfoVisible ? InfoIconRed : InfoIcon} className="h-4 w-4" alt="info-icon-svg"></img>
+          </button>
+          {isInfoVisible && <RedeemCodeInfoBubble />}
         </div>
         <div className="mt-6 flex flex-row items-center justify-start gap-3">
           <h1 className="text-xs font-semibold text-[#848B8D]"> Referral Code </h1>

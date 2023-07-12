@@ -9,7 +9,7 @@ const AnonymousInfoBubble: React.FC = () => {
         profile picture from appearing in the game
         <br /> participant lists and live drops.
       </p>
-      <img className="relative ml-[146px] 2xl:top-[-11px]" src={AnonymousInfoRectangle} alt="Rectangle"></img>
+      <img className="relative top-[-11px] ml-[146px]" src={AnonymousInfoRectangle} alt="Rectangle"></img>
     </div>
   );
 };
