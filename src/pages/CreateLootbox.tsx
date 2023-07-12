@@ -1,35 +1,38 @@
-import { Chat } from "../components/macro/Chat";
-import React, { useCallback, useEffect, useState } from "react";
-import InfoIcon from "../assets/InfoIcon.svg";
-import Discord from "../assets/Discord.svg";
-import RedTwitter from "../assets/RedTwitter.svg";
-import RedCoins from "../assets/RedCoins.svg";
-import EmptyBox from "../assets/EmptyBox.svg";
-import SupportChat from "../assets/SupportChat.svg";
-import Copy from "../assets/Copy.svg";
-import toast from "react-hot-toast";
-import { ReduxEvents } from "../reducers/events";
-import { NftLootiesCard } from "../components/micro/NftLootiesCard";
-import { useDispatch, useSelector } from "react-redux";
-import { COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../mocks/filtersMocks";
-import { CustomFilter } from "../components/micro/CustomFilter";
-import { MobileFiltersButton } from "../components/micro/MobileFiltersButton";
-import axios from "axios";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { EventEmitter } from "events";
-import { Simulate } from "react-dom/test-utils";
+import { Chat } from '../components/macro/Chat';
+import React, { useCallback, useEffect, useState } from 'react';
+import InfoIcon from '../assets/InfoIcon.svg';
+import Discord from '../assets/Discord.svg';
+import RedTwitter from '../assets/RedTwitter.svg';
+import RedCoins from '../assets/RedCoins.svg';
+import EmptyBox from '../assets/EmptyBox.svg';
+import SupportChat from '../assets/SupportChat.svg';
+import Copy from '../assets/Copy.svg';
+import toast from 'react-hot-toast';
+import { ReduxEvents } from '../reducers/events';
+import { NftLootiesCard } from '../components/micro/NftLootiesCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from '../mocks/filtersMocks';
+import { CustomFilter } from '../components/micro/CustomFilter';
+import { MobileFiltersButton } from '../components/micro/MobileFiltersButton';
+import axios from 'axios';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { EventEmitter } from 'events';
+import { Simulate } from 'react-dom/test-utils';
 import input = Simulate.input;
+import RedDollar from '../assets/RedDollar.svg';
+
 export const emitter = new EventEmitter();
 
 export const CreateLootbox = () => {
-  const [lootboxInput, setlootboxInput] = useState<string>("");
+  const [lootboxInput, setlootboxInput] = useState<string>('');
+  const [priceInput, setpriceInput] = useState('');
   const randomGeneratedNumber = Math.random().toString(36).substring(2, 12);
 
   const [notifications, setNotifications] = useState(false);
   const [collection, setCollection] = useState<string>(COLLECTION_OPTIONS[0]);
   const [price, setPrice] = useState<string>(PRICE_OPTIONS[0]);
   const [sortBy, setSortBy] = useState<string>(SORT_BY_OPTIONS[0]);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [openFilters, setOpenFilters] = useState<boolean>(false);
   const [appliedFiltersCount, setAppliedFiltersCount] = useState<number>(0);
 
@@ -139,8 +142,8 @@ export const CreateLootbox = () => {
           const availableNfts = response?.data.availableNfts;
           setList(availableNfts);
         } catch (error) {
-          console.log("Error while fetching your NFTs:", error);
-          toast.error("Failed to fetch your NFTs");
+          console.log('Error while fetching your NFTs:', error);
+          toast.error('Failed to fetch your NFTs');
         }
       }
     };
@@ -170,7 +173,7 @@ export const CreateLootbox = () => {
           const matchingItem = dropchance.find((item: any) => item[0] === nft.id);
           if (matchingItem) {
             const matchedNFT = list.find((item) => item.id === nft.id);
-            const imageUrl = matchedNFT ? matchedNFT.url : "";
+            const imageUrl = matchedNFT ? matchedNFT.url : '';
             return {
               id: nft.id,
               imageUrl: imageUrl,
@@ -179,7 +182,7 @@ export const CreateLootbox = () => {
           }
           return {
             id: nft.id,
-            imageUrl: "",
+            imageUrl: '',
             dropChance: 0,
           };
         });
@@ -198,10 +201,10 @@ export const CreateLootbox = () => {
 
           for (const [key, value] of Object.entries(inputValues)) {
             if (selectedOptions.some((option) => option === key)) {
-              if (key === "coins") {
+              if (key === 'coins') {
                 returnvalues[0] = Number(value);
               }
-              if (key === "empty") {
+              if (key === 'empty') {
                 returnvalues[1] = Number(value);
               }
             }
@@ -212,12 +215,12 @@ export const CreateLootbox = () => {
         let data = returnValuesEmptyCoins();
 
         if (checkNumber() === false) {
-          toast.error("Percentages for selected items should be between 0.01 and 99.99");
+          toast.error('Percentages for selected items should be between 0.01 and 99.99');
           return;
         }
 
         if (nftData.length > 1) {
-          toast.error("Choose only one NFT");
+          toast.error('Choose only one NFT');
           return;
         }
 
@@ -227,9 +230,9 @@ export const CreateLootbox = () => {
             `${process.env.REACT_APP_API_URL}/lootbox/${user.id}/create-lootbox`,
             {
               name: lootboxInput,
-              price: formattedPrice,
+              price: priceInput,
               tokens: {
-                id: "tokens",
+                id: 'tokens',
                 amount: parseFloat(user.tokensBalance).toFixed(2).toString(),
                 dropChance: data[0].toString(),
               },
@@ -241,21 +244,21 @@ export const CreateLootbox = () => {
               emptyBoxChance: data[1].toString(),
             },
             {
-              headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+              headers: { Authorization: `Bearer ${auth.jwt}`, 'Content-Type': 'application/json' },
             }
           );
         } else {
-          toast.error("Sum of all percentages must be 100%");
+          toast.error('Sum of all percentages must be 100%');
           return;
         }
-        dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "CreatedLootbox" } });
-        toast.success("Created Lootbox successfully");
+        dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'CreatedLootbox' } });
+        toast.success('Created Lootbox successfully');
       } catch (err) {
         console.log(err);
-        toast.error("Lootbox error");
+        toast.error('Lootbox error');
       }
     } else {
-      toast.error("You are not logged in!");
+      toast.error('You are not logged in!');
     }
   };
 
@@ -263,16 +266,21 @@ export const CreateLootbox = () => {
     const value = event.target.value;
     setlootboxInput(value);
   };
+  const handleLootboxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const sanitizedValue = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    setpriceInput(sanitizedValue);
+  };
 
   const copyToClipboard = () => {
-    const affiliateCode = `https://looties.app.land/${lootboxInput || "LOOTIES"}`;
+    const affiliateCode = `https://looties.app.land/${lootboxInput || 'LOOTIES'}`;
     navigator.clipboard
       .writeText(affiliateCode)
       .then(() => {
-        return toast.success("Code copied to clipboard!");
+        return toast.success('Code copied to clipboard!');
       })
       .catch((error) => {
-        return toast.error("Failed to copy the code!");
+        return toast.error('Failed to copy the code!');
       });
   };
   const notificationsChange = () => {
@@ -325,11 +333,31 @@ export const CreateLootbox = () => {
                             value={lootboxInput}
                             onChange={handleReferralChange}
                             onKeyPress={(event) => {
-                              if (event.key === " ") {
+                              if (event.key === ' ') {
                                 event.preventDefault();
                               }
                             }}
                             maxLength={14}
+                          />
+                          <button className="top-[56-px] ml-auto flex h-full w-[77px] items-center justify-center rounded-xl bg-transparent px-[8px] text-[#F03033]">
+                            <span className="font-sans text-base font-bold text-[#F03033]">Change</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex w-full flex-col items-start justify-center gap-2 lg:w-[275px]">
+                        <div className="flex h-[48px] w-full items-center justify-start gap-2 rounded-lg border border-[#2C3034] bg-[#1E2023] p-[7px] font-sans font-semibold text-custom_gray_2 md:justify-center">
+                          <img className="ml-1 h-5 w-5" src={RedDollar} alt="red-dollar" />
+                          <input
+                            type="text"
+                            className="h-full w-full flex-1 items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] px-[5px] py-[3px] font-sans text-sm font-semibold text-white outline-0 md:w-[142px] md:text-base"
+                            placeholder={'0.00'}
+                            value={priceInput}
+                            onChange={handleLootboxPriceChange}
+                            onKeyPress={(event) => {
+                              if (event.key === ' ') {
+                                event.preventDefault();
+                              }
+                            }}
                           />
                           <button className="top-[56-px] ml-auto flex h-full w-[77px] items-center justify-center rounded-xl bg-transparent px-[8px] text-[#F03033]">
                             <span className="font-sans text-base font-bold text-[#F03033]">Change</span>
@@ -347,13 +375,13 @@ export const CreateLootbox = () => {
 
                           <button
                             className={`top-[56-px] ml-auto mr-[6px] h-[63%] w-[48px] px-[2px] ${
-                              notifications ? "bg-gray-500" : "bg-[#F03033]"
+                              notifications ? 'bg-gray-500' : 'bg-[#F03033]'
                             } flex items-center justify-start rounded-2xl border border-[#2C3034] transition-all duration-200 `}
                             onClick={notificationsChange}
                           >
                             <div
                               className={`flex h-3 w-3 rounded-full bg-white transition-all duration-200 ${
-                                notifications ? "" : "translate-x-7"
+                                notifications ? '' : 'translate-x-7'
                               }`}
                             ></div>
                           </button>
@@ -472,7 +500,7 @@ export const CreateLootbox = () => {
                     {/* mobile lootbox filters */}
                     <div
                       className={`xs:${
-                        openFilters ? "flex" : "hidden"
+                        openFilters ? 'flex' : 'hidden'
                       } xs:flex-col xs:items-center xs:justify-around xs:gap-4 xs:rounded-xl xs:border xs:border-solid xs:border-[#2C3034] xs:bg-[#1A1D20] xs:p-6 md:hidden`}
                     >
                       <CustomFilter
@@ -541,12 +569,12 @@ export const CreateLootbox = () => {
                               withSlider={true}
                               onSelect={handleSelectOption}
                               selectAll={selectAll}
-                              inputValue={"" || inputValues[index + 2]} // Pass the inputValue prop
+                              inputValue={'' || inputValues[index + 2]} // Pass the inputValue prop
                             />
                           ))}
                         <NftLootiesCard
-                          key={"coins"}
-                          id={"coins"}
+                          key={'coins'}
+                          id={'coins'}
                           index={1000}
                           name={`${parseFloat(user.tokensBalance).toFixed(2)} Coins`}
                           image={RedCoins}
@@ -556,17 +584,17 @@ export const CreateLootbox = () => {
                           percentage={100 / 1 - ((1 - 1) * 2) / 1}
                           handleStateChange={handleStateChange}
                           containerWidth={300}
-                          selected={selectAll || selectedOptions.includes("coins")}
+                          selected={selectAll || selectedOptions.includes('coins')}
                           withSlider={false}
                           onSelect={handleSelectOption}
                           selectAll={selectAll}
-                          inputValue={"" || inputValues[0]} // Pass the inputValue prop
+                          inputValue={'' || inputValues[0]} // Pass the inputValue prop
                         />
                         <NftLootiesCard
-                          key={"empty"}
-                          id={"empty"}
+                          key={'empty'}
+                          id={'empty'}
                           index={1001}
-                          name={"Empty Lootobx"}
+                          name={'Empty Lootobx'}
                           image={EmptyBox}
                           minPrice={500}
                           price={600}
@@ -574,11 +602,11 @@ export const CreateLootbox = () => {
                           percentage={100 / 1 - ((1 - 1) * 2) / 1}
                           handleStateChange={handleStateChange}
                           containerWidth={300}
-                          selected={selectAll || selectedOptions.includes("empty")}
+                          selected={selectAll || selectedOptions.includes('empty')}
                           withSlider={false}
                           onSelect={handleSelectOption}
                           selectAll={selectAll}
-                          inputValue={"" || inputValues[1]} // Pass the inputValue prop
+                          inputValue={'' || inputValues[1]} // Pass the inputValue prop
                         />
                       </div>
                     </div>
