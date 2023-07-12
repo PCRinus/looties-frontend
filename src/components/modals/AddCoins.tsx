@@ -98,7 +98,6 @@ const AddCoins = () => {
 
   const validateDeposit = async () => {
     const balance = await connection.getBalance(publicKey!);
-    console.log(balance);
     if (parseFloat(sol) === 0) {
       toast.error("Deposited amount needs to be higher than 0.00");
       return false;
@@ -120,6 +119,7 @@ const AddCoins = () => {
         toast.error("Wallet not connected");
       } else {
         try {
+          dispatch({ type: ReduxEvents.CloseModal });
           const transaction = new Transaction();
           transaction.add(
             SystemProgram.transfer({
@@ -148,11 +148,10 @@ const AddCoins = () => {
           );
 
           dispatch({ type: ReduxEvents.SetTokensBalance, payload: updatedTokensBalance });
-          dispatch({ type: ReduxEvents.CloseModal });
+
           toast.success("Transaction sent successfully");
         } catch (error) {
           console.error("Error while sending transaction:", error);
-          dispatch({ type: ReduxEvents.CloseModal });
           toast.error("Error while sending transaction");
         }
       }
