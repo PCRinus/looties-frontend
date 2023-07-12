@@ -6,7 +6,6 @@ import RedPlus from "../../assets/red_cross.svg";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { ReduxEvents } from "../../reducers/events";
 import { LootBoxCard } from "../micro/LootBoxCard";
 import { Link } from "react-router-dom";
 
