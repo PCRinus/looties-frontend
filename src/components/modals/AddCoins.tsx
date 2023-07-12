@@ -102,7 +102,7 @@ const AddCoins = () => {
       toast.error("Deposited amount needs to be higher than 0.00");
       return false;
     } else if (!sol) {
-      toast.error("You need to enter an amount");
+      toast.error("You need to enter an amount to deposit");
       return false;
     } else if (parseFloat(sol) > balance / LAMPORTS_PER_SOL) {
       toast.error("Insufficient SOL in wallet");
@@ -147,7 +147,10 @@ const AddCoins = () => {
             }
           );
 
-          dispatch({ type: ReduxEvents.SetTokensBalance, payload: updatedTokensBalance });
+          dispatch({
+            type: ReduxEvents.SetTokensBalance,
+            payload: Math.floor(parseFloat(updatedTokensBalance) * 100) / 100,
+          });
 
           toast.success("Transaction sent successfully");
         } catch (error) {

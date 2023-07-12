@@ -91,7 +91,7 @@ export const useAuth = () => {
           dispatch({ type: ReduxEvents.SetUserData, payload: userData });
           dispatch({ type: ReduxEvents.SetProfileData, payload: profile });
           dispatch({ type: ReduxEvents.UpdateUserSettings, payload: settingsResponse.data });
-          dispatch({ type: ReduxEvents.SetTokensBalance, payload: tokensBalance });
+          dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(tokensBalance) * 100) / 100 });
         }
       } catch (err) {
         console.log("Signing error: ", err);

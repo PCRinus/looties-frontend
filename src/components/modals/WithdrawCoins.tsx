@@ -20,8 +20,8 @@ const WithdrawCoins = () => {
 
   const auth = useSelector((state: any) => state.auth);
   const user = useSelector((state: any) => state.user);
-  const [sol, setSol] = useState("");
-  const [coins, setCoins] = useState("");
+  const [sol, setSol] = useState("0.00");
+  const [coins, setCoins] = useState("0.00");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [withdrawalData, setWithdrawalData] = useState<IWithdrawalData>();
@@ -36,15 +36,12 @@ const WithdrawCoins = () => {
           }
         );
 
-        const { data: tokensBalance } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/tokens/${user.id}/balance`,
-          {
-            headers: {
-              Authorization: `Bearer ${auth.jwt}`,
-            },
-          }
-        );
-        dispatch({ type: ReduxEvents.SetTokensBalance, payload: tokensBalance });
+        const { data: tokensBalance } = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${user.id}/balance`, {
+          headers: {
+            Authorization: `Bearer ${auth.jwt}`,
+          },
+        });
+        dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(tokensBalance) * 100) / 100 });
         setWithdrawalData(withdrawalData);
       } catch (err) {
         console.log(err);
@@ -103,7 +100,15 @@ const WithdrawCoins = () => {
   };
 
   const validateCoinsAmount = (coins: string) => {
-    if (parseFloat(coins) >= parseFloat(user.tokensBalance)) {
+    console.log(parseFloat(coins),parseFloat(user.tokensBalance))
+    if (parseFloat(coins) > parseFloat(user.tokensBalance)) {
+      toast.error("Insufficient funds");
+      return false;
+    } else if (!coins) {
+      toast.error("You need to enter an amount to withdraw");
+      return false;
+    } else if (parseFloat(coins) === 0) {
+      toast.error("Withdrawn amount needs to be higher than 0.00");
       return false;
     }
     return true;
@@ -112,7 +117,8 @@ const WithdrawCoins = () => {
   const handleWithdraw = async () => {
     if (validateCoinsAmount(coins)) {
       try {
-        const { data } = await axios.post<{signature: string, updatedBalance: string}>(
+        dispatch({ type: ReduxEvents.CloseModal });
+        const { data } = await axios.post<{ signature: string; updatedBalance: string }>(
           `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/sol`,
           {
             amount: coins,
@@ -122,16 +128,13 @@ const WithdrawCoins = () => {
           }
         );
 
-        dispatch({ type: ReduxEvents.SetTokensBalance, payload: data.updatedBalance });
-        dispatch({ type: ReduxEvents.CloseModal });
+        dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(data.updatedBalance) * 100) / 100 });
         toast.success("Transaction sent successfully");
       } catch (err) {
         console.log(err);
         dispatch({ type: ReduxEvents.CloseModal });
         toast.error("Withdrawal error");
       }
-    } else {
-      toast.error("Invalid coins amount");
     }
   };
 
@@ -290,7 +293,6 @@ const WithdrawCoins = () => {
                 <img className="ml-1 h-5 w-5" src={RedDollar} alt="red-dollar" />
                 <input
                   type="number"
-                  placeholder="0.00"
                   value={coins}
                   className="flex h-full w-[142px] w-full items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] p-[3px] font-sans text-base font-semibold text-custom_gray_2 outline-0"
                   onChange={handleCoinsChange}
@@ -312,7 +314,6 @@ const WithdrawCoins = () => {
                 <img className="h-5 w-5" src={Solana} alt="red-dollar" />
                 <input
                   type="number"
-                  placeholder="0.00"
                   value={sol}
                   className="h-full w-full flex-1 items-center justify-center rounded border border-[#1E2023] bg-[#1E2023] p-[3px] font-sans text-base font-semibold text-custom_gray_2 outline-0 md:w-[142px]"
                   onChange={handleSolChange}
