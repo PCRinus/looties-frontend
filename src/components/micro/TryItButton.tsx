@@ -32,7 +32,7 @@ const TryItButton = () => {
       dispatch({ type: ReduxEvents.StoreModalData, payload: { data: prize } });
       dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LootboxWin' } });
     } catch (error) {
-      console.log('Self exclude error: ', error);
+      console.log('Try lootbox error: ', error);
       toast.error('Failed to try the lootbox, try again later!');
     }
   };
