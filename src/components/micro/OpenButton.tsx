@@ -43,14 +43,16 @@ const OpenButton: React.FC<IProps> = ({ className, children }) => {
       dispatch({ type: ReduxEvents.StoreModalData, payload: { data: prize } });
       dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LootboxWin' } });
 
-      // get token balance after open box if user won tokens
-      if (prize.prize === 'TOKEN') {
-        const { data: tokensBalance } = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${user.id}/balance`, {
-          headers: {
-            Authorization: `Bearer ${auth.jwt}`,
-          },
-        });
-        dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(tokensBalance) * 100) / 100 });
+      // update token balance after opening a lootbox
+      const { data: tokensBalance } = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${user.id}/balance`, {
+        headers: {
+          Authorization: `Bearer ${auth.jwt}`,
+        },
+      });
+      dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(tokensBalance) * 100) / 100 });
+
+      if (prize.prize !== 'EMPTY_BOX') {
+        navigate('/lootboxes');
       }
     } catch (error) {
       console.log('Open box error: ', error);
