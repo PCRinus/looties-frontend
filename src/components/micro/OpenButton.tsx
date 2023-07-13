@@ -25,6 +25,18 @@ const OpenButton: React.FC<IProps> = ({ className }) => {
 
   const [isOpenButtonEnabled, setIsOpenButtonDisabled] = useState(false);
 
+  useEffect(() => {
+    const fetchLootboxData = async () => {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/lootbox/${lootboxId}`);
+
+      if (data.userId === user.id) {
+        setIsOpenButtonDisabled(true);
+      }
+    };
+
+    fetchLootboxData();
+  }, [lootboxId, user.id]);
+
   const handleOpenLootbox = async (lootboxId?: string) => {
     if (!lootboxId) {
       toast.error('Could not fetch the lootbox ID, try again later');
