@@ -1,5 +1,5 @@
-import React from "react";
-import Elipse from "../../assets/Ellipse.svg";
+import React from 'react';
+import Elipse from '../../assets/Ellipse.svg';
 
 interface INftCardContentProps {
   priceLeft?: string;
@@ -14,7 +14,9 @@ const NftCardContent: React.FC<INftCardContentProps> = ({ priceLeft, price, pric
     <div className="card_inner flex-column items-center justify-center">
       <img src={icon} alt="nft-icon-svg" className="xs:h-[139px] xs:w-[139px] 2xl:h-56 2xl:w-56" />
       <div className="flex-column xs:mt-[2px] 2xl:mt-[12px]">
-        <label className="font-sans font-bold  text-custom_white_1 xs:text-xs 2xl:text-lg">{cardName}</label>
+        {cardName && (
+          <label className="font-sans font-bold  text-custom_white_1 xs:text-xs 2xl:text-lg">{cardName}</label>
+        )}
         {/* <div className="relative h-1 rounded bg-gradient-to-r from-pink-500 via-yellow-400 to-green-500 xs:mt-[10px] 2xl:mt-4 2xl:w-[224px]">
           <img
             src={Elipse}

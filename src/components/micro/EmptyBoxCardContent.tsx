@@ -1,11 +1,7 @@
-import React from "react";
-import EmptyBox from "../../assets/EmptyBox.svg";
+import React from 'react';
+import EmptyBox from '../../assets/EmptyBox.svg';
 
-interface IPrizeProps {
-  value: number | string;
-}
-
-const EmptyBoxCardContent: React.FC<IPrizeProps> = ({ value }) => {
+const EmptyBoxCardContent: React.FC = () => {
   return (
     <>
       <img

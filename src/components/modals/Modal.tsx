@@ -1,19 +1,19 @@
-import { motion } from "framer-motion";
-import { Wallet } from "./Wallet";
-import { WithdrawNft } from "./WithdrawNft";
-import { DepositNft } from "./DepositNft";
-import { LogOut } from "./LogOut";
-import { AddCoins } from "./AddCoins";
-import { ProvablyFair } from "./ProvablyFair";
-import { CreatedLootbox } from "./CreatedLootbox";
-import { WithdrawCoins } from "./WithdrawCoins";
-import { UserProfile } from "./UserProfile";
-import { NftPicker } from "./NftPicker";
-import { NftWin } from "./NftWin";
-import "../../styles/macro/Modal.scss";
-import { ReduxEvents } from "../../reducers/events";
-import { useDispatch } from "react-redux";
-import React from "react";
+import { motion } from 'framer-motion';
+import { Wallet } from './Wallet';
+import { WithdrawNft } from './WithdrawNft';
+import { DepositNft } from './DepositNft';
+import { LogOut } from './LogOut';
+import { AddCoins } from './AddCoins';
+import { ProvablyFair } from './ProvablyFair';
+import { CreatedLootbox } from './CreatedLootbox';
+import { WithdrawCoins } from './WithdrawCoins';
+import { UserProfile } from './UserProfile';
+import { NftPicker } from './NftPicker';
+import { LootboxWin } from './LootboxWin';
+import '../../styles/macro/Modal.scss';
+import { ReduxEvents } from '../../reducers/events';
+import { useDispatch } from 'react-redux';
+import React from 'react';
 
 const Modals: {
   [key: string]: any;
@@ -28,7 +28,7 @@ const Modals: {
   UserProfile,
   CreatedLootbox,
   NftPicker,
-  NftWin
+  LootboxWin,
 };
 
 interface ModalProps {

@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
-import "../../styles/micro/NftGradientCanva.scss";
-import Trash from "../../assets/Trash.svg";
-import { useSelector } from "react-redux";
+import React, { ReactNode } from 'react';
+import '../../styles/micro/NftGradientCanva.scss';
+import Trash from '../../assets/Trash.svg';
+import { useSelector } from 'react-redux';
 
 interface INftCanvaProps {
   children?: ReactNode;
@@ -27,7 +27,9 @@ const NftGradientCanva: React.FC<INftCanvaProps> = ({ children, className, cardT
               <div></div>
             )} */}
           </span>
-          <span className=" p-4 font-sans font-bold text-[#888888] xs:text-[8px] 2xl:text-base">{cardInfo}%</span>
+          {cardInfo && (
+            <span className=" p-4 font-sans font-bold text-[#888888] xs:text-[8px] 2xl:text-base">{cardInfo}%</span>
+          )}
         </div>
         <div
           className={`custom-gradient-bg-color-cards

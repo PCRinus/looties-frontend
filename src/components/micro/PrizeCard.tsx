@@ -1,10 +1,10 @@
-import React from "react";
-import { ICardData, cardData } from "../../mocks/prizeCardsMocks";
-import PrizeCardCanva from "./PrizeCardCanva";
-import PrizeCardContent from "./PrizeCardContent";
-import FreeOpenCard from "./FreeOpenCard";
-import { ILootboxContent } from "../macro/NFTLootBoxContent";
-import EmptyBoxCardContent from "./EmptyBoxCardContent";
+import React from 'react';
+import { ICardData, cardData } from '../../mocks/prizeCardsMocks';
+import PrizeCardCanva from './PrizeCardCanva';
+import PrizeCardContent from './PrizeCardContent';
+import FreeOpenCard from './FreeOpenCard';
+import { ILootboxContent } from '../macro/NFTLootBoxContent';
+import EmptyBoxCardContent from './EmptyBoxCardContent';
 
 interface Props {
   lootboxContent?: ILootboxContent;
@@ -28,7 +28,7 @@ const PrizeCard: React.FC<Props> = ({ lootboxContent }) => {
           cardInfo={lootboxContent.emptyBoxChance}
           className=" flex-col items-center justify-center"
         >
-          <EmptyBoxCardContent value={lootboxContent.tokens.amount} />
+          <EmptyBoxCardContent />
         </PrizeCardCanva>
       )}
     </>
