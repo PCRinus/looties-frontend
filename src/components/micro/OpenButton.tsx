@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { ReduxEvents } from '../../reducers/events';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,14 +15,15 @@ type LootboxPrize = {
   data: any;
 };
 
-const OpenButton: React.FC<IProps> = ({ className, children }) => {
+const OpenButton: React.FC<IProps> = ({ className }) => {
   const dispatch = useDispatch();
-
   const { lootboxId } = useParams();
+  const navigate = useNavigate();
+
   const auth = useSelector((state: any) => state.auth);
   const user = useSelector((state: any) => state.user);
 
-  const navigate = useNavigate();
+  const [isOpenButtonEnabled, setIsOpenButtonDisabled] = useState(false);
 
   const handleOpenLootbox = async (lootboxId?: string) => {
     if (!lootboxId) {
@@ -62,8 +63,9 @@ const OpenButton: React.FC<IProps> = ({ className, children }) => {
 
   return (
     <button
-      className={`rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white xs:text-xs md:max-2xl:text-base 2xl:text-base ${className}`}
+      className={`rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-sans font-semibold text-white disabled:cursor-not-allowed disabled:bg-gradient-to-t disabled:from-gray-600 disabled:to-gray-400 xs:text-xs md:max-2xl:text-base 2xl:text-base ${className}`}
       onClick={() => handleOpenLootbox(lootboxId)}
+      disabled={isOpenButtonEnabled}
     >
       Open
     </button>
