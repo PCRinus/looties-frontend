@@ -132,7 +132,7 @@ export const CreateLootbox = () => {
       if (user.id) {
         try {
           const response = await axios.get(
-            `${process.env.REACT_APP_API_URL}/lootbox/${user.id}/available-lootbox-items`,
+            `${process.env.REACT_APP_API_URL}/user/${user.id}/available-items`,
             {
               headers: {
                 Authorization: `Bearer ${auth.jwt}`,
