@@ -30,18 +30,7 @@ export const MobileSidebar: FC = () => {
             <hr className="my-4 block h-px w-3/4 shrink-0 border-0 bg-[#34373A]" />
           </>
         )}
-        <div className="flex w-3/4 flex-col items-end justify-start gap-3">
-          <Link to="/">
-            <HomeButton />
-          </Link>
-          <Link to="/lootboxes">
-            <LootBoxesButton />
-          </Link>
-          <Link to="/classic">
-            <ClassicButton />
-          </Link>
-        </div>
-        <hr className="my-4 block h-px w-3/4 shrink-0 border-0 bg-[#34373A]" />
+        
         <SidebarInfobar />
         <hr className="my-4 block h-px w-3/4 shrink-0 border-0 bg-[#34373A]" />
         <MobileSocialButtons />
