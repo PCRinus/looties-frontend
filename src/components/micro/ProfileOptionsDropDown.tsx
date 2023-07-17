@@ -1,43 +1,66 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import arrow from "../../assets/dropdown_arrow.svg";
-import arrowUp from "../../assets/dropdown_arrow_up.svg";
-import { ReduxEvents } from "../../reducers/events";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import arrow from '../../assets/dropdown_arrow.svg';
+import arrowUp from '../../assets/dropdown_arrow_up.svg';
+import { ReduxEvents } from '../../reducers/events';
+import { useDispatch } from 'react-redux';
 type OptionType = {
   id: number;
   name: string;
 };
 const options: OptionType[] = [
-  { id: 1, name: "Profile" },
-  { id: 2, name: "Settings" },
-  { id: 3, name: "Games" },
-  { id: 4, name: "Inventory" },
-  { id: 5, name: "My lootboxes" },
-  { id: 6, name: "Affiliates" },
-  { id: 7, name: "Transactions" },
-  { id: 8, name: "Log out" },
+  { id: 1, name: 'Profile' },
+  { id: 2, name: 'Settings' },
+  { id: 3, name: 'Games' },
+  { id: 4, name: 'Inventory' },
+  { id: 5, name: 'My lootboxes' },
+  { id: 6, name: 'Affiliates' },
+  { id: 7, name: 'Transactions' },
+  { id: 8, name: 'Log out' },
 ];
 const ProfileOptionsDropDown: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [selectedOption, setSelectedOption] = useState<OptionType | null>(options[0]);
-  const [selectedColor, setSelectedColor] = useState<number | null>(options[0].id);
+  const location = useLocation();
+
+  const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
+  const [selectedColor, setSelectedColor] = useState<number | null>(null);
+
+  useEffect(() => {
+    const matchedOption = options.find(
+      (option) => `/${option.name.toLowerCase().replace(/ /g, '')}` === location.pathname
+    );
+    if (matchedOption) {
+      setSelectedOption(matchedOption);
+      setSelectedColor(matchedOption.id);
+    } else {
+      setSelectedOption(options[0]);
+      setSelectedColor(options[0].id);
+    }
+  }, []);
+  useEffect(() => {
+    const matchedOption = options.find(
+      (option) => `/${option.name.toLowerCase().replace(/ /g, '')}` === location.pathname
+    );
+    if (matchedOption) {
+      setSelectedOption(matchedOption);
+    }
+  }, [location.pathname]);
 
   const handleSelect = (option: OptionType) => {
     setSelectedOption(option);
     setSelectedColor(option.id);
-    if (option.name.toLowerCase() === "log out") {
+    if (option.name.toLowerCase() === 'log out') {
       handleLogout();
-    } else if (option.name.toLowerCase() === "profile") {
-      navigate("/profile");
+    } else if (option.name.toLowerCase() === 'profile') {
+      navigate('/profile');
     } else {
       navigate(`${option.name.toLowerCase()}`);
     }
   };
 
   const handleLogout = () => {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "LogOut" } });
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LogOut' } });
   };
 
   return (
@@ -58,15 +81,15 @@ const ProfileOptionsDropDown: React.FC = () => {
               onClick={() => handleSelect(option)}
               className={`box-border flex cursor-pointer items-center justify-center border border-custom_gray_1 xs:h-10 xs:w-full ${
                 index === 0
-                  ? "rounded-t-lg  border-b-[2px] border-b-[#373A3D] bg-custom_gray_1"
+                  ? 'rounded-t-lg  border-b-[2px] border-b-[#373A3D] bg-custom_gray_1'
                   : index === options.length - 1
-                  ? "rounded-b-lg   bg-custom_gray_1"
-                  : " border-b-[2px] border-b-[#373A3D] bg-custom_gray_1"
+                  ? 'rounded-b-lg   bg-custom_gray_1'
+                  : ' border-b-[2px] border-b-[#373A3D] bg-custom_gray_1'
               }`}
             >
               <span
                 className={`font-sans text-base font-semibold ${
-                  selectedColor === option.id ? "text-custom_red_1" : "text-custom_gray_2"
+                  selectedColor === option.id ? 'text-custom_red_1' : 'text-custom_gray_2'
                 }`}
               >
                 {option.name}

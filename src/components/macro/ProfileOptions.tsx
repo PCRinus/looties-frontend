@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileIconRed from '../../assets/ProfileIcon.svg';
 import SettingsIcon from '../../assets/SettingsIcon.svg';
 import Games from '../../assets/Games.svg';
@@ -15,14 +15,16 @@ import AffiliatesRed from '../../assets/AffiliatesRed.svg';
 import TransactionsRed from '../../assets/TransactionsRed.svg';
 import LogoutRed from '../../assets/LogoutRed.svg';
 import ProfileGrey from '../../assets/ProfileGrey.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ReduxEvents } from '../../reducers/events';
-import { useLocation } from 'react-router-dom';
 
 const ProfileOptions: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const handleLogout = () => {
     dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LogOut' } });
@@ -39,7 +41,13 @@ const ProfileOptions: React.FC = () => {
     { name: 'Log out', icon: LogoutIcon, iconRed: LogoutRed, path: '' },
   ];
 
-  const [activeButton, setActiveButton] = useState<string | null>('Profile');
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const button = buttons.find((btn) => btn.path === currentPath);
+    if (button) {
+      setActiveButton(button.name);
+    }
+  }, [location]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-y-4">
