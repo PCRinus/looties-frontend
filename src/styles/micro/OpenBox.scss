@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+}
+
+#cardList {
+  height: 260px;
+  width: 100%;
+  position: relative;
+  border: 2px solid black;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.card {
+  display: inline-block;
+  background-color: red;
+  text-align: center;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  width: 260px;
+  height: 260px;
+}
+
+.card > img {
+  width: 260px;
+  height: 260px;
+}
+
+.arrow-down {
+  margin-left: 380px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+
+  border-top: 20px solid #f00;
+}
+#dialog-msg > img {
+  width: 150px;
+  height: 150px;
+}
+#dialog-msg {
+  text-align: center;
+}
+
+body {
+  background: rgb(25,25,33);
+}
+.raffle-roller {
+  height: 165px;
+  position: relative;
+  margin: 60px auto 30px auto;
+  width: 100%;
+}
+.raffle-roller-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 170px;
+  width: 100%;
+  border-radius: 12px;
+  border-width: 4px;
+  border-color: #2C3034;
+}
+.raffle-roller-holder {
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid #3c3759;
+}
+.raffle-roller-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 170px;
+  width: 100%;
+  border-radius: 12px;
+  border-width: 4px;
+  border-color: #2C3034;
+}
+.raffle-roller-container {
+  width: 9999999999999999999px;
+  max-width: 999999999999999999px;
+  height: 170px;
+  background: #191726;
+  margin-left: 0;
+  transition: all 8s cubic-bezier(.08,.6,0,1);
+}
+.item {
+  display: inline-block;
+  float: left;
+  margin: 3px 0px 0.5px 5px;
+  width: 150px;
+  height: 155px;
+  float: left;
+  border: 1px solid #70677c;
+  background: #14202b;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+img {
+  border: 0;
+  vertical-align: middle;
+}
+.winning-item {
+  border: 2px solid #66b233;
+  position: relative;
+  top: -1px;
+  border-bottom: 4px solid #66b233;
+}
+.inventory {
+  margin: 0 auto;
+  width: 960px;
+  max-width: 953px;
+  padding: 10px 15px 6px;
+  height: auto;
+  border: 2px solid #1c3344;
+  background: #0e1a23;
+}
+.inventory > .item {
+  float: none;
+  cursor: pointer;
+  margin: 4px 2px 0.5px 2px;
+}
+.inventory > .item:hover {
+  background-size: 90%;
+  background-color: #182a38;
+}
+.inventory > .item:active {
+  height: 83px;
+  width: 80px;
+  position: relative;
+  top: -2px;
+  border: 2px solid #356d27;
+  border-bottom: 4px solid #356d27;
+}
