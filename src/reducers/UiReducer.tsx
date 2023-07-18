@@ -1,4 +1,4 @@
-import { ReduxEvents } from "./events";
+import { ReduxEvents } from './events';
 
 const initialState = {
   openChat: false,
@@ -13,6 +13,8 @@ export const UiReducer = (state = initialState, action: any) => {
       return { ...state, openChat: false };
     case ReduxEvents.ToggleSidebar:
       return { ...state, openSidebar: !state.openSidebar };
+    case ReduxEvents.CloseSidebar:
+      return { ...state, openSidebar: false };
     default:
       return state;
   }

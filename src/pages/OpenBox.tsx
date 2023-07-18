@@ -1,10 +1,10 @@
-import Scrollbars from "react-custom-scrollbars-2";
-import OfficialBox from "../components/macro/OfficialBox";
-import NFTLootBoxContent from "../components/macro/NFTLootBoxContent";
-import RecommendedBoxes from "../components/macro/RecommendedBoxes";
-import LastTopNFTs from "../components/macro/LastTopNFTs";
-import LiveDropSidebar from "../components/micro/LiveDropSidebar";
-import { Chat } from "../components/macro/Chat";
+import Scrollbars from 'react-custom-scrollbars-2';
+import OfficialBox from '../components/macro/OfficialBox';
+import NFTLootBoxContent from '../components/macro/NFTLootBoxContent';
+import RecommendedBoxes from '../components/macro/RecommendedBoxes';
+import LastTopNFTs from '../components/macro/LastTopNFTs';
+import LiveDropSidebar from '../components/micro/LiveDropSidebar';
+import { Chat } from '../components/macro/Chat';
 
 const OpenLootbox: React.FC = () => {
   return (

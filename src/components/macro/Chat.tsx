@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { ChatHeader } from "../micro/ChatHeader";
-import { ChatMessage } from "../micro/ChatMessage";
-import { useEffect, useRef, useState } from "react";
-import { Socket, io } from "socket.io-client";
-import { ChatInput } from "../micro/ChatInput";
-import { ChatMessageUserNotAuthenticated } from "../micro/ChatMessageUserNotAuthenticated";
-import { useLocation } from "react-router-dom";
-import { ReduxEvents } from "../../reducers/events";
+import { useDispatch, useSelector } from 'react-redux';
+import { ChatHeader } from '../micro/ChatHeader';
+import { ChatMessage } from '../micro/ChatMessage';
+import { useEffect, useRef, useState } from 'react';
+import { Socket, io } from 'socket.io-client';
+import { ChatInput } from '../micro/ChatInput';
+import { ChatMessageUserNotAuthenticated } from '../micro/ChatMessageUserNotAuthenticated';
+import { useLocation } from 'react-router-dom';
+import { ReduxEvents } from '../../reducers/events';
 
 export interface Message {
   id: string;
@@ -38,13 +38,13 @@ export const Chat: React.FC = () => {
   const [scrollApplied, setScrollApplied] = useState(false);
   const chatBodyDiv = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleMessage = (message: string) => {
     try {
-      chatSocket?.emit("message", { userId: user.id, message });
+      chatSocket?.emit('message', { userId: user.id, message });
     } catch (error) {
-      console.log("Could not emit message " + error);
+      console.log('Could not emit message ' + error);
     }
   };
 
@@ -56,27 +56,27 @@ export const Chat: React.FC = () => {
       userId: user.id,
     };
     try {
-      chatSocket?.emit("reply", reply);
+      chatSocket?.emit('reply', reply);
     } catch (error) {
-      console.log("Could not emit reply " + error);
+      console.log('Could not emit reply ' + error);
     }
   };
 
   const handleLike = (userId: string, messageId: string) => {
-    console.log("like", userId, messageId);
+    console.log('like', userId, messageId);
     try {
-      chatSocket?.emit("like", { userId, messageId });
+      chatSocket?.emit('like', { userId, messageId });
     } catch (error) {
-      console.log("Could not emit like " + error);
+      console.log('Could not emit like ' + error);
     }
   };
 
   const handleUnlike = (userId: string, messageId: string) => {
-    console.log("unlike", userId, messageId);
+    console.log('unlike', userId, messageId);
     try {
-      chatSocket?.emit("unlike", { userId, messageId });
+      chatSocket?.emit('unlike', { userId, messageId });
     } catch (error) {
-      console.log("Could not emit unlike " + error);
+      console.log('Could not emit unlike ' + error);
     }
   };
 
@@ -122,18 +122,18 @@ export const Chat: React.FC = () => {
         Authorization: `Bearer ${auth.jwt}`,
       },
     });
-    socket.on("connected", (data) => {
+    socket.on('connected', (data) => {
       setMessages(data.messages);
     });
-    socket.on("get-users-count", (data) => {
+    socket.on('get-users-count', (data) => {
       setChatUsersCount(data.connectedUsersCount);
     });
-    socket.on("message", (newMessageData) => {
+    socket.on('message', (newMessageData) => {
       const { name, level, newMessage } = newMessageData;
       setMessages((prevMessages) => [...prevMessages, { name, level, ...newMessage } as Message]);
       setScrollApplied(false);
     });
-    socket.on("like", (data) => {
+    socket.on('like', (data) => {
       setMessages((prevMessages) =>
         prevMessages.map((message) =>
           message.id === data.likedMessageId
@@ -142,7 +142,7 @@ export const Chat: React.FC = () => {
         )
       );
     });
-    socket.on("unlike", (data) => {
+    socket.on('unlike', (data) => {
       setMessages((prevMessages) =>
         prevMessages.map((message) =>
           message.id === data.unlikedMessageId
@@ -151,7 +151,7 @@ export const Chat: React.FC = () => {
         )
       );
     });
-    socket.on("reply", (replyData) => {
+    socket.on('reply', (replyData) => {
       const { name, level, newMessage } = replyData;
       setMessages((prevMessages) => [...prevMessages, { name, level, ...newMessage } as Message]);
       setScrollApplied(false);
@@ -171,14 +171,14 @@ export const Chat: React.FC = () => {
     }
   }, [messages, isReply, scrollApplied]);
 
-  useEffect(()=>{
-    dispatch({type:ReduxEvents.CloseChat})
-  },[location.pathname])
+  useEffect(() => {
+    dispatch({ type: ReduxEvents.CloseChat });
+  }, [location.pathname]);
 
   return (
     <div
       className={`${
-        openChat ? "xs:left-0" : "xs:left-[-100vw]"
+        openChat ? 'xs:left-0' : 'xs:left-[-100vw]'
       } flex flex-col  items-center  justify-start bg-[#1C1E22] transition-all duration-200 xs:absolute xs:top-20 xs:h-[calc(100%-64px-80px)] xs:w-screen 2xl:static 2xl:h-full 2xl:w-[429px] 2xl:flex-shrink-0`}
     >
       <ChatHeader chatUsersCount={chatUsersCount} />
@@ -211,7 +211,7 @@ export const Chat: React.FC = () => {
         ))}
         <div
           className={`absolute h-8 bg-gradient-to-t from-[#151719] to-transparent xs:w-full 2xl:w-[429px] ${
-            isReply ? "bottom-[104px]" : "bottom-[79px]"
+            isReply ? 'bottom-[104px]' : 'bottom-[79px]'
           }`}
         ></div>
       </div>
