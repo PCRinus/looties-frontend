@@ -26,13 +26,13 @@ export const Footer: React.FC = () => {
     >
       <div className="flex h-full flex-row items-center justify-center ">
         <div className="flex w-20 shrink-0 grow  flex-row items-center justify-center">
-          <button onClick={() => dispatch({ type: ReduxEvents.ToggleChat })}>
+          <button onClick={() =>{dispatch({type: ReduxEvents.CloseModal}); dispatch({ type: ReduxEvents.ToggleChat })}}>
             <img className="h-7 w-7" src={openChat ? ChatIconRed : ChatIcon} alt="Chat"></img>
           </button>
         </div>
         <div className="flex w-[266px]   flex-row items-center justify-center gap-9">
           <Link to="/lootboxes">
-            <button>
+            <button onClick={()=>dispatch({type: ReduxEvents.CloseModal})}>
               <img
                 className="h-7 w-7"
                 src={location.pathname === "/lootboxes" && !openChat ? DropBoxIconRed : DropBoxIcon}
@@ -41,7 +41,7 @@ export const Footer: React.FC = () => {
             </button>
           </Link>
           <Link to="/">
-            <button>
+            <button onClick={()=>dispatch({type: ReduxEvents.CloseModal})}>
               <img
                 className="h-7 w-7"
                 src={location.pathname === "/" && !openChat ? HomeIconRed : HomeIcon}
@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
             </button>
           </Link>
           <Link to="/classic">
-            <button>
+            <button onClick={()=>dispatch({type: ReduxEvents.CloseModal})}>
               <img
                 className="h-7 w-7"
                 src={location.pathname === "/classic" && !openChat ? StarRed : Star}
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
           </Link>
         </div>
         <div className="flex w-20 shrink-0 grow flex-row items-center justify-center">
-          <button onClick={() => dispatch({ type: ReduxEvents.ToggleSidebar })}>
+          <button onClick={() => {dispatch({type: ReduxEvents.CloseModal});dispatch({ type: ReduxEvents.ToggleSidebar })}}>
             <img className="h-7 w-7" src={openSidebar ? MobileMenuIconRed : MobileMenuIcon} alt="Open sidebar"></img>
           </button>
         </div>
