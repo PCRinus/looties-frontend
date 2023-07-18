@@ -270,12 +270,12 @@ const AddCoins = () => {
                     >
                       Withdraw coins
                     </li>
-                    <li
+                    {/* <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
                       onClick={() => handleOptionChange("Deposit NFT's")}
                     >
                       Deposit NFT's
-                    </li>
+                    </li> */}
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
                       onClick={() => handleOptionChange("Withdraw NFT's")}

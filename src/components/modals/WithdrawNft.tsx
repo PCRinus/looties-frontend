@@ -259,12 +259,12 @@ const WithdrawNft = () => {
                     >
                       Withdraw coins
                     </li>
-                    <li
+                    {/* <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
                       onClick={() => handleOptionChange("Deposit NFT's")}
                     >
                       Deposit NFT's
-                    </li>
+                    </li> */}
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-[#F03033] hover:bg-gray-500 hover:text-white"
                       onClick={() => handleOptionChange("Withdraw NFT's")}
@@ -285,73 +285,7 @@ const WithdrawNft = () => {
             <Close />
           </div>
         </div>
-        <div className="mx-[32px] flex flex-nowrap justify-start gap-4 xs:flex-col 2xl:flex-row">
-          <div className="flex flex-row gap-4 xs:grid xs:grid-cols-2 xs:items-center xs:justify-center 2xl:flex 2xl:flex-row 2xl:justify-start">
-            <input
-              type="text"
-              placeholder="Search"
-              onChange={handleSearchChange}
-              className="h-10 flex-1 items-center justify-center rounded-xl border border-custom_gray_1 bg-transparent p-[15px] font-sans font-semibold text-custom_gray_2 outline-0 md:h-[44.57px] 2xl:w-[215px]"
-            />
-            {/* desktop lootbox filters */}
-            <span className="flex md:hidden">
-              <MobileFiltersButton
-                openFilters={openFilters}
-                appliedFiltersCount={appliedFiltersCount}
-                toggleFilters={handleToggleFilters}
-              />
-            </span>
-            <span className="hidden md:flex">
-              <CustomFilter
-                filterName="Collection"
-                options={nftCollections.map((collection) => collection.name)}
-                handleFilterChange={handleCollectionChange}
-                value={collection}
-              />
-            </span>
-            <span className="hidden md:flex">
-              <CustomFilter
-                filterName="Price"
-                options={PRICE_OPTIONS}
-                handleFilterChange={handlePriceChange}
-                value={price}
-              />
-            </span>
-            <span className="hidden md:flex">
-              <CustomFilter
-                filterName="Sort by"
-                options={SORT_BY_OPTIONS}
-                handleFilterChange={handleSortByChange}
-                value={sortBy}
-              />
-            </span>
-          </div>
-          {/* mobile lootbox filters */}
-          <div
-            className={`xs:${
-              openFilters ? 'flex' : 'hidden'
-            } xs:flex-col xs:items-center xs:justify-around xs:gap-4 xs:rounded-xl xs:border xs:border-solid xs:border-[#2C3034] xs:bg-[#1A1D20] xs:p-6 md:hidden`}
-          >
-            <CustomFilter
-              filterName="Collection"
-              options={nftCollections.map((collection) => collection.name)}
-              handleFilterChange={handleCollectionChange}
-              value={collection}
-            />
-            <CustomFilter
-              filterName="Price"
-              options={PRICE_OPTIONS}
-              handleFilterChange={handlePriceChange}
-              value={price}
-            />
-            <CustomFilter
-              filterName="Sort by"
-              options={SORT_BY_OPTIONS}
-              handleFilterChange={handleSortByChange}
-              value={sortBy}
-            />
-          </div>
-        </div>
+
         <div className="mx-[32px] flex flex-row items-center justify-between">
           <div className="font-bold">
             All NFT’s <span className="text-[#F03033]">({nfts.length})</span>
