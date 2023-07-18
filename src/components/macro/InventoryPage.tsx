@@ -128,7 +128,7 @@ const InventoryPage: React.FC = () => {
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-8">
         {nfts.length === 0 ? (
           <div className="h-full w-full">
-            {/* <Scrollbars
+            <Scrollbars
               // This will activate auto hide
               autoHide
               // Hide delay in ms
@@ -142,7 +142,7 @@ const InventoryPage: React.FC = () => {
             >
               <div
                 style={{
-                  display: "grid",
+                  display: 'grid',
                   gridTemplateColumns: `repeat(${numColumns}, 1fr)`,
                 }}
                 className={`auto-rows-max place-content-start gap-4 xs:gap-4 2xl:gap-[14px]`}
@@ -156,8 +156,8 @@ const InventoryPage: React.FC = () => {
                   />
                 ))}
               </div>
-            </Scrollbars> */}
-            <InventoryItemCard name="NFT box name" url={Icon} price={2421} />
+            </Scrollbars>
+            {/* <InventoryItemCard name="NFT box name" url={Icon} price={2421} />
             <NftCard
               cardTitle="NFT box name"
               itemsCount="7"
@@ -173,7 +173,7 @@ const InventoryPage: React.FC = () => {
               cost={2421}
               icon={Icon}
               lootboxId="123"
-            ></NftLootboxCard>
+            ></NftLootboxCard> */}
           </div>
         ) : (
           <div className="flex w-full items-center justify-center  xs:px-6  xs:py-[58px]  2xl:min-h-[664px] 2xl:p-0">
