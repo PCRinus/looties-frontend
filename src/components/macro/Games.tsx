@@ -1,14 +1,14 @@
-import React from "react";
-import GameNav from "../micro/GameNav";
-import LootboxesImg from "../../assets/LootboxexImg.svg";
-import ClassicImg from "../../assets/ClassicImg.svg";
-import WalletIcon from "../../assets/Wallet.svg";
-import Dropbox from "../../assets/DropBoxIcon.svg";
-import redStar from "../../assets/StarRed.svg";
-import DropBoxRed from "../../assets/DropboxIconRed.svg";
-import LootboxesIconWhite from "../../assets/LootboxesIconWhite.svg";
-import ClassicIconWhite from "../../assets/ClassicIconWhite.svg";
-import { Link } from "react-router-dom";
+import React from 'react';
+import GameNav from '../micro/GameNav';
+import LootboxesImg from '../../assets/LootboxexImg.svg';
+import ClassicImg from '../../assets/ClassicImg.svg';
+import WalletIcon from '../../assets/Wallet.svg';
+import Dropbox from '../../assets/DropBoxIcon.svg';
+import redStar from '../../assets/StarRed.svg';
+import DropBoxRed from '../../assets/DropboxIconRed.svg';
+import LootboxesIconWhite from '../../assets/LootboxesIconWhite.svg';
+import ClassicIconWhite from '../../assets/ClassicIconWhite.svg';
+import { Link } from 'react-router-dom';
 const Games: React.FC = () => {
   return (
     <div className="flex xs:flex-col xs:justify-center 2xl:flex-row 2xl:gap-[52px]">

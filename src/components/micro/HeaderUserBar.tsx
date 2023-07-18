@@ -1,16 +1,16 @@
-import React from "react";
-import "../../styles/micro/HeaderUserBar.scss";
-import LogoutButton from "./LogoutButton";
-import UserInfo from "./UserInfo";
-import HomeButton from "./HomeButton";
-import LootBoxesButton from "./LootBoxesButton";
-import ClassicButton from "./ClassicButton";
-import ProvablyFairButton from "./ProvablyFairButton";
-import BalanceView from "./BalanceView";
-import { ConnectWalletButton } from "./ConnectWalletButton";
-import { Link } from "react-router-dom";
-import { CreateLootboxButton } from "./CreateLootboxButton";
-import { useSelector } from "react-redux";
+import React from 'react';
+import '../../styles/micro/HeaderUserBar.scss';
+import LogoutButton from './LogoutButton';
+import UserInfo from './UserInfo';
+import HomeButton from './HomeButton';
+import LootBoxesButton from './LootBoxesButton';
+import ClassicButton from './ClassicButton';
+import ProvablyFairButton from './ProvablyFairButton';
+import BalanceView from './BalanceView';
+import { ConnectWalletButton } from './ConnectWalletButton';
+import { Link } from 'react-router-dom';
+import { CreateLootboxButton } from './CreateLootboxButton';
+import { useSelector } from 'react-redux';
 
 const HeaderUserBar: React.FC = () => {
   const user = useSelector((state: any) => state.user);
@@ -29,11 +29,11 @@ const HeaderUserBar: React.FC = () => {
           </Link>
         </div>
 
-        <div className="ml-4">
+        {/* <div className="ml-4">
           <Link to="/classic">
             <ClassicButton />
           </Link>
-        </div>
+        </div> */}
 
         {/* <div className="ml-4">
           <ProvablyFairButton />
