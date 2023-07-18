@@ -1,9 +1,8 @@
-import React, {useState} from "react";
-import "../../styles/micro/LiveDropHeader.scss";
-import InfoIcon from "../../assets/InfoIcon.svg";
+import React, { useState } from 'react';
+import '../../styles/micro/LiveDropHeader.scss';
+import InfoIcon from '../../assets/InfoIcon.svg';
 // import {useDispatch} from "react-redux";
-import { LiveDropsInfo } from "./LiveDropsInfo";
-
+import { LiveDropsInfo } from './LiveDropsInfo';
 
 interface Props {
   itemsOrder: string;
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const LiveDropHeader: React.FC<Props> = ({ itemsOrder, handleItemsOrder }) => {
-
   const [showInfo, setShowInfo] = useState(false);
 
   const handleInfoButtonClick = () => {
@@ -26,28 +24,28 @@ const LiveDropHeader: React.FC<Props> = ({ itemsOrder, handleItemsOrder }) => {
     <div className="livedrop-header flex h-[60px] w-full justify-between">
       <div className="flex items-center justify-center">
         <label className="ml-8 font-sans font-semibold text-custom_white_1">Live drops</label>
-        <span className="ml-[9.87px] flex justify-center items-center">
+        <span className="ml-[9.87px] flex items-center justify-center">
           {/*<img src={InfoIcon} alt="info-icon-svg"></img>*/}
-          <button id="info-button" onClick={handleInfoButtonClick}>
+          {/* <button id="info-button" onClick={handleInfoButtonClick}>
           <img src={InfoIcon} alt="Info"></img>
         </button>
-          <i className=""></i>
+          <i className=""></i> */}
         </span>
       </div>
       <div className="mr-8 flex items-center justify-center">
         <button
           className={`mr-[12px] font-sans font-semibold ${
-            itemsOrder === "top" ? "text-red-500" : "text-custom_white_1"
+            itemsOrder === 'top' ? 'text-red-500' : 'text-custom_white_1'
           }`}
-          onClick={() => handleItemsOrder("top")}
+          onClick={() => handleItemsOrder('top')}
         >
           Top
         </button>
         <button
           className={`font-sans font-semibold text-custom_white_1 ${
-            itemsOrder === "all" ? "text-red-500" : "text-custom_white_1"
+            itemsOrder === 'all' ? 'text-red-500' : 'text-custom_white_1'
           }`}
-          onClick={() => handleItemsOrder("all")}
+          onClick={() => handleItemsOrder('all')}
         >
           All
         </button>
