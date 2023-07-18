@@ -9,6 +9,8 @@ export const UiReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case ReduxEvents.ToggleChat:
       return { ...state, openChat: !state.openChat };
+    case ReduxEvents.CloseChat:
+      return { ...state, openChat: false };
     case ReduxEvents.ToggleSidebar:
       return { ...state, openSidebar: !state.openSidebar };
     default:

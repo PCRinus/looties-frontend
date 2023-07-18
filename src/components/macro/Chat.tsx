@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ChatHeader } from "../micro/ChatHeader";
 import { ChatMessage } from "../micro/ChatMessage";
 import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { ChatInput } from "../micro/ChatInput";
 import { ChatMessageUserNotAuthenticated } from "../micro/ChatMessageUserNotAuthenticated";
+import { useLocation } from "react-router-dom";
+import { ReduxEvents } from "../../reducers/events";
 
 export interface Message {
   id: string;
@@ -35,6 +37,8 @@ export const Chat: React.FC = () => {
   const [repliedMessageData, setRepliedMessageData] = useState<RepliedMessage>();
   const [scrollApplied, setScrollApplied] = useState(false);
   const chatBodyDiv = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const dispatch = useDispatch()
 
   const handleMessage = (message: string) => {
     try {
@@ -166,6 +170,10 @@ export const Chat: React.FC = () => {
       setScrollApplied(true);
     }
   }, [messages, isReply, scrollApplied]);
+
+  useEffect(()=>{
+    dispatch({type:ReduxEvents.CloseChat})
+  },[location.pathname])
 
   return (
     <div

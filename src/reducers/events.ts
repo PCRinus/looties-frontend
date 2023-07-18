@@ -36,6 +36,7 @@ enum ReduxEvents {
 
   // UI actions
   ToggleChat = "TOGGLE_CHAT",
+  CloseChat="CLOSE_CHAT",
   ToggleSidebar = "TOGGLE_SIDEBAR",
   CloseBottomBar = "CLOSE_BOTTOM_BAR",
   OpenBottomBar = "OPEN_BOTTOM_BAR",
