@@ -1,15 +1,15 @@
-import { ReduxEvents } from "../../reducers/events";
-import { ReactComponent as Close } from "../../assets/Close.svg";
-import { NftModalCard } from "../micro/NftModalCard";
-import { useDispatch, useSelector } from "react-redux";
-import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../../mocks/filtersMocks";
-import { CustomFilter } from "../micro/CustomFilter";
-import React, { useEffect, useState } from "react";
-import RedArrowDown from "../../assets/RedArrowDown.svg";
-import { MobileFiltersButton } from "../micro/MobileFiltersButton";
-import { toast } from "react-hot-toast";
-import axios from "axios";
-import { ColorRing } from "react-loader-spinner";
+import { ReduxEvents } from '../../reducers/events';
+import { ReactComponent as Close } from '../../assets/Close.svg';
+import { NftModalCard } from '../micro/NftModalCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from '../../mocks/filtersMocks';
+import { CustomFilter } from '../micro/CustomFilter';
+import React, { useEffect, useState } from 'react';
+import RedArrowDown from '../../assets/RedArrowDown.svg';
+import { MobileFiltersButton } from '../micro/MobileFiltersButton';
+import { toast } from 'react-hot-toast';
+import axios from 'axios';
+import { ColorRing } from 'react-loader-spinner';
 
 const WithdrawNft = () => {
   const [collection, setCollection] = useState<string>(COLLECTION_OPTIONS[0]);
@@ -17,7 +17,7 @@ const WithdrawNft = () => {
   const [category, setCategory] = useState<string>(CATEGORY_OPTIONS[0]);
 
   const [sortBy, setSortBy] = useState<string>(SORT_BY_OPTIONS[0]);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [openFilters, setOpenFilters] = useState<boolean>(false);
 
   const [appliedFiltersCount, setAppliedFiltersCount] = useState<number>(0);
@@ -46,7 +46,7 @@ const WithdrawNft = () => {
           }
         });
         nftCollections.sort();
-        nftCollections.unshift({ name: "All", symbol: undefined });
+        nftCollections.unshift({ name: 'All', symbol: undefined });
         setNfts(nfts);
         setNftCollections(nftCollections);
       } catch (err) {
@@ -120,7 +120,7 @@ const WithdrawNft = () => {
 
   const validateNftWithdraw = () => {
     if (selectedOptions.length === 0) {
-      toast.error("You need to select at least one NFT to withdraw");
+      toast.error('You need to select at least one NFT to withdraw');
       return false;
     }
     return true;
@@ -137,40 +137,41 @@ const WithdrawNft = () => {
           `${process.env.REACT_APP_API_URL}/withdrawal/${user.id}/nft`,
           withdrawnNfts,
           {
-            headers: { Authorization: `Bearer ${auth.jwt}`, "Content-Type": "application/json" },
+            headers: { Authorization: `Bearer ${auth.jwt}`, 'Content-Type': 'application/json' },
           }
         );
         if (successfullyWithdrawnNfts.length === withdrawnNfts.length) {
-          toast.success("Withdrawal successful");
+          toast.success('Withdrawal successful');
         } else if (successfullyWithdrawnNfts.length === 0) {
-          toast.error("Withdrawal failed");
+          toast.error('Withdrawal failed');
         } else {
-          toast.error("Withdrawal partially failed");
+          toast.error('Withdrawal partially failed');
         }
       } catch (err) {
         console.log(err);
-        toast.error("Withdrawal error");
+        toast.error('Withdrawal error');
       }
     }
   };
 
   if (selectedOption === "Withdraw NFT's") {
-  } else if (selectedOption === "Withdraw coins") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } });
-  } else if (selectedOption === "Add coins") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "AddCoins" } });
-  } else if (selectedOption === "Deposit NFT's") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+  } else if (selectedOption === 'Withdraw coins') {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'WithdrawCoins' } });
+  } else if (selectedOption === 'Add coins') {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'AddCoins' } });
   }
+  //  else if (selectedOption === "Deposit NFT's") {
+  //   dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+  // }
 
   if (error) {
     dispatch({ type: ReduxEvents.CloseModal });
-    toast.error("Error fetching NFTs");
+    toast.error('Error fetching NFTs');
   } else
     return (
       <div
         className="flex--column autoheight modal--content w-[100vw] md:w-[81vw] lg:w-[986px]"
-        style={{ height: `calc(100vh - 144px)`, justifyContent: "start" }}
+        style={{ height: `calc(100vh - 144px)`, justifyContent: 'start' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mx-[32px] mt-[32px] hidden  flex-wrap items-center justify-start gap-4 md:flex">
@@ -178,7 +179,7 @@ const WithdrawNft = () => {
             <div>
               <button
                 className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
-                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "AddCoins" } })}
+                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'AddCoins' } })}
               >
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Add coins</span>
               </button>
@@ -188,13 +189,13 @@ const WithdrawNft = () => {
             <div>
               <button
                 className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
-                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } })}
+                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'WithdrawCoins' } })}
               >
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Withdraw coins</span>
               </button>
             </div>
           </div>
-          <div className="">
+          {/* <div className="">
             <div>
               <button
                 className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
@@ -205,7 +206,7 @@ const WithdrawNft = () => {
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Deposit NFT'S</span>
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="">
             <div>
               <button className="active_modal top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]">
@@ -237,24 +238,24 @@ const WithdrawNft = () => {
                       src={RedArrowDown}
                       alt="provably-svg-icon"
                       className={`h-4 w-4 transition-transform duration-300 ${
-                        isDropdownOpen ? "rotate-180 transform" : ""
+                        isDropdownOpen ? 'rotate-180 transform' : ''
                       }`}
                     />
                   </div>
                   <ul
                     className={`absolute left-0 top-full z-[100] mt-1 w-full transform overflow-hidden rounded-xl border border-[#2C3034] bg-[#2C3034] transition-opacity duration-300 ease-in-out ${
-                      isDropdownOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+                      isDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'
                     }`}
                   >
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
-                      onClick={() => handleOptionChange("Add coins")}
+                      onClick={() => handleOptionChange('Add coins')}
                     >
                       Add coins
                     </li>
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
-                      onClick={() => handleOptionChange("Withdraw coins")}
+                      onClick={() => handleOptionChange('Withdraw coins')}
                     >
                       Withdraw coins
                     </li>
@@ -328,7 +329,7 @@ const WithdrawNft = () => {
           {/* mobile lootbox filters */}
           <div
             className={`xs:${
-              openFilters ? "flex" : "hidden"
+              openFilters ? 'flex' : 'hidden'
             } xs:flex-col xs:items-center xs:justify-around xs:gap-4 xs:rounded-xl xs:border xs:border-solid xs:border-[#2C3034] xs:bg-[#1A1D20] xs:p-6 md:hidden`}
           >
             <CustomFilter
@@ -375,7 +376,7 @@ const WithdrawNft = () => {
         </div>
         {loading ? (
           <div className="flex h-full flex-col items-center justify-center px-[32px] md:min-h-[355px]">
-            <ColorRing colors={["#F03033", "#F03033", "#F03033", "#F03033", "#F03033"]} />
+            <ColorRing colors={['#F03033', '#F03033', '#F03033', '#F03033', '#F03033']} />
             <h1 className="text-[#F03033] xs:text-xl xs:font-bold 2xl:text-2xl 2xl:font-bold">Loading your NFT's...</h1>
           </div>
         ) : (
@@ -386,7 +387,7 @@ const WithdrawNft = () => {
                   .filter(
                     (nft) =>
                       nft.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-                      (nft.symbol.toLowerCase() === collection.toLowerCase() || collection.toLowerCase() === "all")
+                      (nft.symbol.toLowerCase() === collection.toLowerCase() || collection.toLowerCase() === 'all')
                   )
                   .map((nft) => (
                     <NftModalCard

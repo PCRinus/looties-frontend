@@ -1,17 +1,17 @@
-import { ReduxEvents } from "../../reducers/events";
-import { ReactComponent as Close } from "../../assets/Close.svg";
-import RedArrowDown from "../../assets/RedArrowDown.svg";
-import RedDollar from "../../assets/RedDollar.svg";
-import Solana from "../../assets/Solana.svg";
-import InfoRed from "../../assets/InfoRed.svg";
-import Equals from "../../assets/Equals.svg";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { Buffer } from "buffer";
+import { ReduxEvents } from '../../reducers/events';
+import { ReactComponent as Close } from '../../assets/Close.svg';
+import RedArrowDown from '../../assets/RedArrowDown.svg';
+import RedDollar from '../../assets/RedDollar.svg';
+import Solana from '../../assets/Solana.svg';
+import InfoRed from '../../assets/InfoRed.svg';
+import Equals from '../../assets/Equals.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { Buffer } from 'buffer';
 
 global.Buffer = Buffer;
 
@@ -27,8 +27,8 @@ const AddCoins = () => {
   const auth = useSelector((state: any) => state.auth);
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
-  const [sol, setSol] = useState("0.00");
-  const [coins, setCoins] = useState("0.00");
+  const [sol, setSol] = useState('0.00');
+  const [coins, setCoins] = useState('0.00');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [depositData, setDepositData] = useState<IDepositData>();
@@ -42,7 +42,7 @@ const AddCoins = () => {
         setDepositData(res.data);
         setLoading(false);
       } catch (err) {
-        console.log("Error fetching withdrawal data: ", err);
+        console.log('Error fetching withdrawal data: ', err);
         setError(true);
       } finally {
         setLoading(false);
@@ -55,13 +55,13 @@ const AddCoins = () => {
   const handleSolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSol(value);
-    setCoins(value ? (parseFloat(value) * parseFloat(depositData!.tokenPerSolExchangeRate)).toFixed(3) : "");
+    setCoins(value ? (parseFloat(value) * parseFloat(depositData!.tokenPerSolExchangeRate)).toFixed(3) : '');
   };
 
   const handleCoinsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setCoins(value);
-    setSol(value ? (parseFloat(value) / parseFloat(depositData!.tokenPerSolExchangeRate)).toFixed(3) : "");
+    setSol(value ? (parseFloat(value) / parseFloat(depositData!.tokenPerSolExchangeRate)).toFixed(3) : '');
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -77,14 +77,14 @@ const AddCoins = () => {
 
     // Restrict decimal places to a maximum of 3
     const { value } = event.target as HTMLInputElement;
-    if (charCode === 46 && value && value.includes(".")) {
+    if (charCode === 46 && value && value.includes('.')) {
       event.preventDefault();
-    } else if (value && value.includes(".") && value.split(".")[1].length >= 3) {
+    } else if (value && value.includes('.') && value.split('.')[1].length >= 3) {
       event.preventDefault();
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState("Add coins");
+  const [selectedOption, setSelectedOption] = useState('Add coins');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleOptionChange = (option: string) => {
@@ -99,13 +99,13 @@ const AddCoins = () => {
   const validateDeposit = async () => {
     const balance = await connection.getBalance(publicKey!);
     if (parseFloat(sol) === 0) {
-      toast.error("Deposited amount needs to be higher than 0.00");
+      toast.error('Deposited amount needs to be higher than 0.00');
       return false;
     } else if (!sol) {
-      toast.error("You need to enter an amount to deposit");
+      toast.error('You need to enter an amount to deposit');
       return false;
     } else if (parseFloat(sol) > balance / LAMPORTS_PER_SOL) {
-      toast.error("Insufficient SOL in wallet");
+      toast.error('Insufficient SOL in wallet');
       return false;
     }
     return true;
@@ -116,7 +116,7 @@ const AddCoins = () => {
     if (isDepositValid) {
       if (!sendTransaction || !publicKey) {
         dispatch({ type: ReduxEvents.CloseModal });
-        toast.error("Wallet not connected");
+        toast.error('Wallet not connected');
       } else {
         try {
           dispatch({ type: ReduxEvents.CloseModal });
@@ -152,27 +152,28 @@ const AddCoins = () => {
             payload: Math.floor(parseFloat(updatedTokensBalance) * 100) / 100,
           });
 
-          toast.success("Transaction sent successfully");
+          toast.success('Transaction sent successfully');
         } catch (error) {
-          console.error("Error while sending transaction:", error);
-          toast.error("Error while sending transaction");
+          console.error('Error while sending transaction:', error);
+          toast.error('Error while sending transaction');
         }
       }
     }
   };
 
-  if (selectedOption === "Add coins") {
-  } else if (selectedOption === "Withdraw coins") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } });
+  if (selectedOption === 'Add coins') {
+  } else if (selectedOption === 'Withdraw coins') {
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'WithdrawCoins' } });
   } else if (selectedOption === "Withdraw NFT's") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawNft" } });
-  } else if (selectedOption === "Deposit NFT's") {
-    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+    dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'WithdrawNft' } });
   }
+  // else if (selectedOption === "Deposit NFT's") {
+  //   dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+  // }
 
   if (error) {
     dispatch({ type: ReduxEvents.CloseModal });
-    toast.error("Error fetching withdrawal data");
+    toast.error('Error fetching withdrawal data');
   } else if (loading) {
     //TODO: maybe add a loading spinner until deposit data is fetched
     return <></>;
@@ -180,7 +181,7 @@ const AddCoins = () => {
     return (
       <div
         className="flex--column autoheight modal--content w-[100vw] md:w-[81vw] lg:w-[986px]"
-        style={{ height: `calc(100vh - 144px)`, justifyContent: "start" }}
+        style={{ height: `calc(100vh - 144px)`, justifyContent: 'start' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mx-[32px] mt-[32px] hidden  flex-wrap items-center justify-start gap-4 md:flex">
@@ -195,29 +196,29 @@ const AddCoins = () => {
             <div>
               <button
                 className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
-                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawCoins" } })}
+                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'WithdrawCoins' } })}
               >
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Withdraw coins</span>
               </button>
             </div>
           </div>
-          <div className="">
+          {/* <div className="">
             <div>
               <button
                 className=" top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
                 onClick={() => {
-                  dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "DepositNft" } });
+                  dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'DepositNft' } });
                 }}
               >
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Deposit NFT'S</span>
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="">
             <div>
               <button
                 className="top-[56-px] flex h-12 w-auto items-center justify-center rounded-xl border border-custom_gray_1 bg-custom_gray_1 px-[24px]"
-                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: "WithdrawNft" } })}
+                onClick={() => dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'WithdrawNft' } })}
               >
                 <span className="font-sans text-base font-semibold text-custom_gray_2">Withdraw NFT'S</span>
               </button>
@@ -248,24 +249,24 @@ const AddCoins = () => {
                       src={RedArrowDown}
                       alt="provably-svg-icon"
                       className={`h-4 w-4 transition-transform duration-300 ${
-                        isDropdownOpen ? "rotate-180 transform" : ""
+                        isDropdownOpen ? 'rotate-180 transform' : ''
                       }`}
                     />
                   </div>
                   <ul
                     className={`absolute left-0 top-full mt-1 w-full transform overflow-hidden rounded-xl border border-[#2C3034] bg-[#2C3034] transition-opacity duration-300 ease-in-out ${
-                      isDropdownOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+                      isDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'
                     }`}
                   >
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-[#F03033] hover:bg-gray-500 hover:text-white"
-                      onClick={() => handleOptionChange("Add coins")}
+                      onClick={() => handleOptionChange('Add coins')}
                     >
                       Add coins
                     </li>
                     <li
                       className="flex h-12 cursor-pointer items-center justify-center border-t-2 border-[#373A3D] bg-[#2C3034] px-4 py-2 font-sans text-base font-semibold text-custom_gray_2 hover:bg-gray-500 hover:text-white"
-                      onClick={() => handleOptionChange("Withdraw coins")}
+                      onClick={() => handleOptionChange('Withdraw coins')}
                     >
                       Withdraw coins
                     </li>
@@ -298,7 +299,7 @@ const AddCoins = () => {
 
         <div className="mx-[32px] flex flex-row items-center justify-between">
           <div className="text-sm font-semibold leading-5 text-[#848B8D] sm:text-[16px]">
-            Transactions are likely to be confirmed in {"<"}30s depending on the SOL network. Please be patient and
+            Transactions are likely to be confirmed in {'<'}30s depending on the SOL network. Please be patient and
             contact us if no funds arrived 30+ minutes after deposit.
           </div>
         </div>
