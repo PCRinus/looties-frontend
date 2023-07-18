@@ -220,12 +220,12 @@ const OfficialBox = () => {
         raffleContainer.innerHTML = '';
 
         for (let i = 0; i < 101; i++) {
-            let element = `<div id="CardNumber${i}" class="item class_red_item" style="background-image: url(${items.simple.img}); border-bottom: 4px solid ${items.simple.color};"></div>`;
+            let element = `<div id="CardNumber${i}" class="item" style="background-image: url(${items.simple.img}); border-bottom: 4px solid ${items.simple.color};"></div>`;
             const randed = randomInt(1, 1000);
             if (randed < 50) {
-                element = `<div id="CardNumber${i}" class="item class_red_item" style="background-image: url(${items.super.img});"></div>`;
+                element = `<div id="CardNumber${i}" class="item" style="background-image: url(${items.super.img}); border-bottom: 4px solid ${items.super.color};"></div>`;
             } else if (500 < randed) {
-                element = `<div id="CardNumber${i}" class="item class_red_item" style="background-image: url(${items.middle.img});"></div>`;
+                element = `<div id="CardNumber${i}" class="item" style="background-image: url(${items.middle.img}); border-bottom: 4px solid ${items.middle.color};"></div>`;
             }
             raffleContainer.insertAdjacentHTML('beforeend', element);
         }
@@ -235,24 +235,22 @@ const OfficialBox = () => {
 
         setTimeout(() => {
             if (ng === 2) {
-                goRoll(items.middle.skin, items.middle.img);
+                goRoll(items.middle.skin, items.middle.img, items.middle.color );
             } else if (ng === 1) {
-                goRoll(items.super.skin, items.super.img);
+                goRoll(items.super.skin, items.super.img, items.super.color );
             } else {
-                goRoll(items.simple.skin, items.simple.img);
+                goRoll(items.simple.skin, items.simple.img, items.simple.color );
             }
         }, 500);
     };
 
-    console.log(items);
-
-    const goRoll = (skin: string, skinimg: string) => {
+    const goRoll = (skin: string, skinimg: string, border: string) => {
         const raffleContainer = document.querySelector('.raffle-roller-container') as HTMLElement;
         if (isChecked) {        raffleContainer.style.transition = 'all 4s cubic-bezier(.08,.6,0,1)';}
          else {        raffleContainer.style.transition = 'all 8s cubic-bezier(.08,.6,0,1)';}
         const cardNumber78 = document.querySelector('#CardNumber78') as HTMLElement;
         cardNumber78.style.backgroundImage = `url(${skinimg})`;
-        cardNumber78.style.borderStyle = `blue`;
+        cardNumber78.style.borderBottom = `4px solid ${border}`;
         raffleContainer.style.marginLeft = '-11645px';
     };
 
@@ -279,7 +277,78 @@ const OfficialBox = () => {
         if (!buttonClicked) {
             setButtonClicked(true);
             handleTryLootbox(lootboxId);
+            if (isChecked) {
+                setTimeout(() => {
+                    setButtonClicked(false); // Set the state back to false after 4 seconds
+                }, 4000); // Wait for 4 seconds (4000 milliseconds) before
+            }
+            else {             setTimeout(() => {
+                setButtonClicked(false); // Set the state back to false after 7.1 seconds
+            }, 8850); // Wait for 8.85 seconds (7000 milliseconds) before
+            }
+        }
+    };
 
+    const user = useSelector((state: any) => state.user);
+
+    const [isOpenButtonEnabled, setIsOpenButtonDisabled] = useState(false);
+
+    useEffect(() => {
+        const fetchLootboxData = async () => {
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/lootbox/${lootboxId}`);
+
+            if (data.userId === user.id) {
+                setIsOpenButtonDisabled(true);
+            }
+        };
+
+        fetchLootboxData();
+    }, [lootboxId, user.id]);
+
+
+    const handleOpenLootbox = async (lootboxId?: string) => {
+
+        if (!lootboxId) {
+            toast.error('Could not fetch the lootbox ID, try again later');
+        }
+
+        try {
+            const { data: prize } = await axios.post<LootboxPrize>(
+                `${process.env.REACT_APP_API_URL}/lootbox/${lootboxId}/open-lootbox`,
+                {
+                    userId: user.id,
+                },
+                {
+                    headers: { Authorization: `Bearer ${auth.jwt}` },
+                }
+            );
+            actionIt(prize);
+            if (isChecked) { setTimeout(() => {
+                dispatch({ type: ReduxEvents.StoreModalData, payload: { data: prize } });
+                dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LootboxWin' } });
+            }, 4350);}
+            else { setTimeout(() => {
+                dispatch({ type: ReduxEvents.StoreModalData, payload: { data: prize } });
+                dispatch({ type: ReduxEvents.OpenModal, payload: { modal: 'LootboxWin' } });
+            }, 8050);
+            }
+
+            // update token balance after opening a lootbox
+            const { data: tokensBalance } = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${user.id}/balance`, {
+                headers: {
+                    Authorization: `Bearer ${auth.jwt}`,
+                },
+            });
+            dispatch({ type: ReduxEvents.SetTokensBalance, payload: Math.floor(parseFloat(tokensBalance) * 100) / 100 });
+
+        } catch (error) {
+            console.log('Open box error: ', error);
+            toast.error('Failed to open the lootbox, try again later!');
+        }
+    };
+
+    const handleOpenClick = () => {
+            handleOpenLootbox(lootboxId);
             if (isChecked) {
                 setTimeout(() => {
                     setButtonClicked(false); // Set the state back to false after 4 seconds
@@ -287,9 +356,8 @@ const OfficialBox = () => {
             }
             else {             setTimeout(() => {
                 setButtonClicked(false); // Set the state back to false after 7.1 seconds
-            }, 7100); // Wait for 7.1 seconds (7000 milliseconds) before calling handleTryLootbox
+            }, 8850); // Wait for 8.85 seconds (7000 milliseconds) before calling handleTryLootbox
             }
-        }
     };
 
     return (
@@ -311,7 +379,13 @@ const OfficialBox = () => {
                 </div>
             <GradientTitleBox className="flex items-center justify-center xs:h-[68px] mt-2">
                 <div className="flex h-[80px] w-full items-center justify-center ">
-                    <OpenButton className="mr-4 font-sans font-bold xs:ml-6 xs:mr-3 xs:h-[29.71px] xs:w-[164px]  xs:text-[12px] 2xl:h-[44.57px] 2xl:w-[188px]" />
+                        <button
+                            className="rounded-lg bg-gradient-to-t from-red-700 to-red-500 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gradient-to-t disabled:from-gray-600 disabled:to-gray-400 xs:text-xs md:max-2xl:text-base 2xl:text-base mr-4 font-sans font-bold xs:ml-6 xs:mr-3 xs:h-[29.71px] xs:w-[164px]  xs:text-[12px] 2xl:h-[44.57px] 2xl:w-[188px]"
+                            onClick={handleOpenClick}
+                            disabled={isOpenButtonEnabled}
+                        >
+                            Open
+                        </button>
                     <button
                         className={`md-max:2xl:w-[98px] mr-4 flex items-center justify-center rounded-xl border border-custom_gray_1 xs:mr-3 xs:h-[32px] xs:w-[62px] xs:rounded-lg md:max-2xl:h-12 2xl:h-12 2xl:w-[98px] text-white font-semibold ${
                             buttonClicked ? "bg-red-500 cursor-not-allowed" : "bg-custom_gray_1"
