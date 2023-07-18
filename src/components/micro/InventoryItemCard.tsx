@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import Icon from "../../assets/CardIcons/GreenCube.svg";
-import Elipse from "../../assets/Ellipse.svg";
+import React, { useEffect } from 'react';
+import Icon from '../../assets/CardIcons/GreenCube.svg';
+import Elipse from '../../assets/Ellipse.svg';
 interface NftProps {
   name: string;
   url: string;
@@ -10,8 +10,8 @@ const InventoryItemCard: React.FC<NftProps> = ({ name, url, price }) => {
   return (
     <>
       <div className="custom-style-gray flex items-start justify-center rounded-xl xs:h-[279px] xs:w-[158px] 2xl:h-[340px] 2xl:w-[209px]">
-        <div className=" content flex-column mx-0.5 h-full w-full items-start">
-          <div className="mt-1 flex flex-row items-center justify-between rounded-t-xl bg-[#1E2124] xs:mb-[1px] xs:mt-0.5  xs:h-[32px] xs:w-[155px] 2xl:mb-0.5 2xl:ml-0 2xl:h-12 2xl:w-full">
+        <div className=" content flex-column h-full w-full items-start p-1">
+          <div className=" flex flex-row items-center justify-between rounded-t-xl bg-[#1E2124] xs:mb-[2px]   xs:h-[32px] xs:w-[150px] 2xl:mb-0.5 2xl:ml-0 2xl:h-12 2xl:w-full">
             <span className="p-4 font-sans font-bold text-custom_white_1 xs:text-xs 2xl:text-base">{name}</span>
           </div>
           <div
@@ -31,7 +31,7 @@ const InventoryItemCard: React.FC<NftProps> = ({ name, url, price }) => {
                 <div className="  flex justify-between">
                   <label className="font-sans font-semibold text-[#848B8D] xs:text-[8px] 2xl:text-[10px]"></label>
                   <label className="font-sans font-bold text-custom_white_1 xs:text-xs 2xl:text-xs">
-                    rice not available
+                    price not available
                   </label>
                   <label className="font-sans font-semibold text-[#848B8D] xs:text-[8px] 2xl:text-[10px]"></label>
                 </div>

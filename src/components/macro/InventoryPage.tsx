@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
-import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
-import Scrollbars from "react-custom-scrollbars-2";
-import InventoryItemCard from "../micro/InventoryItemCard";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import ProfileOptionsHeader from '../micro/ProfileOptionsHeader';
+import Scrollbars from 'react-custom-scrollbars-2';
+import InventoryItemCard from '../micro/InventoryItemCard';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import NFTPriceCard from '../micro/NFTPriceCard';
+import { NftCard } from '../micro/NftCard';
+import Icon from '../../assets/CardIcons/ApeIcon.svg';
+import NftLootboxCard from '../micro/NftLootboxCard';
 interface IAppState {
   user: { id: string };
   auth: { jwt: string };
@@ -36,7 +40,7 @@ const InventoryPage: React.FC = () => {
         }));
         setNfts(nftsData);
       } catch (error) {
-        console.log("Error while fetching NFTs:", error);
+        console.log('Error while fetching NFTs:', error);
       }
     };
 
@@ -114,17 +118,17 @@ const InventoryPage: React.FC = () => {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [isMobile]);
   return (
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2 xs:min-h-[337px] 2xl:min-h-0 2xl:w-full">
-      <ProfileOptionsHeader title={"Inventory"} />
+      <ProfileOptionsHeader title={'Inventory'} />
       <div id="content" className="  h-full w-full xs:p-6  2xl:p-8">
-        {nfts.length > 0 ? (
+        {nfts.length === 0 ? (
           <div className="h-full w-full">
-            <Scrollbars
+            {/* <Scrollbars
               // This will activate auto hide
               autoHide
               // Hide delay in ms
@@ -152,7 +156,24 @@ const InventoryPage: React.FC = () => {
                   />
                 ))}
               </div>
-            </Scrollbars>
+            </Scrollbars> */}
+            <InventoryItemCard name="NFT box name" url={Icon} price={2421} />
+            <NftCard
+              cardTitle="NFT box name"
+              itemsCount="7"
+              label="created"
+              cost={2421}
+              icon={Icon}
+              lootboxId="123"
+            ></NftCard>
+            <NftLootboxCard
+              cardTitle="NFT box name"
+              itemsCount="7"
+              label="created"
+              cost={2421}
+              icon={Icon}
+              lootboxId="123"
+            ></NftLootboxCard>
           </div>
         ) : (
           <div className="flex w-full items-center justify-center  xs:px-6  xs:py-[58px]  2xl:min-h-[664px] 2xl:p-0">
