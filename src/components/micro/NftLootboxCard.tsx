@@ -41,6 +41,7 @@ const NftLootboxCard: React.FC<Props> = ({ cardTitle, itemsCount, label, cost, i
             className={`flex flex-row items-center justify-between rounded-t-xl bg-[#1E2124] xs:mb-[2px] ${xsHeaderHeight} ${xsHeaderWidth} lg:mb-0.5 ${lgHeaderHeight} ${lgHeaderWidth}`}
           >
             <span className="p-4 font-sans font-bold text-custom_white_1 xs:text-xs lg:text-base">{cardTitle}</span>
+            <span className="text-[#888888] xs:p-2 xs:text-xs lg:p-4 lg:text-base">{`${itemsCount} items`}</span>
           </div>
           <div
             id="content"

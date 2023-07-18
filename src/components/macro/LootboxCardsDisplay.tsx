@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { CustomFilter } from "../micro/CustomFilter";
-import { SearchBar } from "../micro/SearchBar";
-import { NFC_CARDS_DATA } from "../../mocks/nftsMocks";
-import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from "../../mocks/filtersMocks";
-import { MobileFiltersButton } from "../micro/MobileFiltersButton";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { ReduxEvents } from "../../reducers/events";
-import { NftCard } from "../micro/NftCard";
+import React, { useEffect, useState } from 'react';
+import { CustomFilter } from '../micro/CustomFilter';
+import { SearchBar } from '../micro/SearchBar';
+import { NFC_CARDS_DATA } from '../../mocks/nftsMocks';
+import { CATEGORY_OPTIONS, COLLECTION_OPTIONS, PRICE_OPTIONS, SORT_BY_OPTIONS } from '../../mocks/filtersMocks';
+import { MobileFiltersButton } from '../micro/MobileFiltersButton';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxEvents } from '../../reducers/events';
+import { NftCard } from '../micro/NftCard';
+import NftLootboxCard from '../micro/NftLootboxCard';
 
 export const LootboxCardsDisplay: React.FC = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [category, setCategory] = useState<string>(CATEGORY_OPTIONS[0]);
   const [collection, setCollection] = useState<string>(COLLECTION_OPTIONS[0]);
   const [price, setPrice] = useState<string>(PRICE_OPTIONS[0]);
@@ -56,11 +57,11 @@ export const LootboxCardsDisplay: React.FC = () => {
       setScreenWidth(width);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     setFiltersCount();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [category, collection, price, sortBy]);
 
@@ -90,8 +91,8 @@ export const LootboxCardsDisplay: React.FC = () => {
           console.log(list);
           // console.log(response.data);
         } catch (error) {
-          console.log("Error while fetching your NFTs:", error);
-          toast.error("Failed to fetch your NFTs");
+          console.log('Error while fetching your NFTs:', error);
+          toast.error('Failed to fetch your NFTs');
         }
       }
     };
@@ -146,7 +147,7 @@ export const LootboxCardsDisplay: React.FC = () => {
         {/* mobile lootbox filters */}
         <div
           className={`xs:${
-            openFilters ? "flex" : "hidden"
+            openFilters ? 'flex' : 'hidden'
           } xs:flex-col xs:items-center xs:justify-around xs:gap-4 xs:rounded-xl xs:border xs:border-solid xs:border-[#2C3034] xs:bg-[#1A1D20] xs:p-6 2xl:hidden`}
         >
           <CustomFilter
@@ -180,12 +181,12 @@ export const LootboxCardsDisplay: React.FC = () => {
           list
             .filter((lootbox) => lootbox.name.toLowerCase().includes(searchValue.toLowerCase()))
             .map((lootbox, index) => (
-              <NftCard
+              <NftLootboxCard
                 key={index}
                 cardTitle={lootbox.name}
                 cost={lootbox.price}
-                label={"Created"}
-                itemsCount={"3"}
+                label={'Created'}
+                itemsCount={'3'}
                 icon={lootbox.nftImage}
                 lootboxId={lootbox.id}
               />
