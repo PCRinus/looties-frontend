@@ -24,8 +24,14 @@ export const MobileSidebar: FC = () => {
 
   return (
     <OutsideClickHandler
-      onOutsideClick={() => {
-        dispatch({ type: ReduxEvents.CloseSidebar });
+      onOutsideClick={(event) => {
+        if (event.target instanceof Element) {
+          if (event.target.id !== 'toggle_sidebar_button') {
+            dispatch({ type: ReduxEvents.CloseSidebar });
+          }
+        } else {
+          dispatch({ type: ReduxEvents.CloseSidebar });
+        }
       }}
     >
       <div
