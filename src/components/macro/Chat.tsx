@@ -173,7 +173,7 @@ export const Chat: React.FC = () => {
 
   useEffect(() => {
     dispatch({ type: ReduxEvents.CloseChat });
-  }, [location.pathname]);
+  }, [location]);
 
   return (
     <div
