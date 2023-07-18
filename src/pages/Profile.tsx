@@ -7,14 +7,10 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import UserProfileCard from '../components/macro/UserProfileCard';
 import ProfileOptions from '../components/macro/ProfileOptions';
 import { Route, Routes } from 'react-router-dom';
-import SettingsPage from '../components/macro/SettingsPage';
 import { AffiliatesPage } from '../components/macro/AffiliatesPage';
 import GameHistoryPage from '../components/macro/GameHistoryPage';
 import TransactionsPage from '../components/macro/TransactionsPage';
-import ProfileOptionsHeader from '../components/micro/ProfileOptionsHeader';
-import MyLootboxesPage from '../components/macro/MyLootboxesPage';
 import InventoryPage from '../components/macro/InventoryPage';
-import { useSelector } from 'react-redux';
 
 const Profile: React.FC = () => {
   const [isXsScreen, setIsXsScreen] = useState(window.matchMedia('(max-width: 576px)').matches);
@@ -39,7 +35,7 @@ const Profile: React.FC = () => {
             <></>
           ) : (
             <div className="flex h-full w-full flex-col gap-10 bg-[#151719] xs:px-6 xs:pt-8 lg:max-w-[392px] lg:overflow-y-scroll 2xl:py-[52px] 2xl:pl-[52px] 2xl:pr-0 ">
-              <div className="flex h-[806px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
+              <div className="flex h-[678px] flex-col gap-y-8 overflow-auto rounded-xl border-[32px] border-solid border-custom_black_2 bg-custom_black_2">
                 <UserProfileCard />
                 <ProfileOptions />
               </div>
@@ -54,10 +50,8 @@ const Profile: React.FC = () => {
                     <div className="mx-[21px]">
                       <Routes>
                         <Route path="/" element={<ProfilePage />} />
-                        <Route path="/settings" element={<SettingsPage />} />
                         <Route path="/games" element={<GameHistoryPage />} />
                         <Route path="/inventory" element={<InventoryPage />} />
-                        <Route path="/mylootboxes" element={<MyLootboxesPage />} />
                         <Route path="/affiliates" element={<AffiliatesPage />} />
                         <Route path="/transactions" element={<TransactionsPage />} />
                       </Routes>
@@ -72,10 +66,8 @@ const Profile: React.FC = () => {
                       <div id="options-pages-grid" className="h-full max-h-full w-full   bg-[#151719] p-[52px] ">
                         <Routes>
                           <Route path="/" element={<ProfilePage />} />
-                          <Route path="/settings" element={<SettingsPage />} />
                           <Route path="/games" element={<GameHistoryPage />} />
                           <Route path="/inventory" element={<InventoryPage />} />
-                          <Route path="/mylootboxes" element={<MyLootboxesPage />} />
                           <Route path="/affiliates" element={<AffiliatesPage />} />
                           <Route path="/transactions" element={<TransactionsPage />} />
                         </Routes>

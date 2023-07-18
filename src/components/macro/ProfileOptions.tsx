@@ -32,11 +32,10 @@ const ProfileOptions: React.FC = () => {
   };
   const buttons = [
     { name: 'Profile', icon: ProfileGrey, iconRed: ProfileIconRed, path: '/profile' },
-    { name: 'Settings', icon: SettingsIcon, iconRed: SettingsRedIcon, path: 'settings' },
-    { name: 'Games', icon: Games, iconRed: GamesRedIcon, path: 'games' },
-    { name: 'Inventory', icon: InventoryIcon, iconRed: InventoryRedIcon, path: 'inventory' },
-    { name: 'My lootboxes', icon: LootBoxesGrey, iconRed: LootBoxesRed, path: 'mylootboxes' },
+    // { name: 'My lootboxes', icon: LootBoxesGrey, iconRed: LootBoxesRed, path: 'mylootboxes' },
     { name: 'Affiliates', icon: Afiliates, iconRed: AffiliatesRed, path: 'affiliates' },
+    { name: 'Inventory', icon: InventoryIcon, iconRed: InventoryRedIcon, path: 'inventory' },
+    { name: 'Games', icon: Games, iconRed: GamesRedIcon, path: 'games' },
     { name: 'Transactions', icon: TransactionIcon, iconRed: TransactionsRed, path: 'transactions' },
     { name: 'Log out', icon: LogoutIcon, iconRed: LogoutRed, path: '' },
   ];

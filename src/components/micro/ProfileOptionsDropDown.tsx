@@ -10,13 +10,12 @@ type OptionType = {
 };
 const options: OptionType[] = [
   { id: 1, name: 'Profile' },
-  { id: 2, name: 'Settings' },
-  { id: 3, name: 'Games' },
-  { id: 4, name: 'Inventory' },
-  { id: 5, name: 'My lootboxes' },
-  { id: 6, name: 'Affiliates' },
-  { id: 7, name: 'Transactions' },
-  { id: 8, name: 'Log out' },
+  { id: 2, name: 'Affiliates' },
+  { id: 3, name: 'Inventory' },
+  { id: 4, name: 'Games' },
+  // { id: 5, name: 'My lootboxes' },
+  { id: 5, name: 'Transactions' },
+  { id: 6, name: 'Log out' },
 ];
 const ProfileOptionsDropDown: React.FC = () => {
   const navigate = useNavigate();

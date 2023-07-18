@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import ProfileOptions from "./ProfileOptions";
-import UserProfileCard from "./UserProfileCard";
-import ProfileOptionsDropDown from "../micro/ProfileOptionsDropDown";
+import React, { useEffect, useState } from 'react';
+import ProfileOptions from './ProfileOptions';
+import UserProfileCard from './UserProfileCard';
+import ProfileOptionsDropDown from '../micro/ProfileOptionsDropDown';
 
 const ProfileSideBar: React.FC = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -11,10 +11,10 @@ const ProfileSideBar: React.FC = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 

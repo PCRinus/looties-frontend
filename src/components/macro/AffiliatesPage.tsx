@@ -1,23 +1,23 @@
-import { Chat } from "./Chat";
-import React from "react";
-import Users from "../../assets/Users.svg";
-import RedCoins from "../../assets/RedCoins.svg";
-import RedDollar from "../../assets/RedDollar.svg";
-import InfoIcon from "../../assets/InfoIcon.svg";
-import RedTwitter from "../../assets/RedTwitter.svg";
-import Copy from "../../assets/Copy.svg";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { useEffect, useState, useCallback } from "react";
-import ProfileOptionsHeader from "../micro/ProfileOptionsHeader";
-import InfoIconRed from "../../assets/InfoIconRed.svg";
-import RedeemCodeInfoBubble from "../micro/RedeemCodeInfoBubble";
+import { Chat } from './Chat';
+import React from 'react';
+import Users from '../../assets/Users.svg';
+import RedCoins from '../../assets/RedCoins.svg';
+import RedDollar from '../../assets/RedDollar.svg';
+import InfoIcon from '../../assets/InfoIcon.svg';
+import RedTwitter from '../../assets/RedTwitter.svg';
+import Copy from '../../assets/Copy.svg';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useEffect, useState, useCallback } from 'react';
+import ProfileOptionsHeader from '../micro/ProfileOptionsHeader';
+import InfoIconRed from '../../assets/InfoIconRed.svg';
+import RedeemCodeInfoBubble from '../micro/RedeemCodeInfoBubble';
 
 export const AffiliatesPage = () => {
-  const [referralInput, setReferralInput] = useState<string>("");
-  const [yourReferralInput, setYourReferralInput] = useState<string>("");
-  const [referralCode, setReferralCode] = useState<string>("LOOTIES");
+  const [referralInput, setReferralInput] = useState<string>('');
+  const [yourReferralInput, setYourReferralInput] = useState<string>('');
+  const [referralCode, setReferralCode] = useState<string>('LOOTIES');
   const [totalWagered, setTotalWagered] = useState<number>(0);
   const [availableCommission, setavailableCommission] = useState(0);
   const [referralEarnings, setreferralEarnings] = useState(0);
@@ -37,8 +37,8 @@ export const AffiliatesPage = () => {
           setreferralEarnings(parseFloat(referralEarnings));
           setredeemedCount(parseFloat(redeemedCount));
         } catch (error) {
-          console.log("Error while fetching affiliate stats:", error);
-          toast.error("Failed to fetch affiliate stats");
+          console.log('Error while fetching affiliate stats:', error);
+          toast.error('Failed to fetch affiliate stats');
         }
       }
     };
@@ -101,14 +101,14 @@ export const AffiliatesPage = () => {
     }
   }, [setredeemedCount, setTotalWagered, setavailableCommission, user.id, auth.jwt]);
   const copyToClipboard = () => {
-    const affiliateCode = `https://looties.app.land/${referralCode || "LOOTIES"}`;
+    const affiliateCode = `https://looties.app.land/${referralCode || 'LOOTIES'}`;
     navigator.clipboard
       .writeText(affiliateCode)
       .then(() => {
-        return toast.success("Code copied to clipboard!");
+        return toast.success('Code copied to clipboard!');
       })
       .catch((error) => {
-        return toast.error("Failed to copy the code!");
+        return toast.error('Failed to copy the code!');
       });
   };
 
@@ -118,8 +118,8 @@ export const AffiliatesPage = () => {
   }, [getStats, getReferralCode]);
 
   const setCode = () => {
-    if (referralInput.length > 255 || referralInput.includes(" ")) {
-      toast.error("Referral code is invalid");
+    if (referralInput.length > 255 || referralInput.includes(' ')) {
+      toast.error('Referral code is invalid');
       return;
     }
     if (user.id) {
@@ -137,7 +137,7 @@ export const AffiliatesPage = () => {
         )
         .then(
           (response) => {
-            toast.success(response.data + " is your new referral code");
+            toast.success(response.data + ' is your new referral code');
             getReferralCode();
           },
           (error) => {
@@ -150,7 +150,7 @@ export const AffiliatesPage = () => {
   };
   const redeemCode = () => {
     if (yourReferralInput.length > 255) {
-      toast.error("Referral code is too long");
+      toast.error('Referral code is too long');
       return;
     }
     if (user.id) {
@@ -168,7 +168,7 @@ export const AffiliatesPage = () => {
         )
         .then(
           (response) => {
-            toast.success("Referral code redeemed successfully!");
+            toast.success('Referral code redeemed successfully!');
             getStats();
           },
           (error) => {
@@ -193,12 +193,12 @@ export const AffiliatesPage = () => {
         )
         .then(
           (response) => {
-            toast.success("Claimed successfully!");
+            toast.success('Claimed successfully!');
             getStats();
           },
           (error) => {
             if (error.response?.data.message) {
-              toast.error("No available commission to claim!");
+              toast.error('No available commission to claim!');
             }
           }
         );
@@ -230,22 +230,22 @@ export const AffiliatesPage = () => {
 
   return (
     <div className="2xl:autoheight bottom-fade flex-auto rounded-xl bg-custom_black_2  xs:h-auto xs:min-h-full 2xl:min-h-0 2xl:w-full">
-      <ProfileOptionsHeader title={"Affiliates"} />
+      <ProfileOptionsHeader title={'Affiliates'} />
       <div
         className={`relative flex flex-col bg-[#1a1d20] px-[32px] text-[14px] font-semibold leading-5 text-[#848B8D] sm:text-[16px]`}
       >
         <div className="mt-8 rounded-xl bg-gradient-to-b from-red-700 to-gray-900 pl-1 pr-1 pt-1 text-white">
           <div
             className="flex w-full flex-col items-center justify-center rounded-xl md:max-h-[176px] md:flex-row  "
-            style={{ background: "linear-gradient(360deg, #272727 0%, rgba(21, 23, 25, 0) 100%), #191D20" }}
+            style={{ background: 'linear-gradient(360deg, #272727 0%, rgba(21, 23, 25, 0) 100%), #191D20' }}
           >
             <div className="ml-0 flex w-full basis-[100%] flex-col items-center justify-center gap-3 rounded-t-[12px] border-solid border-[#2C3034] bg-transparent p-8 xs:h-16 md:ml-[52px] md:basis-[55%] md:items-start md:p-0 2xl:h-20 ">
               <h1 className="text-center font-bold text-[#F03033] xs:text-xl md:text-start 2xl:text-2xl">
-                {" "}
+                {' '}
                 Earn up to 5% from your friends
               </h1>
               <h1 className="text-center font-medium text-white xs:text-xs md:text-start">
-                {" "}
+                {' '}
                 Earn 5% Of house from Looties that have your code active. Looties using your code will receive a 5%
                 increase in Rakeback for 24 hours.
               </h1>
@@ -282,7 +282,7 @@ export const AffiliatesPage = () => {
           </button>
         </div>
         <h1 className="py-5 text-xl font-bold text-[#DFDFDF]"> Set up your referral code </h1>
-        <div className="mt-2 flex flex-col items-start justify-start gap-3 md:flex-wrap md:flex-row md:items-center">
+        <div className="mt-2 flex flex-col items-start justify-start gap-3 md:flex-row md:flex-wrap md:items-center">
           <div className="flex w-full flex-col items-start justify-center gap-2 md:w-[275px]">
             <h1 className="text-xs font-semibold text-[#848B8D]">Set your referral code</h1>
             <div className="flex h-[48px] w-full items-center justify-start gap-2 rounded-lg border border-[#2C3034] bg-[#1E2023] p-[7px] font-sans font-semibold text-custom_gray_2 md:justify-center">
@@ -297,7 +297,7 @@ export const AffiliatesPage = () => {
                 className="top-[56-px] ml-auto flex h-full w-[77px] items-center justify-center rounded-xl border border-[#2C3034] bg-gradient-to-t from-red-700 to-red-500 px-[8px]"
                 onClick={setCode}
               >
-                <span className="font-sans text-xs font-semibold text-white">Set code</span>
+                <span className="font-sans text-xs font-semibold text-white">Set Code</span>
               </button>
             </div>
           </div>
@@ -336,7 +336,7 @@ export const AffiliatesPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base"> Total referrals </h1>
+              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base"> Total Referrals </h1>
               <h1 className="text-xs font-semibold text-white sm:text-sm md:text-base">{redeemedCount}</h1>
             </div>
           </div>
@@ -347,7 +347,7 @@ export const AffiliatesPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base"> Total wagered </h1>
+              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base"> Total Wagered </h1>
               <h1 className="text-xs font-semibold text-white sm:text-sm md:text-base">{totalWagered}</h1>
             </div>
           </div>
@@ -358,7 +358,7 @@ export const AffiliatesPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base">Referral earnings</h1>
+              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base">Referral Earnings</h1>
               <h1 className="overflow-hidden break-all text-xs font-semibold text-white sm:text-sm md:text-base">
                 {referralEarnings}
               </h1>
@@ -371,7 +371,7 @@ export const AffiliatesPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base"> Available commission </h1>
+              <h1 className="text-xs font-semibold text-[#848B8D] sm:text-sm md:text-base"> Available Commission </h1>
               <h1 className="text-xs font-semibold text-white sm:text-sm md:text-base"> {availableCommission} </h1>
             </div>
             <button

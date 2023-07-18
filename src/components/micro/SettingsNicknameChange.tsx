@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ReduxEvents } from "../../reducers/events";
-import axios from "axios";
-import { toast } from "react-hot-toast";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxEvents } from '../../reducers/events';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const SettingsNicknameChange: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const auth = useSelector((state: any) => state.auth);
-  const [newNickname, setNewNickname] = useState(user.profile.userName || "");
+  const [newNickname, setNewNickname] = useState(user.profile.userName || '');
 
   useEffect(() => {
     setNewNickname(user.profile.userName);
@@ -33,10 +33,10 @@ const SettingsNicknameChange: React.FC = () => {
         },
       });
       dispatch({ type: ReduxEvents.SetProfileData, payload: profile });
-      toast.success("Nickname updated");
+      toast.success('Nickname updated');
     } catch (err) {
-      console.log("Error updating nickname: ", err);
-      toast.error("Nickname change failed");
+      console.log('Error updating nickname: ', err);
+      toast.error('Nickname change failed');
     }
   };
 
