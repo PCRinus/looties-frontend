@@ -44,7 +44,7 @@
 }
 
 body {
-  background: rgb(25,25,33);
+  background: #151719;
 }
 .raffle-roller {
   height: 165px;
@@ -62,7 +62,7 @@ body {
   width: 100%;
   border-radius: 12px;
   border-width: 4px;
-  border-color: #2C3034;
+  border-color: #2c3034;
 }
 .raffle-roller-holder {
   overflow: hidden;
@@ -79,7 +79,7 @@ body {
   width: 100%;
   border-radius: 12px;
   border-width: 4px;
-  border-color: #2C3034;
+  border-color: #2c3034;
 }
 .raffle-roller-container {
   width: 9999999999999999999px;
@@ -87,7 +87,7 @@ body {
   height: 170px;
   background: #191726;
   margin-left: 0;
-  transition: all 8s cubic-bezier(.08,.6,0,1);
+  transition: all 8s cubic-bezier(0.08, 0.6, 0, 1);
 }
 .item {
   display: inline-block;
