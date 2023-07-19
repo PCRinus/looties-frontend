@@ -49,7 +49,11 @@ const NftLootboxCard: React.FC<Props> = ({ cardTitle, itemsCount, label, cost, i
           >
             <div className="flex w-full flex-col">
               <div className=" flex flex-col xs:gap-3 xs:p-3 lg:gap-4 lg:p-4">
-                <img className="h-auto rounded-xl xs:w-[154px] lg:w-[220px]" src={icon} alt="nft-url"></img>
+                <img
+                  className="rounded-xl xs:h-[154px] xs:w-[154px] lg:h-[220px] lg:w-[220px]"
+                  src={icon}
+                  alt="nft-url"
+                ></img>
 
                 <Link to={`/lootboxes/${lootboxId}`}>
                   <button className="rounded-lg bg-gradient-to-t from-[#F03033] to-[#E5383B] font-sans font-bold text-white xs:h-[29px] xs:w-[154px] xs:text-xs lg:h-[40px] lg:w-[220px] lg:text-base">

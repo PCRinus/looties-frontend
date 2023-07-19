@@ -2,9 +2,6 @@ import WelcomeBox from '../components/macro/WelcomeBox';
 import { Chat } from '../components/macro/Chat';
 import LiveDropSidebar from '../components/micro/LiveDropSidebar';
 import Scrollbars from 'react-custom-scrollbars-2';
-import Games from '../components/macro/Games';
-import PaymentMethod from '../components/micro/PaymentMethod';
-import HomepageFooter from '../components/macro/HomepageFooter';
 import LootboxGame from '../components/micro/LootboxGame';
 
 const Homepage = () => {
