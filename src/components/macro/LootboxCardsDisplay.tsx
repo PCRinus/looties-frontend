@@ -117,12 +117,12 @@ export const LootboxCardsDisplay: React.FC = () => {
           {/* desktop lootbox filters */}
           {screenWidth > 1536 && (
             <>
-              <CustomFilter
+              {/* <CustomFilter
                 filterName="Category"
                 options={CATEGORY_OPTIONS}
                 handleFilterChange={handleCategoryChange}
                 value={category}
-              />
+              /> */}
               <CustomFilter
                 filterName="Collection"
                 options={COLLECTION_OPTIONS}
@@ -130,17 +130,17 @@ export const LootboxCardsDisplay: React.FC = () => {
                 value={collection}
               />
               <CustomFilter
-                filterName="Price"
+                filterName="Filter"
                 options={PRICE_OPTIONS}
                 handleFilterChange={handlePriceChange}
                 value={price}
               />
-              <CustomFilter
+              {/* <CustomFilter
                 filterName="Sory by"
                 options={SORT_BY_OPTIONS}
                 handleFilterChange={handleSortByChange}
                 value={sortBy}
-              />
+              /> */}
             </>
           )}
         </div>
@@ -150,12 +150,12 @@ export const LootboxCardsDisplay: React.FC = () => {
             openFilters ? 'flex' : 'hidden'
           } xs:flex-col xs:items-center xs:justify-around xs:gap-4 xs:rounded-xl xs:border xs:border-solid xs:border-[#2C3034] xs:bg-[#1A1D20] xs:p-6 2xl:hidden`}
         >
-          <CustomFilter
+          {/* <CustomFilter
             filterName="Category"
             options={CATEGORY_OPTIONS}
             handleFilterChange={handleCategoryChange}
             value={category}
-          />
+          /> */}
           <CustomFilter
             filterName="Collection"
             options={COLLECTION_OPTIONS}
@@ -163,17 +163,17 @@ export const LootboxCardsDisplay: React.FC = () => {
             value={collection}
           />
           <CustomFilter
-            filterName="Price"
+            filterName="Filter"
             options={PRICE_OPTIONS}
             handleFilterChange={handlePriceChange}
             value={price}
           />
-          <CustomFilter
+          {/* <CustomFilter
             filterName="Sory by"
             options={SORT_BY_OPTIONS}
             handleFilterChange={handleSortByChange}
             value={sortBy}
-          />
+          /> */}
         </div>
       </div>
       <div className="mt-9 flex flex-row flex-wrap items-start justify-center gap-4">

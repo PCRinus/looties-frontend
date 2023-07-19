@@ -402,20 +402,20 @@ const DepositNft = () => {
             </span>
             <span className="hidden md:flex">
               <CustomFilter
-                filterName="Price"
+                filterName="Filter"
                 options={PRICE_OPTIONS}
                 handleFilterChange={handlePriceChange}
                 value={price}
               />
             </span>
-            <span className="hidden md:flex">
+            {/* <span className="hidden md:flex">
               <CustomFilter
                 filterName="Sort by"
                 options={SORT_BY_OPTIONS}
                 handleFilterChange={handleSortByChange}
                 value={sortBy}
               />
-            </span>
+            </span> */}
           </div>
           {/* mobile lootbox filters */}
           <div
@@ -430,17 +430,17 @@ const DepositNft = () => {
               value={collection}
             />
             <CustomFilter
-              filterName="Price"
+              filterName="Filter"
               options={PRICE_OPTIONS}
               handleFilterChange={handlePriceChange}
               value={price}
             />
-            <CustomFilter
+            {/* <CustomFilter
               filterName="Sort by"
               options={SORT_BY_OPTIONS}
               handleFilterChange={handleSortByChange}
               value={sortBy}
-            />
+            /> */}
           </div>
         </div>
         <div className="mx-[32px] flex flex-row items-center justify-between">
