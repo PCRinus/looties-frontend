@@ -295,14 +295,19 @@ const OfficialBox = () => {
 
     useEffect(() => {
         const fetchLootboxData = async () => {
-            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/lootbox/${lootboxId}`);
-
-            if (data.userId === user.id) {
+            try {
+              const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/lootbox/${lootboxId}`);
+      
+              if (data.userId === user.id) {
                 setIsOpenButtonDisabled(true);
+              }
+            } catch (err) {
+              console.log(err);
+              toast.error('Failed to fetch lootbox data');
             }
-        };
-
-        fetchLootboxData();
+          };
+      
+          fetchLootboxData();
     }, [lootboxId, user.id]);
 
 
