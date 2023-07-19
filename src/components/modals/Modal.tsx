@@ -10,6 +10,7 @@ import { WithdrawCoins } from './WithdrawCoins';
 import { UserProfile } from './UserProfile';
 import { NftPicker } from './NftPicker';
 import { LootboxWin } from './LootboxWin';
+import { ImageChange } from './ImageChange';
 import '../../styles/macro/Modal.scss';
 import { ReduxEvents } from '../../reducers/events';
 import { useDispatch } from 'react-redux';
@@ -29,6 +30,7 @@ const Modals: {
   CreatedLootbox,
   NftPicker,
   LootboxWin,
+  ImageChange,
 };
 
 interface ModalProps {
